@@ -1,0 +1,674 @@
+CPUC Tester Beta v2.0
+11/04/2013 08:42:09
+Location: 1311
+Client IP Address: 192.168.32.50
+Host name: WBBDTest4
+Network Provider: Verizon
+
+Standard Test starting.....
+
+Latitude:37.811942
+Longitude:-121.996212
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 184.72.63.139: bytes=32 time=103ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=99ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=104ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=152ms TTL=44
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 99ms, Maximum = 152ms, Average = 114ms
+Successful Connectivity Test.
+
+Latitude:37.811925
+Longitude:-121.996217
+Starting Test 1...
+
+Iperf command line:iperf -c 184.72.63.139 -p 5007 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5007
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 50265 connected with 184.72.63.139 port 5007
+[  5] local 192.168.32.50 port 50268 connected with 184.72.63.139 port 5007
+[  4] local 192.168.32.50 port 50267 connected with 184.72.63.139 port 5007
+[  6] local 192.168.32.50 port 50269 connected with 184.72.63.139 port 5007
+[  5]  0.0- 1.0 sec    384 KBytes  3146 Kbits/sec
+[  6]  0.0- 1.0 sec    376 KBytes  3080 Kbits/sec
+[  3]  0.0- 1.0 sec    376 KBytes  3080 Kbits/sec
+[  4]  0.0- 1.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  0.0- 1.0 sec  1520 KBytes  12452 Kbits/sec
+[  5]  1.0- 2.0 sec    344 KBytes  2818 Kbits/sec
+[  6]  1.0- 2.0 sec    296 KBytes  2425 Kbits/sec
+[  3]  1.0- 2.0 sec    320 KBytes  2621 Kbits/sec
+[  4]  1.0- 2.0 sec    280 KBytes  2294 Kbits/sec
+[SUM]  1.0- 2.0 sec  1240 KBytes  10158 Kbits/sec
+[  6]  2.0- 3.0 sec    248 KBytes  2032 Kbits/sec
+[  5]  2.0- 3.0 sec    424 KBytes  3473 Kbits/sec
+[  3]  2.0- 3.0 sec    448 KBytes  3670 Kbits/sec
+[  4]  2.0- 3.0 sec    440 KBytes  3604 Kbits/sec
+[SUM]  2.0- 3.0 sec  1560 KBytes  12780 Kbits/sec
+[  3]  3.0- 4.0 sec    272 KBytes  2228 Kbits/sec
+[  6]  3.0- 4.0 sec    232 KBytes  1901 Kbits/sec
+[  5]  3.0- 4.0 sec    312 KBytes  2556 Kbits/sec
+[  4]  3.0- 4.0 sec    256 KBytes  2097 Kbits/sec
+[SUM]  3.0- 4.0 sec  1072 KBytes  8782 Kbits/sec
+[  5]  4.0- 5.0 sec    384 KBytes  3146 Kbits/sec
+[  3]  4.0- 5.0 sec    424 KBytes  3473 Kbits/sec
+[  6]  4.0- 5.0 sec    384 KBytes  3146 Kbits/sec
+[  4]  4.0- 5.0 sec    376 KBytes  3080 Kbits/sec
+[SUM]  4.0- 5.0 sec  1568 KBytes  12845 Kbits/sec
+[  3]  5.0- 6.0 sec    344 KBytes  2818 Kbits/sec
+[  4]  5.0- 6.0 sec    328 KBytes  2687 Kbits/sec
+[  6]  5.0- 6.0 sec    376 KBytes  3080 Kbits/sec
+[  5]  5.0- 6.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  5.0- 6.0 sec  1432 KBytes  11731 Kbits/sec
+[  4]  6.0- 7.0 sec    432 KBytes  3539 Kbits/sec
+[  3]  6.0- 7.0 sec    424 KBytes  3473 Kbits/sec
+[  6]  6.0- 7.0 sec    392 KBytes  3211 Kbits/sec
+[  5]  6.0- 7.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  6.0- 7.0 sec  1632 KBytes  13369 Kbits/sec
+[  3]  7.0- 8.0 sec    464 KBytes  3801 Kbits/sec
+[  4]  7.0- 8.0 sec    400 KBytes  3277 Kbits/sec
+[  5]  7.0- 8.0 sec    448 KBytes  3670 Kbits/sec
+[  6]  7.0- 8.0 sec    448 KBytes  3670 Kbits/sec
+[SUM]  7.0- 8.0 sec  1760 KBytes  14418 Kbits/sec
+[  3]  8.0- 9.0 sec    448 KBytes  3670 Kbits/sec
+[  5]  8.0- 9.0 sec    432 KBytes  3539 Kbits/sec
+[  4]  8.0- 9.0 sec    448 KBytes  3670 Kbits/sec
+[  6]  8.0- 9.0 sec    432 KBytes  3539 Kbits/sec
+[SUM]  8.0- 9.0 sec  1760 KBytes  14418 Kbits/sec
+[  4]  0.0-10.0 sec  3784 KBytes  3101 Kbits/sec
+[  5]  0.0-10.0 sec  3952 KBytes  3238 Kbits/sec
+[  3]  9.0-10.0 sec    464 KBytes  3801 Kbits/sec
+[  3]  0.0-10.0 sec  3992 KBytes  3261 Kbits/sec
+[  6]  9.0-10.0 sec    424 KBytes  3473 Kbits/sec
+[  6]  0.0-10.1 sec  3616 KBytes  2931 Kbits/sec
+[  5] local 192.168.32.50 port 50366 connected with 184.72.63.139 port 5007
+[  4] local 192.168.32.50 port 50365 connected with 184.72.63.139 port 5007
+[  3] local 192.168.32.50 port 50367 connected with 184.72.63.139 port 5007
+[  4]  0.0- 1.0 sec    862 KBytes  7061 Kbits/sec
+[  3]  0.0- 1.0 sec    899 KBytes  7361 Kbits/sec
+[  5]  0.0- 1.0 sec    824 KBytes  6752 Kbits/sec
+[SUM]  0.0-10.1 sec  17929 KBytes  14533 Kbits/sec
+[  6] local 192.168.32.50 port 50375 connected with 184.72.63.139 port 5007
+[  6]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  1.0- 2.0 sec    934 KBytes  7651 Kbits/sec
+[  4]  1.0- 2.0 sec    907 KBytes  7429 Kbits/sec
+[  6]  1.0- 2.0 sec    360 KBytes  2953 Kbits/sec
+[  3]  1.0- 2.0 sec    891 KBytes  7297 Kbits/sec
+[  6]  2.0- 3.0 sec    981 KBytes  8039 Kbits/sec
+[  5]  2.0- 3.0 sec    920 KBytes  7540 Kbits/sec
+[  3]  2.0- 3.0 sec    954 KBytes  7817 Kbits/sec
+[  4]  2.0- 3.0 sec    919 KBytes  7529 Kbits/sec
+[  5]  3.0- 4.0 sec    840 KBytes  6880 Kbits/sec
+[  6]  3.0- 4.0 sec    883 KBytes  7236 Kbits/sec
+[  3]  3.0- 4.0 sec    857 KBytes  7018 Kbits/sec
+[  4]  3.0- 4.0 sec    806 KBytes  6601 Kbits/sec
+[  3]  4.0- 5.0 sec    811 KBytes  6645 Kbits/sec
+[  5]  4.0- 5.0 sec    773 KBytes  6334 Kbits/sec
+[  4]  4.0- 5.0 sec    785 KBytes  6431 Kbits/sec
+[  6]  4.0- 5.0 sec    897 KBytes  7351 Kbits/sec
+[  6]  5.0- 6.0 sec    766 KBytes  6274 Kbits/sec
+[  4]  5.0- 6.0 sec    755 KBytes  6185 Kbits/sec
+[  3]  5.0- 6.0 sec    778 KBytes  6374 Kbits/sec
+[  5]  5.0- 6.0 sec    805 KBytes  6596 Kbits/sec
+[  6]  6.0- 7.0 sec    842 KBytes  6896 Kbits/sec
+[  3]  6.0- 7.0 sec    882 KBytes  7229 Kbits/sec
+[  4]  6.0- 7.0 sec    809 KBytes  6625 Kbits/sec
+[  5]  6.0- 7.0 sec    835 KBytes  6840 Kbits/sec
+[  4]  7.0- 8.0 sec    767 KBytes  6285 Kbits/sec
+[  6]  7.0- 8.0 sec    815 KBytes  6674 Kbits/sec
+[  3]  7.0- 8.0 sec    821 KBytes  6729 Kbits/sec
+[  5]  7.0- 8.0 sec    799 KBytes  6545 Kbits/sec
+[  4]  8.0- 9.0 sec    816 KBytes  6685 Kbits/sec
+[  5]  8.0- 9.0 sec    778 KBytes  6373 Kbits/sec
+[  3]  8.0- 9.0 sec    812 KBytes  6651 Kbits/sec
+[  6]  8.0- 9.0 sec    859 KBytes  7040 Kbits/sec
+[  5]  9.0-10.0 sec    886 KBytes  7262 Kbits/sec
+[  6]  9.0-10.0 sec    892 KBytes  7306 Kbits/sec
+[  3]  9.0-10.0 sec    931 KBytes  7628 Kbits/sec
+[  4]  9.0-10.0 sec    882 KBytes  7229 Kbits/sec
+[  5]  0.0-10.2 sec  8520 KBytes  6874 Kbits/sec
+[  4]  0.0-10.2 sec  8440 KBytes  6798 Kbits/sec
+[  3]  0.0-10.2 sec  8816 KBytes  7090 Kbits/sec
+[  6] 10.0-11.0 sec  1342 KBytes  10993 Kbits/sec
+[  6]  0.0-11.5 sec  9216 KBytes  6576 Kbits/sec
+
+Latitude:37.811932
+Longitude:-121.996193
+Starting Test 2...
+
+Iperf command line:iperf -c 184.72.222.65 -p 5007 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5007
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  4] local 192.168.32.50 port 50495 connected with 184.72.222.65 port 5007
+[  5] local 192.168.32.50 port 50496 connected with 184.72.222.65 port 5007
+[  3] local 192.168.32.50 port 50494 connected with 184.72.222.65 port 5007
+[  6] local 192.168.32.50 port 50497 connected with 184.72.222.65 port 5007
+[  3]  0.0- 1.0 sec    248 KBytes  2032 Kbits/sec
+[  4]  0.0- 1.0 sec    288 KBytes  2359 Kbits/sec
+[  6]  0.0- 1.0 sec    248 KBytes  2032 Kbits/sec
+[  5]  0.0- 1.0 sec    256 KBytes  2097 Kbits/sec
+[SUM]  0.0- 1.0 sec  1040 KBytes  8520 Kbits/sec
+[  4]  1.0- 2.0 sec    360 KBytes  2949 Kbits/sec
+[  6]  1.0- 2.0 sec    336 KBytes  2753 Kbits/sec
+[  5]  1.0- 2.0 sec    360 KBytes  2949 Kbits/sec
+[  3]  1.0- 2.0 sec    352 KBytes  2884 Kbits/sec
+[SUM]  1.0- 2.0 sec  1408 KBytes  11534 Kbits/sec
+[  4]  2.0- 3.0 sec    376 KBytes  3080 Kbits/sec
+[  5]  2.0- 3.0 sec    352 KBytes  2884 Kbits/sec
+[  6]  2.0- 3.0 sec    376 KBytes  3080 Kbits/sec
+[  3]  2.0- 3.0 sec    376 KBytes  3080 Kbits/sec
+[SUM]  2.0- 3.0 sec  1480 KBytes  12124 Kbits/sec
+[  6]  3.0- 4.0 sec    368 KBytes  3015 Kbits/sec
+[  3]  3.0- 4.0 sec    344 KBytes  2818 Kbits/sec
+[  4]  3.0- 4.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  3.0- 4.0 sec    368 KBytes  3015 Kbits/sec
+[SUM]  3.0- 4.0 sec  1464 KBytes  11993 Kbits/sec
+[  5]  4.0- 5.0 sec    336 KBytes  2753 Kbits/sec
+[  6]  4.0- 5.0 sec    376 KBytes  3080 Kbits/sec
+[  4]  4.0- 5.0 sec    384 KBytes  3146 Kbits/sec
+[  3]  4.0- 5.0 sec    376 KBytes  3080 Kbits/sec
+[SUM]  4.0- 5.0 sec  1472 KBytes  12059 Kbits/sec
+[  5]  5.0- 6.0 sec    400 KBytes  3277 Kbits/sec
+[  4]  5.0- 6.0 sec    408 KBytes  3342 Kbits/sec
+[  3]  5.0- 6.0 sec    424 KBytes  3473 Kbits/sec
+[  6]  5.0- 6.0 sec    392 KBytes  3211 Kbits/sec
+[SUM]  5.0- 6.0 sec  1624 KBytes  13304 Kbits/sec
+[  6]  6.0- 7.0 sec    360 KBytes  2949 Kbits/sec
+[  3]  6.0- 7.0 sec    336 KBytes  2753 Kbits/sec
+[  4]  6.0- 7.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  6.0- 7.0 sec    376 KBytes  3080 Kbits/sec
+[SUM]  6.0- 7.0 sec  1456 KBytes  11928 Kbits/sec
+[  5]  7.0- 8.0 sec    336 KBytes  2753 Kbits/sec
+[  6]  7.0- 8.0 sec    352 KBytes  2884 Kbits/sec
+[  4]  7.0- 8.0 sec    344 KBytes  2818 Kbits/sec
+[  3]  7.0- 8.0 sec    352 KBytes  2884 Kbits/sec
+[SUM]  7.0- 8.0 sec  1384 KBytes  11338 Kbits/sec
+[  6]  8.0- 9.0 sec    384 KBytes  3146 Kbits/sec
+[  4]  8.0- 9.0 sec    392 KBytes  3211 Kbits/sec
+[  5]  8.0- 9.0 sec    440 KBytes  3604 Kbits/sec
+[  3]  8.0- 9.0 sec    320 KBytes  2621 Kbits/sec
+[SUM]  8.0- 9.0 sec  1536 KBytes  12583 Kbits/sec
+[  4]  9.0-10.0 sec    368 KBytes  3015 Kbits/sec
+[  4]  0.0-10.0 sec  3696 KBytes  3016 Kbits/sec
+[  5]  9.0-10.0 sec    264 KBytes  2163 Kbits/sec
+[  5]  0.0-10.0 sec  3496 KBytes  2857 Kbits/sec
+[  6]  9.0-10.0 sec    360 KBytes  2949 Kbits/sec
+[  6]  0.0-10.0 sec  3560 KBytes  2910 Kbits/sec
+[  3]  9.0-10.0 sec    240 KBytes  1966 Kbits/sec
+[SUM]  9.0-10.0 sec  1232 KBytes  10093 Kbits/sec
+[  3]  0.0-10.1 sec  3376 KBytes  2746 Kbits/sec
+[SUM]  0.0-10.1 sec  14128 KBytes  11493 Kbits/sec
+[  5] local 192.168.32.50 port 50593 connected with 184.72.222.65 port 5007
+[  3] local 192.168.32.50 port 50595 connected with 184.72.222.65 port 5007
+[  6] local 192.168.32.50 port 50594 connected with 184.72.222.65 port 5007
+[  4] local 192.168.32.50 port 50592 connected with 184.72.222.65 port 5007
+[  3]  0.0- 1.0 sec  67.6 KBytes    554 Kbits/sec
+[  4]  0.0- 1.0 sec  97.6 KBytes    799 Kbits/sec
+[  6]  0.0- 1.0 sec  97.6 KBytes    799 Kbits/sec
+[  5]  0.0- 1.0 sec  97.6 KBytes    799 Kbits/sec
+[  6]  1.0- 2.0 sec    404 KBytes  3309 Kbits/sec
+[  5]  1.0- 2.0 sec    411 KBytes  3365 Kbits/sec
+[  4]  1.0- 2.0 sec    472 KBytes  3864 Kbits/sec
+[  3]  1.0- 2.0 sec    435 KBytes  3565 Kbits/sec
+[  5]  2.0- 3.0 sec    380 KBytes  3109 Kbits/sec
+[  3]  2.0- 3.0 sec    442 KBytes  3620 Kbits/sec
+[  6]  2.0- 3.0 sec    460 KBytes  3764 Kbits/sec
+[  4]  2.0- 3.0 sec    455 KBytes  3731 Kbits/sec
+[  6]  3.0- 4.0 sec    485 KBytes  3975 Kbits/sec
+[  5]  3.0- 4.0 sec    512 KBytes  4197 Kbits/sec
+[  3]  3.0- 4.0 sec    312 KBytes  2554 Kbits/sec
+[  4]  3.0- 4.0 sec    466 KBytes  3820 Kbits/sec
+[  6]  4.0- 5.0 sec    461 KBytes  3775 Kbits/sec
+[  5]  4.0- 5.0 sec    460 KBytes  3764 Kbits/sec
+[  4]  4.0- 5.0 sec    480 KBytes  3931 Kbits/sec
+[  3]  4.0- 5.0 sec    552 KBytes  4519 Kbits/sec
+[  4]  5.0- 6.0 sec    453 KBytes  3709 Kbits/sec
+[  6]  5.0- 6.0 sec    474 KBytes  3886 Kbits/sec
+[  5]  5.0- 6.0 sec    465 KBytes  3809 Kbits/sec
+[  3]  5.0- 6.0 sec    236 KBytes  1931 Kbits/sec
+[  6]  6.0- 7.0 sec    452 KBytes  3702 Kbits/sec
+[  3]  6.0- 7.0 sec    478 KBytes  3913 Kbits/sec
+[  4]  6.0- 7.0 sec    460 KBytes  3764 Kbits/sec
+[  5]  6.0- 7.0 sec    420 KBytes  3442 Kbits/sec
+[  6]  7.0- 8.0 sec    483 KBytes  3953 Kbits/sec
+[  5]  7.0- 8.0 sec    442 KBytes  3620 Kbits/sec
+[  4]  7.0- 8.0 sec    493 KBytes  4042 Kbits/sec
+[  3]  7.0- 8.0 sec    478 KBytes  3920 Kbits/sec
+[  5]  8.0- 9.0 sec    401 KBytes  3287 Kbits/sec
+[  6]  8.0- 9.0 sec    446 KBytes  3653 Kbits/sec
+[  4]  8.0- 9.0 sec    476 KBytes  3898 Kbits/sec
+[  3]  8.0- 9.0 sec    309 KBytes  2532 Kbits/sec
+[  4]  9.0-10.0 sec    419 KBytes  3430 Kbits/sec
+[  6]  9.0-10.0 sec    432 KBytes  3542 Kbits/sec
+[  3]  9.0-10.0 sec    388 KBytes  3176 Kbits/sec
+[  5]  9.0-10.0 sec    445 KBytes  3642 Kbits/sec
+[  3]  0.0-10.3 sec  3800 KBytes  3037 Kbits/sec
+[  5]  0.0-10.3 sec  4152 KBytes  3288 Kbits/sec
+[  6]  0.0-10.4 sec  4368 KBytes  3454 Kbits/sec
+[  4]  0.0-10.4 sec  4464 KBytes  3503 Kbits/sec
+[SUM]  0.0-10.4 sec  17144 KBytes  13455 Kbits/sec
+
+Latitude:37.811893
+Longitude:-121.99624
+Starting Test 3...
+
+Pinging 184.72.222.65 with 32 bytes of data:
+Reply from 184.72.222.65: bytes=32 time=118ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=250ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=101ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=169ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=173ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=210ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=202ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=282ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=239ms TTL=40
+Reply from 184.72.222.65: bytes=32 time=179ms TTL=40
+
+Ping statistics for 184.72.222.65:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 101ms, Maximum = 282ms, Average = 192ms
+
+Latitude:37.811878
+Longitude:-121.996232
+Starting Test 4...
+
+Iperf command line:iperf -c 184.72.63.139 -p 5007 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5007
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  6] local 192.168.32.50 port 50813 connected with 184.72.63.139 port 5007
+[  5] local 192.168.32.50 port 50812 connected with 184.72.63.139 port 5007
+[  4] local 192.168.32.50 port 50811 connected with 184.72.63.139 port 5007
+[  3] local 192.168.32.50 port 50810 connected with 184.72.63.139 port 5007
+[  5]  0.0- 1.0 sec    408 KBytes  3342 Kbits/sec
+[  4]  0.0- 1.0 sec    408 KBytes  3342 Kbits/sec
+[  6]  0.0- 1.0 sec    408 KBytes  3342 Kbits/sec
+[  3]  0.0- 1.0 sec    408 KBytes  3342 Kbits/sec
+[SUM]  0.0- 1.0 sec  1632 KBytes  13369 Kbits/sec
+[  4]  1.0- 2.0 sec    424 KBytes  3473 Kbits/sec
+[  6]  1.0- 2.0 sec    400 KBytes  3277 Kbits/sec
+[  3]  1.0- 2.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  1.0- 2.0 sec    424 KBytes  3473 Kbits/sec
+[SUM]  1.0- 2.0 sec  1632 KBytes  13369 Kbits/sec
+[  6]  2.0- 3.0 sec    384 KBytes  3146 Kbits/sec
+[  3]  2.0- 3.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  2.0- 3.0 sec    392 KBytes  3211 Kbits/sec
+[  4]  2.0- 3.0 sec    408 KBytes  3342 Kbits/sec
+[SUM]  2.0- 3.0 sec  1568 KBytes  12845 Kbits/sec
+[  5]  3.0- 4.0 sec    360 KBytes  2949 Kbits/sec
+[  6]  3.0- 4.0 sec    352 KBytes  2884 Kbits/sec
+[  4]  3.0- 4.0 sec    320 KBytes  2621 Kbits/sec
+[  3]  3.0- 4.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  3.0- 4.0 sec  1416 KBytes  11600 Kbits/sec
+[  3]  4.0- 5.0 sec    328 KBytes  2687 Kbits/sec
+[  6]  4.0- 5.0 sec    352 KBytes  2884 Kbits/sec
+[  5]  4.0- 5.0 sec    344 KBytes  2818 Kbits/sec
+[  4]  4.0- 5.0 sec    376 KBytes  3080 Kbits/sec
+[SUM]  4.0- 5.0 sec  1400 KBytes  11469 Kbits/sec
+[  3]  5.0- 6.0 sec    400 KBytes  3277 Kbits/sec
+[  4]  5.0- 6.0 sec    376 KBytes  3080 Kbits/sec
+[  6]  5.0- 6.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  5.0- 6.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  5.0- 6.0 sec  1544 KBytes  12648 Kbits/sec
+[  3]  6.0- 7.0 sec    376 KBytes  3080 Kbits/sec
+[  6]  6.0- 7.0 sec    384 KBytes  3146 Kbits/sec
+[  4]  6.0- 7.0 sec    368 KBytes  3015 Kbits/sec
+[  5]  6.0- 7.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  6.0- 7.0 sec  1512 KBytes  12386 Kbits/sec
+[  4]  7.0- 8.0 sec    368 KBytes  3015 Kbits/sec
+[  5]  7.0- 8.0 sec    328 KBytes  2687 Kbits/sec
+[  3]  7.0- 8.0 sec    368 KBytes  3015 Kbits/sec
+[  6]  7.0- 8.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  7.0- 8.0 sec  1448 KBytes  11862 Kbits/sec
+[  6]  8.0- 9.0 sec    352 KBytes  2884 Kbits/sec
+[  4]  8.0- 9.0 sec    344 KBytes  2818 Kbits/sec
+[  5]  8.0- 9.0 sec    376 KBytes  3080 Kbits/sec
+[  3]  8.0- 9.0 sec    368 KBytes  3015 Kbits/sec
+[SUM]  8.0- 9.0 sec  1440 KBytes  11796 Kbits/sec
+[  5]  9.0-10.0 sec    328 KBytes  2687 Kbits/sec
+[  5]  0.0-10.0 sec  3736 KBytes  3051 Kbits/sec
+[  3]  9.0-10.0 sec    328 KBytes  2687 Kbits/sec
+[  3]  0.0-10.0 sec  3736 KBytes  3051 Kbits/sec
+[  6]  9.0-10.0 sec    352 KBytes  2884 Kbits/sec
+[  6]  0.0-10.1 sec  3760 KBytes  3052 Kbits/sec
+[  4]  9.0-10.0 sec    376 KBytes  3080 Kbits/sec
+[  4]  0.0-10.1 sec  3776 KBytes  3064 Kbits/sec
+[  3] local 192.168.32.50 port 50906 connected with 184.72.63.139 port 5007
+[  5] local 192.168.32.50 port 50905 connected with 184.72.63.139 port 5007
+[  6] local 192.168.32.50 port 50908 connected with 184.72.63.139 port 5007
+[  4] local 192.168.32.50 port 50909 connected with 184.72.63.139 port 5007
+[  5]  0.0- 1.0 sec    543 KBytes  4451 Kbits/sec
+[  3]  0.0- 1.0 sec    611 KBytes  5007 Kbits/sec
+[  6]  0.0- 1.0 sec    558 KBytes  4574 Kbits/sec
+[  4]  0.0- 1.0 sec    602 KBytes  4929 Kbits/sec
+[SUM]  0.0-10.1 sec  17323 KBytes  14058 Kbits/sec
+[  4]  1.0- 2.0 sec    737 KBytes  6041 Kbits/sec
+[  5]  1.0- 2.0 sec    712 KBytes  5830 Kbits/sec
+[  3]  1.0- 2.0 sec    770 KBytes  6307 Kbits/sec
+[  6]  1.0- 2.0 sec    773 KBytes  6329 Kbits/sec
+[  5]  2.0- 3.0 sec    828 KBytes  6785 Kbits/sec
+[  3]  2.0- 3.0 sec    837 KBytes  6854 Kbits/sec
+[  4]  2.0- 3.0 sec    863 KBytes  7073 Kbits/sec
+[  6]  2.0- 3.0 sec    849 KBytes  6951 Kbits/sec
+[  6]  3.0- 4.0 sec    718 KBytes  5883 Kbits/sec
+[  4]  3.0- 4.0 sec    727 KBytes  5954 Kbits/sec
+[  3]  3.0- 4.0 sec    762 KBytes  6240 Kbits/sec
+[  5]  3.0- 4.0 sec    727 KBytes  5952 Kbits/sec
+[  3]  4.0- 5.0 sec    977 KBytes  8000 Kbits/sec
+[  5]  4.0- 5.0 sec    910 KBytes  7451 Kbits/sec
+[  6]  4.0- 5.0 sec    916 KBytes  7506 Kbits/sec
+[  4]  4.0- 5.0 sec    936 KBytes  7671 Kbits/sec
+[  6]  5.0- 6.0 sec    831 KBytes  6807 Kbits/sec
+[  5]  5.0- 6.0 sec    784 KBytes  6425 Kbits/sec
+[  3]  5.0- 6.0 sec    842 KBytes  6896 Kbits/sec
+[  4]  5.0- 6.0 sec    833 KBytes  6825 Kbits/sec
+[  6]  6.0- 7.0 sec    854 KBytes  6996 Kbits/sec
+[  5]  6.0- 7.0 sec    865 KBytes  7084 Kbits/sec
+[  3]  6.0- 7.0 sec    838 KBytes  6862 Kbits/sec
+[  4]  6.0- 7.0 sec    842 KBytes  6896 Kbits/sec
+[  5]  7.0- 8.0 sec    743 KBytes  6085 Kbits/sec
+[  4]  7.0- 8.0 sec    734 KBytes  6013 Kbits/sec
+[  3]  7.0- 8.0 sec    753 KBytes  6166 Kbits/sec
+[  6]  7.0- 8.0 sec    712 KBytes  5830 Kbits/sec
+[  4]  8.0- 9.0 sec    827 KBytes  6773 Kbits/sec
+[  3]  8.0- 9.0 sec    801 KBytes  6562 Kbits/sec
+[  5]  8.0- 9.0 sec    813 KBytes  6662 Kbits/sec
+[  6]  8.0- 9.0 sec    819 KBytes  6713 Kbits/sec
+[  3]  9.0-10.0 sec    705 KBytes  5774 Kbits/sec
+[  5]  9.0-10.0 sec    680 KBytes  5570 Kbits/sec
+[  4]  9.0-10.0 sec    722 KBytes  5918 Kbits/sec
+[  6]  9.0-10.0 sec    680 KBytes  5574 Kbits/sec
+[SUM]  9.0-10.0 sec  4172 KBytes  34175 Kbits/sec
+[  4]  0.0-10.3 sec  8064 KBytes  6388 Kbits/sec
+[  3]  0.0-10.4 sec  8136 KBytes  6435 Kbits/sec
+[  5]  0.0-10.4 sec  7848 KBytes  6197 Kbits/sec
+[  6]  0.0-10.4 sec  7960 KBytes  6286 Kbits/sec
+
+Latitude:37.811878
+Longitude:-121.996202
+Starting Test 5...
+
+Iperf command line:iperf -c 184.72.222.65 -p 5007 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5007
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  5] local 192.168.32.50 port 51003 connected with 184.72.222.65 port 5007
+[  6] local 192.168.32.50 port 51004 connected with 184.72.222.65 port 5007
+[  3] local 192.168.32.50 port 51001 connected with 184.72.222.65 port 5007
+[  4] local 192.168.32.50 port 51002 connected with 184.72.222.65 port 5007
+[  5]  0.0- 1.0 sec    200 KBytes  1638 Kbits/sec
+[  6]  0.0- 1.0 sec    208 KBytes  1704 Kbits/sec
+[  3]  0.0- 1.0 sec    216 KBytes  1769 Kbits/sec
+[  4]  0.0- 1.0 sec    208 KBytes  1704 Kbits/sec
+[SUM]  0.0- 1.0 sec    832 KBytes  6816 Kbits/sec
+[  3]  1.0- 2.0 sec    344 KBytes  2818 Kbits/sec
+[  4]  1.0- 2.0 sec    328 KBytes  2687 Kbits/sec
+[  5]  1.0- 2.0 sec    368 KBytes  3015 Kbits/sec
+[  6]  1.0- 2.0 sec    368 KBytes  3015 Kbits/sec
+[SUM]  1.0- 2.0 sec  1408 KBytes  11534 Kbits/sec
+[  3]  2.0- 3.0 sec    304 KBytes  2490 Kbits/sec
+[  6]  2.0- 3.0 sec    320 KBytes  2621 Kbits/sec
+[  4]  2.0- 3.0 sec    320 KBytes  2621 Kbits/sec
+[  5]  2.0- 3.0 sec    296 KBytes  2425 Kbits/sec
+[SUM]  2.0- 3.0 sec  1240 KBytes  10158 Kbits/sec
+[  3]  3.0- 4.0 sec    400 KBytes  3277 Kbits/sec
+[  4]  3.0- 4.0 sec    320 KBytes  2621 Kbits/sec
+[  5]  3.0- 4.0 sec    320 KBytes  2621 Kbits/sec
+[  6]  3.0- 4.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  3.0- 4.0 sec  1424 KBytes  11665 Kbits/sec
+[  5]  4.0- 5.0 sec    336 KBytes  2753 Kbits/sec
+[  3]  4.0- 5.0 sec    296 KBytes  2425 Kbits/sec
+[  4]  4.0- 5.0 sec    368 KBytes  3015 Kbits/sec
+[  6]  4.0- 5.0 sec    320 KBytes  2621 Kbits/sec
+[SUM]  4.0- 5.0 sec  1320 KBytes  10813 Kbits/sec
+[  3]  5.0- 6.0 sec    320 KBytes  2621 Kbits/sec
+[  5]  5.0- 6.0 sec    328 KBytes  2687 Kbits/sec
+[  6]  5.0- 6.0 sec    320 KBytes  2621 Kbits/sec
+[  4]  5.0- 6.0 sec    320 KBytes  2621 Kbits/sec
+[SUM]  5.0- 6.0 sec  1288 KBytes  10551 Kbits/sec
+[  4]  6.0- 7.0 sec    376 KBytes  3080 Kbits/sec
+[  6]  6.0- 7.0 sec    368 KBytes  3015 Kbits/sec
+[  3]  6.0- 7.0 sec    376 KBytes  3080 Kbits/sec
+[  5]  6.0- 7.0 sec    360 KBytes  2949 Kbits/sec
+[SUM]  6.0- 7.0 sec  1480 KBytes  12124 Kbits/sec
+[  4]  7.0- 8.0 sec    336 KBytes  2753 Kbits/sec
+[  3]  7.0- 8.0 sec    376 KBytes  3080 Kbits/sec
+[  6]  7.0- 8.0 sec    376 KBytes  3080 Kbits/sec
+[  5]  7.0- 8.0 sec    384 KBytes  3146 Kbits/sec
+[SUM]  7.0- 8.0 sec  1472 KBytes  12059 Kbits/sec
+[  6]  8.0- 9.0 sec    352 KBytes  2884 Kbits/sec
+[  3]  8.0- 9.0 sec    336 KBytes  2753 Kbits/sec
+[  4]  8.0- 9.0 sec    384 KBytes  3146 Kbits/sec
+[  5]  8.0- 9.0 sec    312 KBytes  2556 Kbits/sec
+[SUM]  8.0- 9.0 sec  1384 KBytes  11338 Kbits/sec
+[  4]  0.0-10.0 sec  3296 KBytes  2707 Kbits/sec
+[  6]  0.0-10.0 sec  3368 KBytes  2758 Kbits/sec
+[  3]  0.0-10.0 sec  3336 KBytes  2732 Kbits/sec
+[  5]  9.0-10.0 sec    320 KBytes  2621 Kbits/sec
+[  5]  0.0-10.0 sec  3232 KBytes  2638 Kbits/sec
+[SUM]  0.0-10.0 sec  13232 KBytes  10801 Kbits/sec
+[  4] local 192.168.32.50 port 51113 connected with 184.72.222.65 port 5007
+[  6] local 192.168.32.50 port 51114 connected with 184.72.222.65 port 5007
+[  3] local 192.168.32.50 port 51115 connected with 184.72.222.65 port 5007
+[  5] local 192.168.32.50 port 51116 connected with 184.72.222.65 port 5007
+[  6]  0.0- 1.0 sec    141 KBytes  1155 Kbits/sec
+[  4]  0.0- 1.0 sec    148 KBytes  1210 Kbits/sec
+[  5]  0.0- 1.0 sec    129 KBytes  1055 Kbits/sec
+[  3]  0.0- 1.0 sec    138 KBytes  1133 Kbits/sec
+[  3]  1.0- 2.0 sec    400 KBytes  3276 Kbits/sec
+[  4]  1.0- 2.0 sec    469 KBytes  3842 Kbits/sec
+[  5]  1.0- 2.0 sec    422 KBytes  3453 Kbits/sec
+[  6]  1.0- 2.0 sec    397 KBytes  3253 Kbits/sec
+[  3]  2.0- 3.0 sec    384 KBytes  3142 Kbits/sec
+[  6]  2.0- 3.0 sec    411 KBytes  3365 Kbits/sec
+[  4]  2.0- 3.0 sec    469 KBytes  3842 Kbits/sec
+[  5]  2.0- 3.0 sec    503 KBytes  4121 Kbits/sec
+[  3]  3.0- 4.0 sec    450 KBytes  3687 Kbits/sec
+[  4]  3.0- 4.0 sec    446 KBytes  3653 Kbits/sec
+[  5]  3.0- 4.0 sec    426 KBytes  3487 Kbits/sec
+[  6]  3.0- 4.0 sec    432 KBytes  3542 Kbits/sec
+[  4]  4.0- 5.0 sec    461 KBytes  3775 Kbits/sec
+[  5]  4.0- 5.0 sec    465 KBytes  3809 Kbits/sec
+[  6]  4.0- 5.0 sec  94.9 KBytes    777 Kbits/sec
+[  3]  4.0- 5.0 sec    401 KBytes  3284 Kbits/sec
+[  5]  5.0- 6.0 sec    434 KBytes  3553 Kbits/sec
+[  6]  5.0- 6.0 sec    249 KBytes  2043 Kbits/sec
+[  3]  5.0- 6.0 sec    399 KBytes  3265 Kbits/sec
+[  4]  5.0- 6.0 sec    463 KBytes  3792 Kbits/sec
+[  6]  6.0- 7.0 sec    393 KBytes  3220 Kbits/sec
+[  5]  6.0- 7.0 sec    457 KBytes  3742 Kbits/sec
+[  3]  6.0- 7.0 sec    420 KBytes  3441 Kbits/sec
+[  4]  6.0- 7.0 sec    428 KBytes  3508 Kbits/sec
+[  5]  7.0- 8.0 sec    487 KBytes  3986 Kbits/sec
+[  4]  7.0- 8.0 sec    468 KBytes  3831 Kbits/sec
+[  6]  7.0- 8.0 sec    420 KBytes  3442 Kbits/sec
+[  3]  7.0- 8.0 sec    460 KBytes  3764 Kbits/sec
+[  4]  8.0- 9.0 sec    473 KBytes  3875 Kbits/sec
+[  5]  8.0- 9.0 sec    449 KBytes  3675 Kbits/sec
+[  6]  8.0- 9.0 sec    435 KBytes  3564 Kbits/sec
+[  3]  8.0- 9.0 sec    390 KBytes  3197 Kbits/sec
+[  6]  9.0-10.0 sec    401 KBytes  3287 Kbits/sec
+[  4]  9.0-10.0 sec    468 KBytes  3831 Kbits/sec
+[  5]  9.0-10.0 sec    474 KBytes  3886 Kbits/sec
+[  3]  9.0-10.0 sec    348 KBytes  2854 Kbits/sec
+[  6]  0.0-10.2 sec  3456 KBytes  2774 Kbits/sec
+[  4]  0.0-10.3 sec  4424 KBytes  3524 Kbits/sec
+[  5]  0.0-10.3 sec  4376 KBytes  3481 Kbits/sec
+[  3]  0.0-10.5 sec  3888 KBytes  3037 Kbits/sec
+[SUM]  0.0-10.5 sec  16700 KBytes  13044 Kbits/sec
+
+Latitude:37.8119
+Longitude:-121.996208
+Starting Test 6...
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 184.72.63.139: bytes=32 time=224ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=104ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=94ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=118ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=30ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=106ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=95ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=86ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=43ms TTL=44
+Reply from 184.72.63.139: bytes=32 time=99ms TTL=44
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 10, Received = 10, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 30ms, Maximum = 224ms, Average = 99ms
+
+Latitude:37.811902
+Longitude:-121.996207
+Starting Test 7...
+
+Starting UDP 1 second Test #1
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63302 connected with 184.72.63.139 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  86.8 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.1 Kbits/sec  11.488 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #2
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63303 connected with 184.72.63.139 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.1 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 0.9 sec  11.0 KBytes  94.8 Kbits/sec  11.581 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #3
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63304 connected with 184.72.63.139 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.1 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 1.0 sec  11.0 KBytes  92.8 Kbits/sec  8.042 ms    0/   50 (0%)
+[  3]  0.0- 1.0 sec  1 datagrams received out-of-order
+
+Latitude:37.811902
+Longitude:-121.996207
+Starting Test 8...
+
+Starting UDP 1 second Test #1
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63305 connected with 184.72.222.65 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 0.9 sec  11.0 KBytes  97.7 Kbits/sec  10.083 ms    2/   50 (4%)
+[  3]  0.0- 0.9 sec  2 datagrams received out-of-order
+
+Starting UDP 1 second Test #2
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63306 connected with 184.72.222.65 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 1.0 sec  11.0 KBytes  90.7 Kbits/sec  12.575 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #3
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5008 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63307 connected with 184.72.222.65 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.1 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 0.9 sec  11.0 KBytes  96.2 Kbits/sec  11.665 ms    2/   50 (4%)
+[  3]  0.0- 0.9 sec  2 datagrams received out-of-order
+
+Latitude:37.811902
+Longitude:-121.996207
+Starting Test 9...
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5008 -i 1 -t 5 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63308 connected with 184.72.63.139 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  4.0- 5.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  87.9 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] Server Report:
+[  3]  0.0- 4.9 sec  53.9 KBytes  89.3 Kbits/sec  6.458 ms    0/  251 (0%)
+
+Latitude:37.811902
+Longitude:-121.996207
+Starting Test 10...
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5008 -i 1 -t 5 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5008
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 192.168.32.50 port 63309 connected with 184.72.222.65 port 5008
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.5 KBytes  86.2 Kbits/sec
+[  3]  4.0- 5.0 sec  11.0 KBytes  89.8 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  87.8 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] Server Report:
+[  3]  0.0- 4.9 sec  53.9 KBytes  89.4 Kbits/sec  13.157 ms    1/  251 (0.4%)
+[  3]  0.0- 4.9 sec  2 datagrams received out-of-order

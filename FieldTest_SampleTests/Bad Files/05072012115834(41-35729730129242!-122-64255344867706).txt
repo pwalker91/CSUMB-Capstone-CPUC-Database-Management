@@ -1,0 +1,46 @@
+CPUC Tester Beta v1.2
+Testing started at Mon May 07 11:58:34 PDT 2012
+
+
+
+OS: Name = Linux, Architecture = armv7l, Version = 2.6.35.10-gc0a661b
+Java: Version = 0, Vendor = The Android Project
+Latitude: 41.357297
+Longitude: -122.642553
+
+Server: Amazon West Server
+Host: 184.72.63.139
+
+NetworkProvider: sprint
+NetworkOperator: 
+Device ID: A100001BAA3D70
+ConnectionType: UNKNOWN
+CPUC Tester Beta v1.2
+Testing started at Mon May 07 11:58:34 PDT 2012
+
+
+
+OS: Name = Linux, Architecture = armv7l, Version = 2.6.35.10-gc0a661b
+Java: Version = 0, Vendor = The Android Project
+Latitude: 41.357297
+Longitude: -122.642553
+
+Server: Amazon West Server
+Host: 184.72.63.139
+
+NetworkProvider: sprint
+NetworkOperator: 
+Device ID: A100001BAA3D70
+ConnectionType: UNKNOWN
+
+Location ID: 2100
+Latitude:41.35729730129242
+Longitude:-122.64255344867706
+Checking Connectivity.....
+
+connect: Network is unreachable
+
+bad exit value--error executing command: ping -c 4 184.72.63.139
+Connectivity Test Failed--Exiting Test.
+
+Saving Results to sdcard...

@@ -1,0 +1,397 @@
+CPUC Tester Beta v2.0
+11/05/2013 14:22:38
+Location: 2425
+Client IP Address: 127.0.0.1
+Host name: WBBDTest12
+Network Provider: AT&T
+
+Standard Test starting.....
+
+Latitude:33.893707
+Longitude:-117.207947
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 184.72.63.139: bytes=32 time=55ms TTL=47
+Reply from 184.72.63.139: bytes=32 time=138ms TTL=47
+Reply from 184.72.63.139: bytes=32 time=64ms TTL=47
+Reply from 184.72.63.139: bytes=32 time=46ms TTL=47
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 46ms, Maximum = 138ms, Average = 75ms
+Successful Connectivity Test.
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 1...
+
+Iperf command line:iperf -c 184.72.63.139 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5001
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  6] local 10.85.26.190 port 49724 connected with 184.72.63.139 port 5001
+[  4] local 10.85.26.190 port 49722 connected with 184.72.63.139 port 5001
+[  3] local 10.85.26.190 port 49721 connected with 184.72.63.139 port 5001
+[  5] local 10.85.26.190 port 49723 connected with 184.72.63.139 port 5001
+[  6]  0.0- 1.0 sec  88.0 KBytes    721 Kbits/sec
+[  5]  0.0- 1.0 sec  88.0 KBytes    721 Kbits/sec
+[  3]  0.0- 1.0 sec  88.0 KBytes    721 Kbits/sec
+[  4]  0.0- 1.0 sec  80.0 KBytes    655 Kbits/sec
+[SUM]  0.0- 1.0 sec    344 KBytes  2818 Kbits/sec
+[  3]  1.0- 2.0 sec  48.0 KBytes    393 Kbits/sec
+[  6]  1.0- 2.0 sec  56.0 KBytes    459 Kbits/sec
+[  5]  1.0- 2.0 sec  56.0 KBytes    459 Kbits/sec
+[  4]  1.0- 2.0 sec  16.0 KBytes    131 Kbits/sec
+[SUM]  1.0- 2.0 sec    176 KBytes  1442 Kbits/sec
+[  6]  2.0- 3.0 sec  48.0 KBytes    393 Kbits/sec
+[  3]  2.0- 3.0 sec  56.0 KBytes    459 Kbits/sec
+[  5]  2.0- 3.0 sec  48.0 KBytes    393 Kbits/sec
+[  6]  3.0- 4.0 sec  32.0 KBytes    262 Kbits/sec
+[  3]  3.0- 4.0 sec  32.0 KBytes    262 Kbits/sec
+[  4]  2.0- 3.0 sec  32.0 KBytes    262 Kbits/sec
+[SUM]  2.0- 3.0 sec    184 KBytes  1507 Kbits/sec
+[  4]  3.0- 4.0 sec  8.00 KBytes  65.5 Kbits/sec
+[  3]  4.0- 5.0 sec  56.0 KBytes    459 Kbits/sec
+[  6]  4.0- 5.0 sec  72.0 KBytes    590 Kbits/sec
+[  5]  3.0- 4.0 sec  16.0 KBytes    131 Kbits/sec
+[SUM]  3.0- 4.0 sec  88.0 KBytes    721 Kbits/sec
+[  4]  4.0- 5.0 sec  24.0 KBytes    197 Kbits/sec
+[  5]  4.0- 5.0 sec  8.00 KBytes  65.5 Kbits/sec
+[SUM]  4.0- 5.0 sec    160 KBytes  1311 Kbits/sec
+[  5]  5.0- 6.0 sec  16.0 KBytes    131 Kbits/sec
+[  6]  5.0- 6.0 sec  32.0 KBytes    262 Kbits/sec
+[  3]  5.0- 6.0 sec  32.0 KBytes    262 Kbits/sec
+[  6]  6.0- 7.0 sec  24.0 KBytes    197 Kbits/sec
+[  5]  6.0- 7.0 sec  32.0 KBytes    262 Kbits/sec
+[  3]  6.0- 7.0 sec  16.0 KBytes    131 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  40.0 KBytes    328 Kbits/sec
+[  4]  5.0- 6.0 sec  24.0 KBytes    197 Kbits/sec
+[SUM]  5.0- 6.0 sec    104 KBytes    852 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  6.0- 7.0 sec  72.0 KBytes    590 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  24.0 KBytes    197 Kbits/sec
+[SUM]  7.0- 8.0 sec  64.0 KBytes    524 Kbits/sec
+[  4]  8.0- 9.0 sec  32.0 KBytes    262 Kbits/sec
+[  6]  8.0- 9.0 sec  48.0 KBytes    393 Kbits/sec
+[  3]  8.0- 9.0 sec  40.0 KBytes    328 Kbits/sec
+[  5]  8.0- 9.0 sec  32.0 KBytes    262 Kbits/sec
+[SUM]  8.0- 9.0 sec    152 KBytes  1245 Kbits/sec
+[  4]  0.0-10.2 sec    248 KBytes    200 Kbits/sec
+[  6]  9.0-10.0 sec  32.0 KBytes    262 Kbits/sec
+[  6]  0.0-10.2 sec    480 KBytes    384 Kbits/sec
+[  5]  9.0-10.0 sec  16.0 KBytes    131 Kbits/sec
+[  5]  0.0-10.4 sec    344 KBytes    272 Kbits/sec
+[  4] local 10.85.26.190 port 49825 connected with 184.72.63.139 port 5001
+[  6] local 10.85.26.190 port 49826 connected with 184.72.63.139 port 5001
+[  3]  9.0-10.0 sec  16.0 KBytes    131 Kbits/sec
+[  3]  0.0-10.5 sec    392 KBytes    307 Kbits/sec
+[  5] local 10.85.26.190 port 49827 connected with 184.72.63.139 port 5001
+[  3] local 10.85.26.190 port 49828 connected with 184.72.63.139 port 5001
+[  4]  0.0- 1.0 sec  52.0 KBytes    426 Kbits/sec
+[  5]  0.0- 1.0 sec  26.3 KBytes    216 Kbits/sec
+[  6]  0.0- 1.0 sec  52.0 KBytes    426 Kbits/sec
+[  3]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  0.0-10.5 sec  1594 KBytes  1250 Kbits/sec
+[  4]  1.0- 2.0 sec  90.0 KBytes    737 Kbits/sec
+[  3]  1.0- 2.0 sec  11.7 KBytes  95.6 Kbits/sec
+[  6]  1.0- 2.0 sec  62.3 KBytes    510 Kbits/sec
+
+Test Timed Out.
+
+bad exit value--error executing command: iperf -c 184.72.63.139 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 2...
+
+Iperf command line:iperf -c 184.72.222.65 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5001
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  5] local 0.0.0.0 port 50535 connected with 184.72.222.65 port 5001
+[  5]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  4] local 0.0.0.0 port 50534 connected with 184.72.222.65 port 5001
+[  4]  0.0- 0.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] local 0.0.0.0 port 50533 connected with 184.72.222.65 port 5001
+[  3]  0.0- 0.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] local 0.0.0.0 port 50536 connected with 184.72.222.65 port 5001
+
+Test Timed Out.
+connect failed: No route to host
+connect failed: No route to host
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write1 failed: Transport endpoint is not connected
+write1 failed: Transport endpoint is not connected
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: 
+
+bad exit value--error executing command: iperf -c 184.72.222.65 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 3...
+
+Pinging 184.72.222.65 with 32 bytes of data:
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+
+Ping statistics for 184.72.222.65:
+    Packets: Sent = 10, Received = 0, Lost = 10 (100% loss),
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 4...
+
+Iperf command line:iperf -c 184.72.63.139 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5001
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  3] local 0.0.0.0 port 51378 connected with 184.72.63.139 port 5001
+[  3]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  6] local 0.0.0.0 port 51381 connected with 184.72.63.139 port 5001
+[  6]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  5] local 0.0.0.0 port 51380 connected with 184.72.63.139 port 5001
+[  5]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  4] local 0.0.0.0 port 51379 connected with 184.72.63.139 port 5001
+
+Test Timed Out.
+connect failed: No route to host
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write1 failed: Transport endpoint is not connected
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: 
+
+bad exit value--error executing command: iperf -c 184.72.63.139 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 5...
+
+Iperf command line:iperf -c 184.72.222.65 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5001
+TCP window size: 64.0 KByte
+------------------------------------------------------------
+[  6] local 0.0.0.0 port 52151 connected with 184.72.222.65 port 5001
+[  6]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  5] local 0.0.0.0 port 52150 connected with 184.72.222.65 port 5001
+[  5]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  4] local 0.0.0.0 port 52149 connected with 184.72.222.65 port 5001
+[  4]  0.0- 0.0 sec  0.00 KBytes   nan Kbits/sec
+[  3] local 0.0.0.0 port 52148 connected with 184.72.222.65 port 5001
+
+Test Timed Out.
+connect failed: No route to host
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write1 failed: Transport endpoint is not connected
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+connect failed: No route to host
+write1 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: Transport endpoint is not connected
+write2 failed: 
+
+bad exit value--error executing command: iperf -c 184.72.222.65 -p 5001 -e -w 64k -P 4 -i 1 -t 10 -f k
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 6...
+
+Pinging 184.72.63.139 with 32 bytes of data:
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+General failure.
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 10, Received = 0, Lost = 10 (100% loss),
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 7...
+
+Starting UDP 1 second Test #1
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61470 connected with 184.72.63.139 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Starting UDP 1 second Test #2
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61471 connected with 184.72.63.139 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Starting UDP 1 second Test #3
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61472 connected with 184.72.63.139 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 8...
+
+Starting UDP 1 second Test #1
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61473 connected with 184.72.222.65 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Starting UDP 1 second Test #2
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61474 connected with 184.72.222.65 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.1 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Starting UDP 1 second Test #3
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5002 -i 1 -t 1 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61475 connected with 184.72.222.65 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.2 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 9...
+
+Iperf command line:iperf -c 184.72.63.139 -u -p 5002 -i 1 -t 5 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61476 connected with 184.72.63.139 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  4.0- 5.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  87.9 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
+
+Latitude:33.893707
+Longitude:-117.207947
+Starting Test 10...
+
+Iperf command line:iperf -c 184.72.222.65 -u -p 5002 -i 1 -t 5 -l 220 -b 88k -f k
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5002
+Sending 220 byte datagrams
+UDP buffer size: 64.0 KByte (default)
+------------------------------------------------------------
+[  3] local 10.85.26.190 port 61477 connected with 184.72.222.65 port 5002
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  4.0- 5.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  87.9 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] WARNING: did not receive ack of last datagram after 10 tries.
