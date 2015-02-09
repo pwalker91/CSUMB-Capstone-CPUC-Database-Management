@@ -41,6 +41,3 @@ Append path to sys.path to be able to import files. For an example, see Misc. Pr
 >> import sys
 ## sys.path.append(“__PROJECT_PATH__”)
 >> sys.path.append(“/Users/peterwalker/Documents/School/+CSUMB Courses+/CST 499_Capstone/CSUMB-Capstone-Iperf-Parser”)
-
-
-timmy was here!!!!
