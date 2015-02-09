@@ -13,3 +13,10 @@ m = A()
 func = getattr(m, 'sampleFunc')("I have passed in many things", x=1, t=4, i_am_smart="SO MUCH PRINTING")
 #func('sample arg')
 #func("I have passed in many things", x=1, t=4, i_am_smart="SO MUCH PRINTING")
+
+#A few more comments
+#HAHA
+
+def x(v):
+    v=v*4
+    return v
