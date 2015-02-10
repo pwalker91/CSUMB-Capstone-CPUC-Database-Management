@@ -48,11 +48,17 @@ def _executeQuery(self, query, query_data=None):
 
 # DESC: Given a SpeedTestFile object, will store it (as a pickled object) into the MySQL database.
 #       The row inserted has some basic information (date time, os, etc.) and the pickled object
-def storeFile(self, object):
+def storeFile(self, object, **kwargs):
     if (str(type(object)) != "<class 'source.Data_Object.SpeedTestFile.SpeedTestFile'>"):
         raise TypeError("The object passed is not a SpeedTestFile.")
     #This is a dictionary, where each key corresponds to a placeholder in the previous query.
     # Each value associated with a key will be placed into the query during execution
+    query_data = {}
+
+    for key in kwargs:
+        query_data[key] = kwargs[key]
+
+
     query_data = {
         'filename': (object.Filename
                 if object.Filename is not None else ''),
@@ -110,6 +116,9 @@ def storeFile(self, object):
     # The information is the header information in the beginning few line of each raw data file
 
     # This is temporarily commented out because I am getting pickling errors
+    query_insert = "INSERT INTO "+table
+    for key in kwargs:
+        query_insert += "'"+key+"',"
     query_insert = ("INSERT INTO CPUC_Data.`File` (`Filename`,`Device_ID`,`Date`, \
                     `Time`,`Device_Type`,`Location_ID`, \
                     `OS`,`Java`,`Server`, \
