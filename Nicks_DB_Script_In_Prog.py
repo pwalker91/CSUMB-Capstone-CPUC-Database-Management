@@ -1,6 +1,7 @@
+#import pymysql
 import pymysql
 ###this works just as well as import mysql.connector
-connect = pymysql.connect(host='localhost', user='Moradster', password='root', database='testdb')
+connect = pymysql.connect(host='localhost', user='Moradster', password='root', database='testdb', autocommit= True)
 cursor = connect.cursor()
 userflag = True
 """def test_func(var1, *args, **kwargs):
@@ -18,26 +19,41 @@ def getcolumns(table):
 #def update_table(table, columns):
     
 
-def insert_into(table, columns):
-    print("Please insert new data into columns: %s" %(columns))
+def insert_into(table, **kwargs):
     cursor.execute("SELECT * FROM %s" %table)
-    values = []
+    """values = []
     valueids = ()
     for items in columns:
         values.append(input('--> '))
     columnids = ", ".join(columns)
+    for items in values:
+        val_index = values.index(items)
+        values[val_index] = "'" + str(items) + "',"
     valueids = ",".join(values)
-    print(valueids)
+    print(valueids)"""
+
+    query = "INSERT INTO " + table + " ("
+    for key in kwargs:
+        query += "" + key + ","
+    query = query[:-1]+" ) VALUES ("
+    for key in kwargs:
+        query += " %(" + key + ")s,"
+    query = query[:-1]+")"
+    print (query)
+    print (kwargs)
+    try:
+        cursor.execute(query, kwargs)
+    except pymysql.Error as err:
+        print (err)
+
     #need to find a way to pull string from lists without manually doing it
     #this should work but doesn't
     #cursor.execute("INSERT INTO %s (%s, %s, %s, %s) VALUES ('%d', '%s','%s','%f')")
     #another failed attempt
     #cursor.execute("INSERT INTO ", table, "(", columns, ") VALUES (", values, ")")
     #closest so far
-    cursor.execute("INSERT INTO %s (%s) VALUES ('%s')" %(table, columnids, valueids))
-    for row in cursor:
-        print (row)
-
+    #cursor.execute("INSERT INTO %s (%s) VALUES (%s)" %(table, columnids, valueids)
+    return userflag == True
 
 
 #This function asks for user input in order to form a query
@@ -101,7 +117,7 @@ while userflag == True:
     print("Would you like to insert information, query or update table %s?" %table_input)
     iorq = input('i/q/u: ')
     if iorq == 'i' or iorq == 'I':
-        insert_into(table_input, columnlist)
+        insert_into(table_input, id='6', date='2015-2-5', provider= 'att', speed='4.5')
     if iorq == 'q' or iorq == 'Q':
         select_from(table_input, columnlist)
     elif iorq != 'q' or iorq != 'i' or iorq != 'u':
