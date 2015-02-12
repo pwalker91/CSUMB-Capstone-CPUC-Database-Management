@@ -1,7 +1,5 @@
 
-
-
-
+IN THE FUTURE!!!!
 class DB_API():
     conn_config = {}
     def __init__(self):
@@ -13,9 +11,33 @@ class DB_API():
         code
 
 
-
-
-
-
 x = DB_API()
 x.insert(tablename, x=1, e=4, t=7)
+
+
+—————————————————————————————
+FOR NOW . . . . .
+def insert(cursor, table, **kwargs):
+	code codee code
+
+MAIN!!!
+connection = (making DB connection)
+cursor = connection.getCursor
+
+insert(cursor, ‘myTable’, ID=4, speed=12)
+!!!
+
+
+—————————————————————————————
+x = FieldTest_File(“/file/to/parse”)
+y = CrowdSource_File(“/files/d”)
+
+import myDBAPI
+
+api = myDBAPI()
+
+api.insert(“info”, filename=x.Filename, ConnectionType=x.ConnectionType, . . . )
+
+api.insert(“crowdInfo”, filename=y.Filenane, columnNAme=46)
+
+
