@@ -1,0 +1,2 @@
+"ID","OSNAME;ARCHECTICUTRE;VERSION","JAVAVERSION;VENDOR","DeviceID","DeviceType","ServerName","HostIpAddress","NetworkCarrier","NetworkProvider","NewtworkOperator","ConnectionType","LocationID","Tester","Date","Time","Latitude","Longitude","NormalLatitude","NormalLongitude","FileLocation"
+1,"Linux;armv71;3.4.0-529760","0;The Android Project",99000344556962,"mobile","Amazon West Server","184.72.63.139","Sprint","Sprint","Sprint","1xrtt",2358,NULL,"2013-11-04","2013-11-04 14:48:23",40.7027,-122.21,NULL,NULL,NULL

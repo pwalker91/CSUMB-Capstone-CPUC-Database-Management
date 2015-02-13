@@ -1,0 +1,4 @@
+PINGID,DeviceAndTestInfoID,"EastWest",TestNumber,"PingedIPAddress",PingsSent,PingsRecieved,PingsLost,MinTrip,MaxTrip,AvgTrip,MOS,RVal,ErrorType
+1,1,"west",1,"184.72.63.139",4,4,0,481.293,622.223,526.405,1,86.0962,NULL
+2,1,"east",1,"184.72.222.65",10,10,0,458.709,602.875,521.285,3.9,52.3598,NULL
+3,1,"west",2,"184.72.63.139",10,10,0,483.765,628.632,551.474,2.3,52.3598,NULL

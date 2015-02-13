@@ -17,7 +17,7 @@ NetworkProvider: Sprint
 NetworkOperator: Sprint
 Device ID: 99000344556962
 ConnectionType: 1xRTT
-
+ 
 Location ID: 2358
 Latitude:40.70270732
 Longitude:-122.21016394
