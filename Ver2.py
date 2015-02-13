@@ -33,6 +33,7 @@ def insert(cursor, table, **kwargs):
         cursor.execute(query, kwargs)
     except pymysql.Error as err:
         print (err)
+    return userflag == True
 
 def select(cursor, table, *args, **kwargs):
     #works minimally
@@ -41,7 +42,7 @@ def select(cursor, table, *args, **kwargs):
         query += "" + keys + ","
     query = query[:-1] + " FROM " + table + " WHERE "
     for keys in kwargs:
-        query +="" + keys + ">%(" + keys + ")s,"
+        query +="" + keys + "=%(" + keys + ")s,"
     query = query[:-1]+ ""
     print (query)
     try:
@@ -69,6 +70,7 @@ def update(cursor, table, *args, **kwargs):
             print (row)
     except pymysql.Error as err:
         print (err)
+    return userflag == True
 
 #class myAPI():
 #place correctly working select, insert and update mysql commands here
