@@ -41,25 +41,35 @@ def select(cursor, table, *args, **kwargs):
         query += "" + keys + ","
     query = query[:-1] + " FROM " + table + " WHERE "
     for keys in kwargs:
-        query +="" + keys + "=%(" + keys + ")s,"
+        query +="" + keys + ">%(" + keys + ")s,"
     query = query[:-1]+ ""
     print (query)
-    cursor.execute(query, kwargs)
-    for row in cursor:
-        print (row)
+    try:
+        cursor.execute(query, kwargs)
+    except pymysql.Error as err:
+        print (err)
+    for item in cursor:
+        print (item)
     return userflag == True
 
 
 
 def update(cursor, table, *args, **kwargs):
-    query = "UPDATE " + table + "SET "
-    for key in kwargs:
+    query = "UPDATE " + table + " SET "
+    for key in args:
         query += "" + key + ","
     query = query[:-1]+" WHERE "
     for key in kwargs:
         query += "" + key + " =%("+ key + ")s,"
     query = query[:-1]
     print (query)
+    try:
+        cursor.execute(query, kwargs)
+        for row in cursor:
+            print (row)
+    except pymysql.Error as err:
+        print (err)
+
 #class myAPI():
 #place correctly working select, insert and update mysql commands here
 
@@ -80,9 +90,9 @@ while userflag==True:
     if iorq == 'i' or iorq == 'I':
         insert(cursor, table, id='7', date='2015-6-5', provider= 't-mobile', speed='8.4')
     if iorq == 'q' or iorq == 'Q':
-        select(cursor, table, 'id', speed='5')
+        select(cursor, table, 'id', 'date', speed='5')
     if iorq == 'u' or iorq =='U':
-        update(cursor, table, """<orginal column name> = <ori value>, <new/old column> = <new value>""")
+        update(cursor, table, "date = '2015-2-15'", id= '6')
     elif iorq != 'q' or iorq != 'i' or iorq != 'u':
         userflag == False
         break
