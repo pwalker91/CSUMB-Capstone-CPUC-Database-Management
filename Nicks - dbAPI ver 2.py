@@ -43,12 +43,26 @@ class API():
             query += " %(" + key + ")s,"
         query = query[:-1]+ ")"
         print (query)
-                 
-                 
+    def update(cursor, table, **kwargs):
+        columnList = _getcolumns(table)
+        for item in columnList:
+            if columnList[item] != kwargs[item]:
+                print ("Exiting")
+        query = "UPDATE " + table + "SET "
+        for key in kwargs:
+            query += "" + key + ","
+        query = query[:-1]+" WHERE "
+        for key in kwargs:
+            query += "" + key + " = %("+ key + ")s,"
+        query = query[:-1]
+        print (query)
+
 import pymysql
 ###this works just as well as import mysql.connector
 connect = pymysql.connect(host='localhost', user='Moradster', password='root', database='testdb', autocommit= True)
 cursor = connect.cursor()
-
+cursor.execute("SHOW TABLES")
+print ("Please select a table to use")
+table = input('--> ')
 
 
