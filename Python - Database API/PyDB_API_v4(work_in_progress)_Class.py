@@ -6,32 +6,29 @@ import pymysql
 class CSDI_MySQL():
 
     lastResult = False
-    lastQuery = “”
+    lastQuery = ""
 
     config ={}
     
     def __init__(self):
-	#defines config data
-	#does this need to be user input?
-        config = {}
-		config["user"] = “Moradster”
-    	config["host"] = “localhost”
-    	config["password"] = “root”
-    	config["database"] = “testdb”
-    	config["autocommit"] = True
-	
-   def connect(self):
-   		try:
-   			connect = pymysql.connect(**config)
-    		self.cursor = connect.cursor()
-    		print ("Connection succeeded")
-    		return True
-    	except pymysql.Error as err:
-    		print (err)
-                
-    def config(self, configDictionary, **kwargs):
-    	
-    
+        #defines config data
+        #does this need to be user input?
+        config["user"] = "Moradster"
+        config["host"] = "localhost"
+        config["password"] = "root"
+        config["database"] = "testdb"
+        config["autocommit"] = True
+            
+            
+    def connect(self,config):
+        try:
+            connect = pymysql.connect(**config)
+            self.cursor = connect.cursor()
+            print ("Connection succeeded")
+            return True
+        except pymysql.Error as err:
+            print (err)
+    #def config(self, configDictionary, **kwargs):
     #gets columns to compare
     def __getcolumns(self, table):
         self.cursor.execute("SELECT * FROM %s" %table)
@@ -41,21 +38,27 @@ class CSDI_MySQL():
         return [getcolm[0] for getcolm in list]
     
     def __executeQuery(**kwargs):
-    	try:
-    		self.cursor.execute(kwargs)
-            vtr = cursor.fetchall()
-    		return (True, vtr)
-    	except pymysql.Error as err:
-    		print (err)
+        lastQuery = kwargs
+        try:
+            self.cursor.execute(kwargs)
+            vtr = self.cursor.fetchall()
+            lastResult = vtr
+            exeFlag = True
+            return (exeFlag, vtr)
+        except pymysql.Error as err:
+            print (err)
             return False
 
     def insert(self, table, **kwargs):
         #works for insert purposes
         #need to make a delete function incase of user mistakes
-        #make for loop for column checks
+        #make for loop for column check
+        columns = __getcolumns(table)
+        for row in columns:
+            if key in kwargs != columns:
+                print("Please enter proper columns and values")
+                break
         self.cursor.execute("SELECT * FROM %s" %table)
-        if (query == lastQuery):
-        	print(LA
         query = "INSERT INTO " + table + " ("
         for key in kwargs:
             query += "" + key + ","
@@ -63,12 +66,16 @@ class CSDI_MySQL():
         for key in kwargs:
             query += " %(" + key + ")s,"
         query = query[:-1]+")"
-        print (query)
-        print (kwargs)
-        try:
-            self.cursor.execute(query, kwargs)
-        except pymysql.Error as err:
-            print (err)
+        #print (query)
+        #print (kwargs)
+        if (query == lastQuery):
+            print(lastResult)
+
+        else:
+            try:
+                __executeQuery(query)
+            except pymysql.Error as err:
+                print (err)
 
     def select(self, table, valuesToReturn, *args, **kwargs):
         #need to find a way to find if user input has wrong columns 
@@ -77,15 +84,19 @@ class CSDI_MySQL():
             query += "" + keys + ","
         query = query[:-1] + " FROM " + table + " WHERE "
         for keys in kwargs:
-            query +="" + keys + "=%(" + keys + ")s,"
+            query +="" + keys + "%(" + keys + ")s,"
         query = query[:-1]+ ""
         print (query)
-        try:
-            self.cursor.execute(query, kwargs)
-        except pymysql.Error as err:
-            print (err)
-        for item in cursor:
-            print (item)
+        if query == lastQuery:
+            print (lastResult)
+        else:
+            try:
+                self.cursor.execute(query, kwargs)
+            
+            except pymysql.Error as err:
+                print (err)
+            for item in cursor:
+                print (item)
 
     """def update(self,table, *args, **kwargs):
         query = "UPDATE " + table + " SET "
@@ -106,23 +117,21 @@ class CSDI_MySQL():
 x = CSDI_MySQL()
 userflag = True
 while userflag==True:
-    x.cursor.execute("SHOW TABLES")
-    for items in x.cursor:
-        print(items)
+    x.connect()
     print ("Please select a table to use")
     table = input('--> ')
-    column names = __getColumns(table)
+    columnnames = __getcolumns(table)
     print("Would you like to insert information or query table %s?" %table)
     command = input('[Insert/Select]')
     if (command == 'Insert' or command == 'insert'):
-		print("Please insert data to be inserted:")
-		insertData = input('—-> ')
-		x.insert(insertData)
+        print("['table', column'=string', column'>value', column=integer]")
+        insertData = input('—-> ')
+        x.insert(insertData)
     if (command == 'Select' or command == 'select'):
-    	print("insert: ['table', 'valuesToReturn', 'column = value'")
-    	selData = input ('--> ')
-		x.select(selData)
+        print("['table', 'valuesToReturn', 'column = value']")
+        selData = input('--> ')
+        x.select(selData)
     else:
-		break
+        break
 
 
