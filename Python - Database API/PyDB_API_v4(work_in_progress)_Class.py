@@ -9,26 +9,21 @@ class CSDI_MySQL():
     lastQuery = ""
 
     config = {}
-    config["user"] = "Moradster"
-    config["host"] = "localhost"
-    config["password"] = "root"
-    config["database"] = "testdb"
-    config["autocommit"] = True
+ 
     
     def __init__(self):
-        config = {}
         #defines config data
         #does this need to be user input?
-        config["user"] = "Moradster"
-        config["host"] = "localhost"
-        config["password"] = "root"
-        config["database"] = "testdb"
-        config["autocommit"] = True
+        self.config["user"] = "Moradster"
+        self.config["host"] = "localhost"
+        self.config["password"] = "root"
+        self.config["database"] = "testdb"
+        self.config["autocommit"] = True
     #says config isn't defined. But it is defined at top
     #this doesn't work?
-    def connect(self, config):
+    def connect(self):
         try:
-            connect = pymysql.connect(**config)
+            connect = pymysql.connect(self.config)
             self.cursor = connect.cursor()
             print ("Connection succeeded")
             return True
@@ -126,7 +121,7 @@ while userflag==True:
     x.connect()
     print ("Please select a table to use")
     table = input('--> ')
-    columnnames = __getcolumns(table)
+    columnnames = x.__getcolumns(table)
     print("Would you like to insert information or query table %s?" %table)
     command = input('[Insert/Select]')
     if (command == 'Insert' or command == 'insert'):
