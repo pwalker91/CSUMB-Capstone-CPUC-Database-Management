@@ -8,9 +8,15 @@ class CSDI_MySQL():
     lastResult = False
     lastQuery = ""
 
-    config ={}
+    config = {}
+    config["user"] = "Moradster"
+    config["host"] = "localhost"
+    config["password"] = "root"
+    config["database"] = "testdb"
+    config["autocommit"] = True
     
     def __init__(self):
+        config = {}
         #defines config data
         #does this need to be user input?
         config["user"] = "Moradster"
@@ -18,9 +24,9 @@ class CSDI_MySQL():
         config["password"] = "root"
         config["database"] = "testdb"
         config["autocommit"] = True
-            
-            
-    def connect(self,config):
+    #says config isn't defined. But it is defined at top
+    #this doesn't work?
+    def connect(self, config):
         try:
             connect = pymysql.connect(**config)
             self.cursor = connect.cursor()
