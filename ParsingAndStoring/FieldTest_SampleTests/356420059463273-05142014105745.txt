@@ -1,0 +1,1010 @@
+CPUC Tester Beta v2.0
+Testing started at Wed May 14 10:57:45 PDT 2014
+
+GPS override set by Tester.
+
+
+OS: Name = Linux, Architecture = armv7l, Version = 3.4.0-540242
+Java: Version = 0, Vendor = The Android Project
+No GPS signal. 
+NetworkType: mobile
+
+
+Server: Amazon West Server
+Host: 184.72.63.139
+
+NetworkProvider: 
+NetworkOperator: T-Mobile
+Device ID: 356420059463273
+ConnectionType: EDGE
+
+Location ID: 1683
+Latitude:0.0
+Longitude:0.0
+Checking Connectivity.....
+
+PING 184.72.63.139 (184.72.63.139) 56(84) bytes of data.
+64 bytes from 184.72.63.139: icmp_seq=1 ttl=46 time=653 ms
+64 bytes from 184.72.63.139: icmp_seq=2 ttl=46 time=577 ms
+64 bytes from 184.72.63.139: icmp_seq=3 ttl=46 time=554 ms
+64 bytes from 184.72.63.139: icmp_seq=4 ttl=46 time=551 ms
+
+--- 184.72.63.139 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3001ms
+rtt min/avg/max/mdev = 551.331/584.258/653.228/41.082 ms
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 1: Iperf TCP West....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -e -w 32k -P 4 -i 1 -t 10 -f k -p 5005
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5005
+TCP window size: 64.0 KByte (WARNING: requested 32.0 KByte)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 57366 connected with 184.72.63.139 port 5005
+[  4] local 21.124.96.137 port 57367 connected with 184.72.63.139 port 5005
+[  6] local 21.124.96.137 port 57370 connected with 184.72.63.139 port 5005
+[  5] local 21.124.96.137 port 57369 connected with 184.72.63.139 port 5005
+[  4]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0-11.6 sec  48.0 KBytes  34.0 Kbits/sec
+[  6]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0-11.8 sec  48.0 KBytes  33.2 Kbits/sec
+[SUM]  0.0-11.8 sec    176 KBytes    122 Kbits/sec
+[  5]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-12.1 sec  48.0 KBytes  32.5 Kbits/sec
+[  3]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-12.4 sec  48.0 KBytes  31.8 Kbits/sec
+[SUM]  0.0-12.4 sec    176 KBytes    117 Kbits/sec
+[  4] local 21.124.96.137 port 57371 connected with 184.72.63.139 port 5005
+[  5] local 21.124.96.137 port 57373 connected with 184.72.63.139 port 5005
+[  6] local 21.124.96.137 port 57372 connected with 184.72.63.139 port 5005
+[  3] local 21.124.96.137 port 57374 connected with 184.72.63.139 port 5005
+[  4]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0- 7.2 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-10.3 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  3]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  6.64 KBytes  54.4 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 14.0-15.0 sec  2.71 KBytes  22.2 Kbits/sec
+[  3] 12.0-13.0 sec  12.1 KBytes  98.8 Kbits/sec
+[  3] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 15.0-16.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  6] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 15.0-16.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  3] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 18.0-19.0 sec  13.6 KBytes    111 Kbits/sec
+[  6] 19.0-20.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  3] 19.0-20.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6] 20.0-21.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  6] 21.0-22.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  3] 20.0-21.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  3] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 22.0-23.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  6] 22.0-23.0 sec  9.49 KBytes  77.7 Kbits/sec
+[  6] 23.0-24.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  6] 24.0-25.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  3] 23.0-24.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  3] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 25.0-26.0 sec  6.78 KBytes  55.5 Kbits/sec
+[  6]  0.0-26.6 sec  72.0 KBytes  22.1 Kbits/sec
+[  3] 25.0-26.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  3]  0.0-26.8 sec  72.0 KBytes  22.0 Kbits/sec
+[SUM]  0.0-26.8 sec    144 KBytes  44.1 Kbits/sec
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 2: Iperf TCP East....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -e -w 32k -P 4 -i 1 -t 10 -f k -p 5005
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5005
+TCP window size: 64.0 KByte (WARNING: requested 32.0 KByte)
+------------------------------------------------------------
+[  6] local 21.124.96.137 port 45130 connected with 184.72.222.65 port 5005
+[  3] local 21.124.96.137 port 45127 connected with 184.72.222.65 port 5005
+[  5] local 21.124.96.137 port 45129 connected with 184.72.222.65 port 5005
+[  4] local 21.124.96.137 port 45128 connected with 184.72.222.65 port 5005
+[  6]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  16.0 KBytes    131 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-13.4 sec  64.0 KBytes  39.2 Kbits/sec
+[  3] local 21.124.96.137 port 45131 connected with 184.72.222.65 port 5005
+[  5]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-16.2 sec  48.0 KBytes  24.2 Kbits/sec
+[SUM]  0.0-16.2 sec    232 KBytes    117 Kbits/sec
+[  4]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0-17.7 sec  48.0 KBytes  22.2 Kbits/sec
+[  5] local 21.124.96.137 port 45132 connected with 184.72.222.65 port 5005
+[  4] local 21.124.96.137 port 45133 connected with 184.72.222.65 port 5005
+[  6]  5.0- 6.0 sec  16.0 KBytes    131 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0-21.0 sec  64.0 KBytes  24.9 Kbits/sec
+[  3]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0- 6.5 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] local 21.124.96.137 port 45134 connected with 184.72.222.65 port 5005
+[  5]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-10.4 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  0.0-21.0 sec    152 KBytes  59.2 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  6] 14.0-15.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  6] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  6.78 KBytes  55.5 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 17.0-18.0 sec  2.71 KBytes  22.2 Kbits/sec
+[  4] 18.0-19.0 sec  6.78 KBytes  55.5 Kbits/sec
+[  6] 17.0-18.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  6] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 20.0-21.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  4] 19.0-20.0 sec  2.71 KBytes  22.2 Kbits/sec
+[  4] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 21.0-22.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6] 21.0-22.0 sec  6.78 KBytes  55.5 Kbits/sec
+[  4] 22.0-23.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  6] 22.0-23.0 sec  12.2 KBytes  99.9 Kbits/sec
+[  6] 23.0-24.0 sec  2.71 KBytes  22.2 Kbits/sec
+[  4] 23.0-24.0 sec  13.6 KBytes    111 Kbits/sec
+[  4] 24.0-25.0 sec  2.71 KBytes  22.2 Kbits/sec
+[  6] 24.0-25.0 sec  13.6 KBytes    111 Kbits/sec
+[  6] 25.0-26.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  4] 25.0-26.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  4] 26.0-27.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  6] 26.0-27.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6] 27.0-28.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  4] 27.0-28.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  4] 28.0-29.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  6] 28.0-29.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6] 29.0-30.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  4] 29.0-30.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  4]  0.0-30.9 sec    104 KBytes  27.5 Kbits/sec
+[  6] 30.0-31.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6]  0.0-31.1 sec    104 KBytes  27.4 Kbits/sec
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 3: Ping East....
+
+PING 184.72.222.65 (184.72.222.65) 56(84) bytes of data.
+64 bytes from 184.72.222.65: icmp_seq=1 ttl=40 time=755 ms
+64 bytes from 184.72.222.65: icmp_seq=2 ttl=40 time=428 ms
+64 bytes from 184.72.222.65: icmp_seq=3 ttl=40 time=373 ms
+64 bytes from 184.72.222.65: icmp_seq=4 ttl=40 time=1269 ms
+64 bytes from 184.72.222.65: icmp_seq=5 ttl=40 time=468 ms
+64 bytes from 184.72.222.65: icmp_seq=6 ttl=40 time=1226 ms
+64 bytes from 184.72.222.65: icmp_seq=7 ttl=40 time=406 ms
+64 bytes from 184.72.222.65: icmp_seq=8 ttl=40 time=1225 ms
+64 bytes from 184.72.222.65: icmp_seq=9 ttl=40 time=404 ms
+64 bytes from 184.72.222.65: icmp_seq=10 ttl=40 time=1230 ms
+
+--- 184.72.222.65 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9004ms
+rtt min/avg/max/mdev = 373.596/778.994/1269.928/388.264 ms, pipe 2
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 4: Iperf TCP West....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -e -w 32k -P 4 -i 1 -t 10 -f k -p 5005
+------------------------------------------------------------
+Client connecting to 184.72.63.139, TCP port 5005
+TCP window size: 64.0 KByte (WARNING: requested 32.0 KByte)
+------------------------------------------------------------
+[  6] local 21.124.96.137 port 57387 connected with 184.72.63.139 port 5005
+[  3] local 21.124.96.137 port 57384 connected with 184.72.63.139 port 5005
+[  5] local 21.124.96.137 port 57386 connected with 184.72.63.139 port 5005
+[  4] local 21.124.96.137 port 57385 connected with 184.72.63.139 port 5005
+[  3]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-19.6 sec  48.0 KBytes  20.1 Kbits/sec
+[  5]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-20.5 sec  48.0 KBytes  19.2 Kbits/sec
+[SUM]  0.0-20.5 sec    176 KBytes  70.5 Kbits/sec
+[  3] local 21.124.96.137 port 57388 connected with 184.72.63.139 port 5005
+[  5] local 21.124.96.137 port 57389 connected with 184.72.63.139 port 5005
+[  6]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 22.0-23.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 23.0-24.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 25.0-26.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 26.0-27.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 27.0-28.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 28.0-29.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 29.0-30.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 30.0-31.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 31.0-32.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 32.0-33.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 33.0-34.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 35.0-36.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 37.0-38.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0-38.2 sec  48.0 KBytes  10.3 Kbits/sec
+[  5]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 17.0-18.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  5] 18.0-19.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  5] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 20.0-21.0 sec  3.93 KBytes  32.2 Kbits/sec
+[  6] local 21.124.96.137 port 57390 connected with 184.72.63.139 port 5005
+[  5] 21.0-22.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  5] 22.0-23.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  6]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 22.0-23.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 23.0-24.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 24.0-25.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  6] 25.0-26.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  5] 23.0-24.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  5] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 25.0-26.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 26.0-27.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 27.0-28.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  5] 28.0-29.0 sec  6.78 KBytes  55.5 Kbits/sec
+[  5] 29.0-30.0 sec  4.07 KBytes  33.3 Kbits/sec
+[  6] 26.0-27.0 sec  6.64 KBytes  54.4 Kbits/sec
+[  6] 27.0-28.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 28.0-29.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 29.0-30.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 30.0-31.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  6] 31.0-32.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  4]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 22.0-23.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 23.0-24.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 25.0-26.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 26.0-27.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 27.0-28.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 28.0-29.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 29.0-30.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 30.0-31.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 31.0-32.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 32.0-33.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 33.0-34.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 35.0-36.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 37.0-38.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 38.0-39.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 39.0-40.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 40.0-41.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 41.0-42.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 42.0-43.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 43.0-44.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 44.0-45.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 45.0-46.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 46.0-47.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 47.0-48.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 48.0-49.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 49.0-50.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 50.0-51.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 51.0-52.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 52.0-53.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 53.0-54.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0-54.4 sec  48.0 KBytes  7.22 Kbits/sec
+[  5] 30.0-31.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  5] 31.0-32.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 32.0-33.0 sec  13.6 KBytes    111 Kbits/sec
+[  5] 33.0-34.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  5] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 32.0-33.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  6] 33.0-34.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] local 21.124.96.137 port 57391 connected with 184.72.63.139 port 5005
+[  6] 35.0-36.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 35.0-36.0 sec  1.36 KBytes  11.1 Kbits/sec
+[  5] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 37.0-38.0 sec  12.2 KBytes  99.9 Kbits/sec
+[  5]  0.0-38.9 sec  72.0 KBytes  15.2 Kbits/sec
+[  6] 37.0-38.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  6] 38.0-39.0 sec  5.42 KBytes  44.4 Kbits/sec
+[  4]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  0.0-54.4 sec    248 KBytes  37.3 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 22.0-23.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 23.0-24.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 25.0-26.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 26.0-27.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 27.0-28.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 28.0-29.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 29.0-30.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 30.0-31.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 31.0-32.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 32.0-33.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 33.0-34.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 35.0-36.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 37.0-38.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 38.0-39.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 39.0-40.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  4] 39.0-40.0 sec  12.1 KBytes  98.8 Kbits/sec
+[  3]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 21.0-22.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 22.0-23.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 23.0-24.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 24.0-25.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 25.0-26.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 26.0-27.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 27.0-28.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 28.0-29.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 29.0-30.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 30.0-31.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 31.0-32.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 32.0-33.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 33.0-34.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 34.0-35.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 35.0-36.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 36.0-37.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 37.0-38.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 38.0-39.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 39.0-40.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-40.8 sec  18014398509481984 KBytes  3617117953336100 Kbits/sec
+[  4] 40.0-41.0 sec  8.13 KBytes  66.6 Kbits/sec
+[  6] 40.0-41.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  6]  0.0-41.5 sec  72.0 KBytes  14.2 Kbits/sec
+[  4] 41.0-42.0 sec  9.49 KBytes  77.7 Kbits/sec
+[  4] 42.0-43.0 sec  10.8 KBytes  88.8 Kbits/sec
+[  4] 43.0-44.0 sec  16.3 KBytes    133 Kbits/sec
+[  4] 44.0-45.0 sec  12.2 KBytes  99.9 Kbits/sec
+[  4] 45.0-46.0 sec  12.2 KBytes  99.9 Kbits/sec
+[  4] 46.0-47.0 sec  14.9 KBytes    122 Kbits/sec
+[  4] 47.0-48.0 sec  21.7 KBytes    178 Kbits/sec
+[  4] 48.0-49.0 sec  21.7 KBytes    178 Kbits/sec
+[  4]  0.0-49.9 sec    152 KBytes  24.9 Kbits/sec
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 5: Iperf TCP East....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -e -w 32k -P 4 -i 1 -t 10 -f k -p 5005
+------------------------------------------------------------
+Client connecting to 184.72.222.65, TCP port 5005
+TCP window size: 64.0 KByte (WARNING: requested 32.0 KByte)
+------------------------------------------------------------
+[  6] local 21.124.96.137 port 45146 connected with 184.72.222.65 port 5005
+[  3] local 21.124.96.137 port 45143 connected with 184.72.222.65 port 5005
+[  4] local 21.124.96.137 port 45144 connected with 184.72.222.65 port 5005
+[  5] local 21.124.96.137 port 45145 connected with 184.72.222.65 port 5005
+[  6]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0- 1.0 sec  40.0 KBytes    328 Kbits/sec
+[SUM]  0.0- 1.0 sec    160 KBytes  1311 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[SUM]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0-11.9 sec  48.0 KBytes  33.1 Kbits/sec
+[  6]  5.0- 6.0 sec  16.0 KBytes    131 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0-14.1 sec  64.0 KBytes  37.1 Kbits/sec
+[  5] local 21.124.96.137 port 45147 connected with 184.72.222.65 port 5005
+[  6] local 21.124.96.137 port 45148 connected with 184.72.222.65 port 5005
+[  3]  7.0- 8.0 sec  16.0 KBytes    131 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-18.0 sec  64.0 KBytes  29.1 Kbits/sec
+[  4]  9.0-10.0 sec  16.0 KBytes    131 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 17.0-18.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 18.0-19.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 19.0-20.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 20.0-21.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0-21.3 sec  64.0 KBytes  24.6 Kbits/sec
+[  5]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  5]  0.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  6]  0.0- 8.8 sec  18014398509481984 KBytes  16778518862642722 Kbits/sec
+[  3] local 21.124.96.137 port 45149 connected with 184.72.222.65 port 5005
+[  4] local 21.124.96.137 port 45150 connected with 184.72.222.65 port 5005
+[  3]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  3]  0.0-13.1 sec  18014398509481984 KBytes  11304076696046858 Kbits/sec
+[  4]  0.0- 1.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  1.0- 2.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  2.0- 3.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  3.0- 4.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  4.0- 5.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  5.0- 6.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  6.0- 7.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  7.0- 8.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  8.0- 9.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  9.0-10.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 10.0-11.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 11.0-12.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 12.0-13.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 13.0-14.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 14.0-15.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 15.0-16.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4] 16.0-17.0 sec  0.00 KBytes  0.00 Kbits/sec
+[  4]  0.0-17.9 sec  18014398509481984 KBytes  8265085482266690 Kbits/sec
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 6: Ping West....
+
+PING 184.72.63.139 (184.72.63.139) 56(84) bytes of data.
+64 bytes from 184.72.63.139: icmp_seq=1 ttl=46 time=7131 ms
+64 bytes from 184.72.63.139: icmp_seq=2 ttl=46 time=6254 ms
+64 bytes from 184.72.63.139: icmp_seq=3 ttl=46 time=5250 ms
+64 bytes from 184.72.63.139: icmp_seq=4 ttl=46 time=4243 ms
+64 bytes from 184.72.63.139: icmp_seq=5 ttl=46 time=3292 ms
+64 bytes from 184.72.63.139: icmp_seq=6 ttl=46 time=2283 ms
+64 bytes from 184.72.63.139: icmp_seq=7 ttl=46 time=1281 ms
+64 bytes from 184.72.63.139: icmp_seq=8 ttl=46 time=272 ms
+64 bytes from 184.72.63.139: icmp_seq=9 ttl=46 time=348 ms
+64 bytes from 184.72.63.139: icmp_seq=10 ttl=46 time=1167 ms
+
+--- 184.72.63.139 ping statistics ---
+10 packets transmitted, 10 received, 0% packet loss, time 9045ms
+rtt min/avg/max/mdev = 272.309/3152.648/7131.835/2354.203 ms, pipe 8
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 7: 3 Iperf West UDP 1 second tests....
+
+Starting UDP 1 second Test #1
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 47389 connected with 184.72.63.139 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  88.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 2.0 sec  11.0 KBytes  44.4 Kbits/sec  18.480 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #2
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 37001 connected with 184.72.63.139 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  87.9 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 2.3 sec  11.0 KBytes  38.6 Kbits/sec  26.790 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #3
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 56304 connected with 184.72.63.139 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  88.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 2.3 sec  11.0 KBytes  39.4 Kbits/sec  23.151 ms    0/   51 (0%)
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 8: 3 Iperf East UDP 1 second tests....
+
+Starting UDP 1 second Test #1
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 34082 connected with 184.72.222.65 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  88.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 1.9 sec  11.0 KBytes  48.0 Kbits/sec  25.983 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #2
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 47854 connected with 184.72.222.65 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  88.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 2.4 sec  11.0 KBytes  37.6 Kbits/sec  32.012 ms    0/   51 (0%)
+
+Starting UDP 1 second Test #3
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -u -l 220 -b 88k -i 1 -t 1 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 33253 connected with 184.72.222.65 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 1.0 sec  11.0 KBytes  88.0 Kbits/sec
+[  3] Sent 51 datagrams
+[  3] Server Report:
+[  3]  0.0- 2.2 sec  11.0 KBytes  40.7 Kbits/sec  46.176 ms    2/   51 (3.9%)
+[  3]  0.0- 2.2 sec  2 datagrams received out-of-order
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 9: One Iperf West UDP 5 second test....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.63.139 -u -l 220 -b 88k -i 1 -t 5 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.63.139, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 60377 connected with 184.72.63.139 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  4.0- 5.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  88.0 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] Server Report:
+[  3]  0.0-10.2 sec  53.9 KBytes  43.2 Kbits/sec  32.829 ms    0/  251 (0%)
+
+Latitude:0.0
+Longitude:0.0
+Starting Test 10: One Iperf East UDP 5 second test....
+
+Iperf command line:/data/data/net.measurementlab.ndt/files/iperfT -c 184.72.222.65 -u -l 220 -b 88k -i 1 -t 5 -f k -p 5006
+------------------------------------------------------------
+Client connecting to 184.72.222.65, UDP port 5006
+Sending 220 byte datagrams
+UDP buffer size:   160 KByte (default)
+------------------------------------------------------------
+[  3] local 21.124.96.137 port 37879 connected with 184.72.222.65 port 5006
+[  3]  0.0- 1.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  1.0- 2.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  2.0- 3.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  3.0- 4.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  4.0- 5.0 sec  10.7 KBytes  88.0 Kbits/sec
+[  3]  0.0- 5.0 sec  53.9 KBytes  88.0 Kbits/sec
+[  3] Sent 251 datagrams
+[  3] Server Report:
+[  3]  0.0-11.0 sec  53.9 KBytes  40.2 Kbits/sec  27.407 ms   12/  251 (4.8%)
+[  3]  0.0-11.0 sec  12 datagrams received out-of-order
+
+Latitude:0.0
+Longitude:0.0
+Saving Results to sdcard...

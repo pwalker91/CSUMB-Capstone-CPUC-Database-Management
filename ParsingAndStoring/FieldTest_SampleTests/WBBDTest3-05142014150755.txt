@@ -1,0 +1,44 @@
+CPUC Tester Beta v2.0
+05/14/2014 15:07:55
+Location: 1570
+Client IP Address: 192.168.10.2
+Host name: WBBDTest3
+Network Provider: Sprint
+
+Standard Test starting.....
+
+Latitude:41.053017
+Longitude:-121.398758
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+Reply from 192.168.10.1: Destination net unreachable.
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Connectivity Test Failed.

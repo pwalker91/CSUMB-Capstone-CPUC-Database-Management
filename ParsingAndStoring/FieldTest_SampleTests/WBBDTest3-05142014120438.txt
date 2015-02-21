@@ -1,0 +1,44 @@
+CPUC Tester Beta v2.0
+05/14/2014 12:04:38
+Location: 2135
+Client IP Address: 127.0.0.1
+Host name: WBBDTest3
+Network Provider: Sprint
+
+Standard Test starting.....
+
+Latitude:40.517345
+Longitude:-121.015307
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+Connectivity Test Failed.
+Checking Connectivity....
+
+Pinging 184.72.63.139 with 32 bytes of data:
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+PING: transmit failed. General failure. 
+
+Ping statistics for 184.72.63.139:
+    Packets: Sent = 4, Received = 0, Lost = 4 (100% loss),
+Connectivity Test Failed.
