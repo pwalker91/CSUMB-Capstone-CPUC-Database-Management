@@ -20,6 +20,7 @@ sdist/
 var/
 *.egg-info/
 .installed.cfg
+setup.cfg
 *.egg
 MANIFEST.in
 
@@ -53,5 +54,5 @@ coverage.xml
 # Sphinx documentation
 docs/_build/
 
-#package distribution help
-build_deploy_help.txt
+# package distribution help
+*_help.txt
