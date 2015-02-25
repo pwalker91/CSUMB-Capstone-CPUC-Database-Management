@@ -37,7 +37,7 @@ class CSDI_MySQL():
         return [getcolm[0] for getcolm in list]
 
     def __executeQuery(self, query, queryData):
-        self.lastQuery = query
+        self.lastQuery = self.__queryAsString(query, queryData)
         try:
             self.cursor.execute(query, queryData)
             self.lastResult = self.cursor.fetchall()
@@ -45,6 +45,10 @@ class CSDI_MySQL():
         except pymysql.Error as err:
             print (err)
             return (False,[])
+
+    def __queryAsString(self, query, queryData):
+        queryWithData = query.replace("%(","{").replace(")s","}")
+        return queryWithData.format(**queryData)
 
     def insert(self, table, **kwargs):
         if table not in self.__checktable(table):
@@ -79,9 +83,10 @@ class CSDI_MySQL():
         for kwargskeys in keys:
             query +=" " + kwargskeys +" "+ kwargs[kwargskeys+ "_operator"] +" %(" + kwargskeys + ")s AND"
         query = query[:-3]+ ""
-        print (query)
-        if query == self.lastQuery:
+        if self.__queryAsString(query, kwargs) == self.lastQuery:
             return self.lastResult
         else:
             flag, results = self.__executeQuery(query, kwargs)
-            return results
+            if flag:
+                return results
+

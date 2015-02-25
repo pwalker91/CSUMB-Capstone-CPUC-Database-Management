@@ -42,7 +42,7 @@ class CSDI_MySQL():
             self.cursor.execute(query, queryData)
             vtr = self.cursor.fetchall()
             self.lastResult = vtr
-            return (True, vtr)
+            return (True, self.lastResult)
         except pymysql.Error as err:
             print (err)
             return (False,[])
@@ -55,7 +55,7 @@ class CSDI_MySQL():
             if kwargkey not in columns:
                 print("Please enter proper columns and values")
                 return False
-        self.cursor.execute("SELECT * FROM %s" %table)
+    #not necessary: self.cursor.execute("SELECT * FROM %s" %table)
         query = "INSERT INTO " + table + " ("
         for key in kwargs:
             query += "" + key + ","
@@ -81,8 +81,8 @@ class CSDI_MySQL():
             if kwargkey not in columns:
                 print("Please enter proper columns and values")
                 return False
-        #kwargs.keys() gets all the key values and puts into a list form
-        #the list function is applied to make it mutable
+    #kwargs.keys() gets all the key values and puts into a list form
+    #the list function is applied to make it mutable
         keys = list(kwargs.keys())
         #add each element from keys to the new array if "_operator" is not in the key name
         #the resulting array is all of the keys in kwargs that are column names
