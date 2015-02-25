@@ -1,8 +1,7 @@
+
+"""-------------------------------------------------------------------------------
+        """
 import pymysql
-###this works just as well as import mysql.connector
-#For this i am assuming that this script will be called?
-#or is it being ran from main?
-#nick has questions about variables lastResult and lastQuery and functions connect() and config (param, param)
 class CSDI_MySQL():
 
     lastResult = False
@@ -12,16 +11,14 @@ class CSDI_MySQL():
  
  
     def __init__(self):
-        #defines config data
-        #does this need to be user input?
+
         self.config = {}
         self.config["user"] = "Moradster"
         self.config["host"] = "localhost"
         self.config["password"] = "root"
         self.config["database"] = "testdb"
         self.config["autocommit"] = True
-    #says config isn't defined. But it is defined at top
-    #this doesn't work?
+
     def connect(self):
         try:
             connection = pymysql.connect(**self.config)
@@ -51,10 +48,9 @@ class CSDI_MySQL():
             return (False,[])
 
     def insert(self, table, **kwargs):
-        #works for insert purposes
-        #need to make a delete function incase of user mistakes
-        #make for loop for column check
         columns = self.__getcolumns(table)
+        #Grabing every key in kwargs assigning to kwargkey
+        #Check to see if value kwargkey is in columns
         for kwargkey in kwargs:
             if kwargkey not in columns:
                 print("Please enter proper columns and values")
@@ -80,14 +76,25 @@ class CSDI_MySQL():
 
     def select(self, table, *args, **kwargs):
         #need to find a way to find if user input has wrong columns
+        columns = self.__getcolumns(table)
+        for kwargkey in kwargs:
+            if kwargkey not in columns:
+                print("Please enter proper columns and values")
+                return False
+        #kwargs.keys() gets all the key values and puts into a list form
+        #the list function is applied to make it mutable
         keys = list(kwargs.keys())
+        #add each element from keys to the new array if "_operator" is not in the key name
+        #the resulting array is all of the keys in kwargs that are column names
         keys = [elem for elem in keys if "_operator" not in elem]
-        
         query ="SELECT "
         for argkey in args:
             query += "" + argkey + ","
         query = query[:-1] + " FROM " + table + " WHERE "
         for kwargskeys in keys:
+            #adding to the query what we are looking for
+            #kwarg key = column name, kwargs[kwargskeys + _operator] is grabbing the mathematical operator from kwargs
+            #kwargskeys is being used as a placeholder in query string
             query +=" " + kwargskeys +" "+ kwargs[kwargskeys+ "_operator"] +" %(" + kwargskeys + ")s AND"
         query = query[:-3]+ ""
         print (query)
@@ -99,7 +106,7 @@ class CSDI_MySQL():
                 print (results)
             except pymysql.Error as err:
                 print (err)
-
+        #just in case.....
     """def update(self,table, *args, **kwargs):
         query = "UPDATE " + table + " SET "
         for key in args:
