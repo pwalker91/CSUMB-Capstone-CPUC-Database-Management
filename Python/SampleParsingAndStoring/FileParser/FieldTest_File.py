@@ -27,7 +27,7 @@ FUNCTIONS:
     get_csvStatValues
     get_csvQualValues
     get_csvRvMosValues
-    get_csvNBNCBCValues
+    get_csvOverallTCPValues
   STRING PRINOUT:
     __str__
 ------------------------------------------------------------------------
@@ -529,7 +529,7 @@ class FieldTest_File(File):
         return rValMOSVals
     #END DEF
 
-    def get_csvNBNCBCValues(self):
+    def get_csvOverallTCPValues(self):
         """
         This will conglomerate all upload speed from every TCP test into one
         list. The same will also be done with the download speeds.

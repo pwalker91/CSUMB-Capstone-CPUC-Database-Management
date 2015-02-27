@@ -25,6 +25,7 @@ FUNCTIONS:
     get_csvStatValues
     get_csvQualValues
     get_csvRvMosValues
+    get_csvOverallTCPValues
   STRING PRINOUT:
     __str__
 ------------------------------------------------------------------------
@@ -561,6 +562,46 @@ class CrowdSource_File(File):
 
     def get_csvRvMosValues(self):
         return self._get_csvValues("PING", "RvMos", 2)
+    #END DEF
+
+    def get_csvOverallTCPValues(self):
+        """
+        This will conglomerate all upload speed from every TCP test into one
+        list. The same will also be done with the download speeds.
+        Once our lists have all 4 TCP test's speeds, we will then take the mean,
+        the population standard deviation, and then calculate the mean minus
+        one standard deviation.
+        RETURNS:
+            NBNValues   List of 6 values, the mean, population standard deviation,
+                        and (mean-pstdev) of a combination of all thread from every
+                        test in each direction.
+        """
+        from statistics import mean, pstdev
+        allTCPs = self.getTest("TCP")
+        upMsrments = []; dnMsrments = []
+        #We will only perform these functions and math if allTCPs actually
+        # returned tests for us to use
+        if allTCPs:
+            for test in allTCPs:
+                if not test.ContainsErrors:
+                    upMsrments.append(mean(test.get_ThreadSumValues(direction="UP")))
+                    dnMsrments.append(mean(test.get_ThreadSumValues(direction="DOWN")))
+            #END FOR
+            if upMsrments:
+                upMean = mean(upMsrments); upStDev = pstdev(upMsrments)
+            else:
+                upMean = -1; upStDev = -1;
+            #END IF/ELSE
+            if dnMsrments:
+                dnMean = mean(dnMsrments); dnStDev = pstdev(dnMsrments)
+            else:
+                dnMean = -1; dnStDev = -1;
+            #END IF/ELSE
+            NBNVals = [upMean, upStDev, (upMean-upStDev),
+                       dnMean, dnStDev, (dnMean-dnStDev)]
+        else:
+            NBNVals = [self.ErrorTypes[self.ErrorCode]]*6
+        return NBNVals
     #END DEF
 
 
