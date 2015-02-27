@@ -23,88 +23,135 @@ CLASSES-
 -------------------------------------------------------------------------------
 """
 
+#IMPORTS
 import pymysql
+
+#END IMPORTS
+
+
 class CSDI_MySQL():
+
     """
     This class will connect to a specific database, and generate
      queries based on user input
+    ATTRIBUTES
+        lastResults     List, the returned result from the previous query
+        lastQuery       String, the last query executed, with the data inserted
+                         into the query
+        config          Dictionary, the configuration information for connecting
+                         to the database
     """
+
+    #CLASS ATTRIBUTES --------------
     lastResult = False
     lastQuery = ""
 
     config = {}
+    # ------------------------------
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """
-        Initializes the object's connection information
+        Initializes the object's connection information using kwargs.
+        Defaults:
+            user:       root
+            host:       localhost
+            autocommit: True
         """
-        self.config = {}
-        self.config["user"] = "root"
-        self.config["host"] = "localhost"
-        self.config["password"] = "thedefault"
-        self.config["database"] = "CPUC"
-        self.config["autocommit"] = True
-    #connects to mysql db
+        #This takes any information in kwargs, and essentially copies it into
+        # self.config. As such, you may set config to be anything when you
+        # initialize a CSDI_MySQL object
+        self.config = {"user": "root",
+                       "host": "localhost",
+                       "autocommit": True
+                       }
+        self.config.update(kwargs)
+    #END DEF
+
+
+    #INITIALIZATION ------------------------------------------------------------
+
     def connect(self):
-        """
-        Starts connection and stores le cursor in the object
-        """
+        """Starts connection and stores le cursor in the object"""
         try:
             connection = pymysql.connect(**self.config)
             self.cursor = connection.cursor()
-            print ("Connection succeeded")
+            print("Connection succeeded")
             return True
         except pymysql.Error as err:
-            print (err)
-    #compares table input to actual tables
-    def __checktable(self, table):
+            print(err)
+    #END DEF
+
+
+    #ERROR CHECKING and DECORATORS ---------------------------------------------
+
+    def __checkTable(func):
+        def checkTableWrapper(*args, **kwargs):
+            """
+            Checks if the user's table exists in the database.
+             If not, an error is raised
+            """
+            args[0].cursor.execute("SHOW TABLES")
+            tables = args[0].cursor.fetchall()
+            if not tables:
+                raise RuntimeError("Something went wrong getting tables.")
+            tables = [elem[0] for elem in tables]
+            if args[1] not in tables:
+                raise ValueError("The table you passed in has not been created.")
+            return func(*args, **kwargs)
+        return checkTableWrapper
+    #END DEF
+
+    def __getColumns(self, table):
         """
-        Checks if the user's table exists in the database. If not an error is returned
+        Grabs correct columns from database in order to check queries to see
+         if any wrong inputs went through
         """
-        self.cursor.execute("SHOW TABLES")
-        tables = self.cursor.fetchall()
-        if not tables:
-            raise RuntimeError("Something went wrong getting tables")
-        tables = [elem[0] for elem in tables]
-        return tables
-    #gets columns to compare queries too
-    def __getcolumns(self, table):
-        """
-        Grabs correct columns from database in order to check queries to see if any wrong inputs went through
-        """
-        self.cursor.execute("SHOW COLUMN FROM %s" %table)
-        list = self.cursor.description
+        self.cursor.execute("SHOW COLUMNS FROM %s" %table)
+        list = self.cursor.fetchall()
         return [getcolm[0] for getcolm in list]
+    #END DEF
 
     def __executeQuery(self, query, queryData):
         """
-            Executes query and saves lastQuery as the query as a string for reference use later in insert and select functions
+        Executes query and saves lastQuery as the query as a string for
+         reference use later in insert and select functions
         """
-        self.lastQuery = self.__queryAsString(query, queryData)
-        try:
-            self.cursor.execute(query, queryData)
-            self.lastResult = self.cursor.fetchall()
-            return (True, self.lastResult)
-        except pymysql.Error as err:
-            print (err)
-            return (False,[])
+        asString = self.__queryAsString(query, queryData)
+        if asString != self.lastQuery:
+            self.lastQuery = asString
+            try:
+                self.cursor.execute(query, queryData)
+                self.lastResult = (True, self.cursor.fetchall())
+            except pymysql.Error as err:
+                print(err)
+                self.lastResult = (True, [])
+        return self.lastResult
+    #END DEF
 
     def __queryAsString(self, query, queryData):
-        """Recieves a query with placeholders in it, with the data and creates a string version with data in it, for comparison
+        """
+        Recieves a query with placeholders in it, with the data and
+         creates a string version with data in it, for comparison
         """
         queryWithData = query.replace("%(","{").replace(")s","}")
         return queryWithData.format(**queryData)
+    #END DEF
 
+    #QUERY GENERATION and EXECUTION --------------------------------------------
+
+    @__checkTable
     def insert(self, table, **kwargs):
-        """Runs an INSERT query with table and kwargs.
-            Table has the table that user declared. Table to be checked
-            KWARGS:
-                we expect in kwargs:
-                    Location = '[input]', DeviceID = '[input]'
-                    In this example DeviceID and Location would be keys within in kwargs and would be paired the inputs which are either strings or numbers. These inputs are the values we would be inserting into the row.         """
-        if table not in self.__checktable(table):
-            raise ValueError("The given table does not exist")
-        columns = self.__getcolumns(table)
+        """
+        Runs an INSERT query with table and kwargs.
+         'table' has the table that user declared, and kwargs is made of
+         column/value pairs.
+        ARGS:
+            table   String, the table to insert into
+        **KWARGS:
+            key     Dictionary key, the column to insert a value into
+            value   String/Integer/Date/Time, the value to insert
+        """
+        columns = self.__getColumns(table)
         #Grabing every key in kwargs assigning to kwargkey
         #Check to see if value kwargkey is in columns
         for kwargkey in kwargs:
@@ -120,20 +167,26 @@ class CSDI_MySQL():
         query = query[:-1]+")"
         flag, results = self.__executeQuery(query, kwargs)
         if flag:
-            newflag, results = self.__executeQuery("SELECT LAST_INSERT_ID()",[])
+            newflag, results = self.__executeQuery("SELECT LAST_INSERT_ID()",{})
             return results[0][0]
         return flag
+    #END DEF
 
+    @__checkTable
     def select(self, table, *args, **kwargs):
         """
-        Creates a simple function using correct tables, columns and values to query the database for specific information.
-            TABLE: Table inputed, still needs to be checked by function
-            ARGS: This holds all of the column names describing the values to be returned
-            KWARGS: Hold the values for the specific columns to be searched for
+        Creates a simple function using correct tables, columns and values to
+         query the database for specific information.
+        ARGS:
+            table   String, the table to select from
+        *ARGS:
+            A sequence of Strings, which are the columns from which data should be queried.
+            User '*' for all columns
+        **KWARGS:
+            Key/Value pairs, which represent the column/value pairs in the table
+             that form the criteria of the query.
         """
-        if table not in self.__checktable(table):
-            raise ValueError("The given table does not exist")
-        columsn = self.getcolumns(table)
+        columns = self.__getColumns(table)
         for kwargkey in kwargs:
             if kwargkey not in columns:
                 print("Please enter proper columns and values")
@@ -154,10 +207,6 @@ class CSDI_MySQL():
             #kwargskeys is being used as a placeholder in query string
             query +=" " + kwargskeys +" "+ kwargs[kwargskeys+ "_operator"] +" %(" + kwargskeys + ")s AND"
         query = query[:-3]+ ""
-        if self.__queryAsString(query, kwargs) == self.lastQuery:
-            return self.lastResult
-        else:
-            flag, results = self.__executeQuery(query, kwargs)
-            if flag:
-                return results
-
+        return self.__executeQuery(query, kwargs)
+    #END DEF
+#END CLASS
