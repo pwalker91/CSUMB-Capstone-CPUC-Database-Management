@@ -1,12 +1,14 @@
 """
 -------------------------------------------------------------------------------
 PyDB_API.PY
-    
+
 AUTHOR(S):  Peter Walker: pwalker@csumb.edu
             Nicholas Moradi: nmoradi@csumb.edu
-    
-PURPOSE-  This module will be used for data manipulation in MySQL Databases. Ability to SELECT and INSERT. Creates a class that will use multiple functions to do what it needs to do
-    
+
+PURPOSE-  This module will be used for data manipulation in MySQL Databases.
+            Ability to SELECT and INSERT. Creates a class that will use multiple
+            functions to do what it needs to do.
+
 CLASSES-
     CSDI_MySQL
         CLASS VARIABLES-
