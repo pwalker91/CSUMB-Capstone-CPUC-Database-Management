@@ -187,25 +187,36 @@ class CSDI_MySQL():
              that form the criteria of the query.
         """
         columns = self.__getColumns(table)
-        for kwargkey in kwargs:
+        #kwargs.keys() gets all the key values and puts into a list form
+        #the list function is applied to make it mutable
+        trueKeys = list(kwargs.keys())
+        #add each element from keys to the new array if "_operator" is not in the key name
+        #the resulting array is all of the keys in kwargs that are column names
+        trueKeys = [elem for elem in trueKeys if "_operator" not in elem]
+        for kwargkey in trueKeys:
             if kwargkey not in columns:
                 print("Please enter proper columns and values")
                 return False
-            #kwargs.keys() gets all the key values and puts into a list form
-            #the list function is applied to make it mutable
-        keys = list(kwargs.keys())
-        #add each element from keys to the new array if "_operator" is not in the key name
-        #the resulting array is all of the keys in kwargs that are column names
-        keys = [elem for elem in keys if "_operator" not in elem]
+        #This checks that each element in 'args' is a column within the table,
+        # or that the argkey is '*'
+        if len(args)<1:
+            print("You need to pass in what columns you want selected. Pass in '*' for all columns.")
+            return False
+        for argkey in args:
+            if argkey not in columns and argkey != '*':
+                print("Please enter proper columns names.")
+                return False
+
+        #Adding the columns after SELECT, the columns the user wants returned
         query = "SELECT "
         for argkey in args:
             query += "" + argkey + ","
         query = query[:-1] + " FROM " + table + " WHERE "
-        for kwargskeys in keys:
+        for kwargskey in trueKeys:
             #adding to the query what we are looking for
             #kwarg key = column name, kwargs[kwargskeys + _operator] is grabbing the mathematical operator from kwargs
             #kwargskeys is being used as a placeholder in query string
-            query +=" " + kwargskeys +" "+ kwargs[kwargskeys+ "_operator"] +" %(" + kwargskeys + ")s AND"
+            query +=" " + kwargskey +" "+ kwargs[kwargskey+"_operator"] +" %(" + kwargskey + ")s AND"
         query = query[:-3]+ ""
         return self.__executeQuery(query, kwargs)
     #END DEF
