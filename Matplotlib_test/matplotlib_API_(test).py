@@ -1,18 +1,18 @@
 import matplotlib.pyplot as plt
 import pandas
-import PyMySQL
+import pymysql
 
 
 # connect to MySQL database
-conn = PyMySQL.connect(host="localhost", user="Moradster", passwd="root", db="testdb")
+conn = pymysql.connect(host="localhost", user="Moradster", passwd="root", db="testdb")
 
 
 # this is the query we will be making
 query = """
     SELECT Speed, Date
     FROM
-    WHERE Data >= "2014-01-03"
-    AND Data < "2014-02-25";
+    WHERE Data >= "2015-01-03"
+    AND Data < "2015-02-25";
     """
 
 df = pandas.read_sql(query, conn, index_col=['Data'])
