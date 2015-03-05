@@ -1,29 +1,33 @@
 import matplotlib.pyplot as plt
-import pandas
+import sys
 import pymysql
+import numpy as np
+from pylab import *
+
 from PyDB_API import CSDI_MySQL
 
-#db = CSDI_MySQL(database = 'testdb', user = 'Moradster', password= 'root')
+db = CSDI_MySQL(database = 'testdb', user = 'Moradster', password= 'root')
 
 
 # connect to MySQL database
-conn = pymysql.connect(host="localhost", user="Moradster", passwd="root", db="testdb")
-
+db.connect()
 
 # this is the query we will be making
-query = """SELECT Speed, id FROM test WHERE id >= "1" AND id < "9";"""
-#db.connect()
-#results = db.select('test', "speed","date", date="2015-01-03", date_operator=">=")
-#print(results)
-df = pandas.read_sql(query, conn, index_col=['id'])
-fig, ax = plt.subplots()
-df.plot(ax=ax)
-# plt.xticks(TimeStamp, (hour))
-fig.set_size_inches(20.5,10.5)
-plt.grid(True)
+query = """SELECT Speed, date FROM test WHERE date >= "2015-01-03";"""
+results = db.select('test', "speed","date", date="2015-01-03", date_operator=">=")
+print(results)
+x = []
+y = []
+for records  in results[1]:
+    x.append(records[0])
+    y.append(records[1])
+line, = plt.plot(x, y, 'ko')
+title(query)
+grid(True)
 plt.draw()
-fig.savefig('/Users/Moradster/test2.png', dpi=100)
-
-conn.close()
+plt.show()
+F = gcf()
+DPI = F.get_dpi()
+F.savefig('plot.png', dpi = (80))
 #grab results return from the PyDB_MySQL api when a query is executed.
 #pandas should only get data to transform meaning results from mysql query
