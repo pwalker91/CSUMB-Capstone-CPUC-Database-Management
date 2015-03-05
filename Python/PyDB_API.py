@@ -43,10 +43,11 @@ class CSDI_MySQL():
     """
 
     #CLASS ATTRIBUTES --------------
-    lastResult = False
+    lastResult = (False,[])
     lastQuery = ""
 
     config = {}
+    cursor = None
     # ------------------------------
 
     def __init__(self, **kwargs):
@@ -65,6 +66,16 @@ class CSDI_MySQL():
                        "autocommit": True
                        }
         self.config.update(kwargs)
+        self.cursor = None
+    #END DEF
+
+    def __del__(self):
+        """Safely destroys the object, closing database connections"""
+        self.config = {}
+        if isinstance(self.cursor, pymysql.cursors.Cursor.__class__):
+            self.cursor.close()
+        self.cursor = None
+        print("Database connection closed.")
     #END DEF
 
 
@@ -72,13 +83,18 @@ class CSDI_MySQL():
 
     def connect(self):
         """Starts connection and stores le cursor in the object"""
+        if 'database' not in self.config:
+            print("You must specify a database before you can connect.")
+            return False
+        #Now that we know self.config['database'] is set, we try connecting
         try:
             connection = pymysql.connect(**self.config)
             self.cursor = connection.cursor()
-            print("Connection succeeded")
+            print("Connection established to {}.".format(self.config['database']))
             return True
         except pymysql.Error as err:
             print(err)
+            return False
     #END DEF
 
 
@@ -101,14 +117,24 @@ class CSDI_MySQL():
         return checkTableWrapper
     #END DEF
 
-    def __getColumns(self, table):
-        """
-        Grabs correct columns from database in order to check queries to see
-         if any wrong inputs went through
-        """
-        self.cursor.execute("SHOW COLUMNS FROM %s" %table)
-        list = self.cursor.fetchall()
-        return [getcolm[0] for getcolm in list]
+    def __checkColumns(func):
+        def checkColumnsWrapper(*args, **kwargs):
+            """
+            Checks the given columns in args and kwargs, and if the tables exist
+             in the given table.
+            """
+            args[0].cursor.execute("SHOW COLUMNS FROM {}".format(args[1]))
+            columnsList = [column[0] for column in args[0].cursor.fetchall()]
+            givenColumns = list(args[2:])
+            if "*" in givenColumns:
+                givenColumns.remove(givenColumns.index("*"))
+            [givenColumns.append(key) for key in kwargs if "_operator" not in key]
+            for column in givenColumns:
+                if column not in columnsList:
+                    raise RuntimeError("The given column, '{}'".format(column)+
+                                       ", is not in the given table, '{}'".format(args[1]))
+            return func(*args, **kwargs)
+        return checkColumnsWrapper
     #END DEF
 
     def __executeQuery(self, query, queryData):
@@ -124,7 +150,7 @@ class CSDI_MySQL():
                 self.lastResult = (True, self.cursor.fetchall())
             except pymysql.Error as err:
                 print(err)
-                self.lastResult = (True, [])
+                self.lastResult = (False, self.lastResult[-1])
         return self.lastResult
     #END DEF
 
@@ -139,6 +165,7 @@ class CSDI_MySQL():
 
     #QUERY GENERATION and EXECUTION --------------------------------------------
 
+    @__checkColumns
     @__checkTable
     def insert(self, table, **kwargs):
         """
@@ -151,20 +178,13 @@ class CSDI_MySQL():
             key     Dictionary key, the column to insert a value into
             value   String/Integer/Date/Time, the value to insert
         """
-        columns = self.__getColumns(table)
-        #Grabing every key in kwargs assigning to kwargkey
-        #Check to see if value kwargkey is in columns
-        for kwargkey in kwargs:
-            if kwargkey not in columns:
-                print("Please enter proper columns and values")
-                return False
-        query = "INSERT INTO " + table + " ("
+        query = "INSERT INTO {} (".format(table)
         for key in kwargs:
-            query += "" + key + ","
-        query = query[:-1]+" ) VALUES ("
+            query += "{}, ".format(key)
+        query = query[:-2]+" ) VALUES ("
         for key in kwargs:
-            query += " %(" + key + ")s,"
-        query = query[:-1]+")"
+            query += "%({})s, ".format(key)
+        query = query[:-2]+")"
         flag, results = self.__executeQuery(query, kwargs)
         if flag:
             newflag, results = self.__executeQuery("SELECT LAST_INSERT_ID()",{})
@@ -172,6 +192,7 @@ class CSDI_MySQL():
         return flag
     #END DEF
 
+    @__checkColumns
     @__checkTable
     def select(self, table, *args, **kwargs):
         """
@@ -185,39 +206,55 @@ class CSDI_MySQL():
         **KWARGS:
             Key/Value pairs, which represent the column/value pairs in the table
              that form the criteria of the query.
+            Key/operator pairs, where the key is the column name, followed
+             by '_operator'. This can be '=', '>', etc.
+            The only conjunction available is 'AND'. If you wish to execute a
+             more selective query, you must call executeAQuery().
         """
-        columns = self.__getColumns(table)
-        #kwargs.keys() gets all the key values and puts into a list form
-        #the list function is applied to make it mutable
-        trueKeys = list(kwargs.keys())
-        #add each element from keys to the new array if "_operator" is not in the key name
-        #the resulting array is all of the keys in kwargs that are column names
-        trueKeys = [elem for elem in trueKeys if "_operator" not in elem]
-        for kwargkey in trueKeys:
-            if kwargkey not in columns:
-                print("Please enter proper columns and values")
-                return False
+        #kwargs.keys() gets all the key values from kwargs, and puts into a list form.
+        #The list function is applied to make it mutable
+        #We then add each element from the keys to the new array if "_operator"
+        # is not in the key name. The resulting array is all of the keys in
+        # kwargs that are column names.
+        trueKeys = [elem for elem in list(kwargs.keys()) if "_operator" not in elem]
         #This checks that each element in 'args' is a column within the table,
         # or that the argkey is '*'
         if len(args)<1:
-            print("You need to pass in what columns you want selected. Pass in '*' for all columns.")
-            return False
-        for argkey in args:
-            if argkey not in columns and argkey != '*':
-                print("Please enter proper columns names.")
-                return False
+            raise RuntimeError("You need to pass in what columns you want selected."+
+                               "Pass in '*' for all columns.")
 
         #Adding the columns after SELECT, the columns the user wants returned
         query = "SELECT "
         for argkey in args:
-            query += "" + argkey + ","
-        query = query[:-1] + " FROM " + table + " WHERE "
+            query += "{}, "
+        query = query[:-2] + " FROM {} WHERE ".format(table)
         for kwargskey in trueKeys:
             #adding to the query what we are looking for
-            #kwarg key = column name, kwargs[kwargskeys + _operator] is grabbing the mathematical operator from kwargs
-            #kwargskeys is being used as a placeholder in query string
-            query +=" " + kwargskey +" "+ kwargs[kwargskey+"_operator"] +" %(" + kwargskey + ")s AND"
-        query = query[:-3]+ ""
+            #kwarg key = column name, kwargs[kwargskey + _operator] is grabbing
+            # the mathematical operator from kwargs
+            #kwargskey is being used as a placeholder in query string
+            acceptableOps = ["=", "<>", ">", ">=", "<", "<="]
+            if kwargskey+"_operator" not in kwargs:
+                kwargs[kwargskey+"_operator"] = "="
+            else:
+                if kwargs[kwargskey+"_operator"] not in acceptableOps:
+                    print("You gave an incorrect SQL predicate. "+
+                          "Was given '{}'".format(kwargs[kwargskey+"_operator"]))
+                    return self.lastResult
+            #END IF/ELSE
+
+            #Now we actually create the criteria, subbing in the column name,
+            # operator, and conjunction
+            query +=" {} {} %({})s AND".format(kwargskey,
+                                               kwargs[kwargskey+"_operator"],
+                                               kwargskey)
+        #Removing the AND from the end of our query
+        query = query.rsplit(" ",1)[0]
         return self.__executeQuery(query, kwargs)
+    #END DEF
+
+
+    def _executeAQuery(self, *args, **kwargs):
+        return False
     #END DEF
 #END CLASS
