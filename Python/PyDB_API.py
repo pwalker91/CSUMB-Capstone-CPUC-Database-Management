@@ -226,7 +226,7 @@ class CSDI_MySQL():
         #Adding the columns after SELECT, the columns the user wants returned
         query = "SELECT "
         for argkey in args:
-            query += "{}, "
+            query += "{}, ".format(argkey)
         query = query[:-2] + " FROM {} WHERE ".format(table)
         for kwargskey in trueKeys:
             #adding to the query what we are looking for
