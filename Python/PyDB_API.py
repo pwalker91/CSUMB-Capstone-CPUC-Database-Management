@@ -8,18 +8,6 @@ AUTHOR(S):  Peter Walker: pwalker@csumb.edu
 PURPOSE-  This module will be used for data manipulation in MySQL Databases.
             Ability to SELECT and INSERT. Creates a class that will use multiple
             functions to do what it needs to do.
-
-CLASSES-
-    CSDI_MySQL
-        CLASS VARIABLES-
-            lastResult = False
-            lastQuery = ""
-            config = {}
-        FUNCTIONS-
-            __init__(self)
-            connect(self)
-            insert(self, table **kwargs)
-            select(self, table, *args, **kwargs)
 -------------------------------------------------------------------------------
 """
 
@@ -40,6 +28,8 @@ class CSDI_MySQL():
                          into the query
         config          Dictionary, the configuration information for connecting
                          to the database
+        connection      PyMySQL Connection object
+        cursor          PyMySQL Cursor object
     """
 
     #CLASS ATTRIBUTES --------------
@@ -47,6 +37,7 @@ class CSDI_MySQL():
     lastQuery = ""
 
     config = {}
+    connection = None
     cursor = None
     # ------------------------------
 
@@ -72,8 +63,9 @@ class CSDI_MySQL():
     def __del__(self):
         """Safely destroys the object, closing database connections"""
         self.config = {}
-        if isinstance(self.cursor, pymysql.cursors.Cursor.__class__):
-            self.cursor.close()
+        if isinstance(self.connection, pymysql.connections.Connection.__class__):
+            self.connection.close()
+        self.connection = None
         self.cursor = None
         print("Database connection closed.")
     #END DEF
@@ -88,8 +80,8 @@ class CSDI_MySQL():
             return False
         #Now that we know self.config['database'] is set, we try connecting
         try:
-            connection = pymysql.connect(**self.config)
-            self.cursor = connection.cursor()
+            self.connection = pymysql.connect(**self.config)
+            self.cursor = self.connection.cursor()
             print("Connection established to {}.".format(self.config['database']))
             return True
         except pymysql.Error as err:
@@ -198,6 +190,12 @@ class CSDI_MySQL():
         """
         Creates a simple function using correct tables, columns and values to
          query the database for specific information.
+        !!!
+        Note that you do not have control of the order in which the columns are
+         added to the query. You must assume that the columns given in kwargs
+         and args will not be int he order you specify them. You can also not
+         change the conjuntion between AND and OR
+        !!!
         ARGS:
             table   String, the table to select from
         *ARGS:
@@ -209,7 +207,7 @@ class CSDI_MySQL():
             Key/operator pairs, where the key is the column name, followed
              by '_operator'. This can be '=', '>', etc.
             The only conjunction available is 'AND'. If you wish to execute a
-             more selective query, you must call executeAQuery().
+             more selective query, you must call _executeAQuery().
         """
         #kwargs.keys() gets all the key values from kwargs, and puts into a list form.
         #The list function is applied to make it mutable
