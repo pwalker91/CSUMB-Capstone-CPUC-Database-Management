@@ -18,7 +18,7 @@ import statistics
 import datetime
 
 from FileParser.FieldTest_File import FieldTest_File as parser
-from PyDB_API import CSDI_MySQL as dbapi
+from CSDI_MySQL import CSDI_MySQL as dbapi
 
 if __name__!="__main__":
     raise SystemExit
@@ -45,15 +45,15 @@ config = {"user": "root",
           "database": "CPUC",
           "autocommit": True
           }
-api = dbapi(**config)
-api.connect()
+db = dbapi(**config)
+db.connect()
 
 print("Inserting...")
 for file in parsedFiles:
     print(" Inserted {} of {}...".format(parsedFiles.index(file)+1, len(parsedFiles)), end="\r")
     avgLat = [elem[0] for elem in file.AllCoordPairs if elem[0]!=0]
     avgLng = [elem[1] for elem in file.AllCoordPairs if elem[1]!=0]
-    newID = api.insert( "Overview",
+    newID = db.insert( "Overview",
                         OSName_OSArchitecture_OSVersion=("{} | {} | {}".format(file.OSName,
                                                                                file.OSArchitecture,
                                                                                file.OSVersion)),
@@ -81,7 +81,7 @@ for file in parsedFiles:
         sdv_md = tcpTest.get_csvStatValues()
         qual = tcpTest.get_csvQualValues()
         allValues = [elem if isinstance(elem, (float, int)) else 0 for elem in (avgs+sdv_md+qual)]
-        api.insert( "TCPResult",
+        db.insert( "TCPResult",
                     oid=newID,
                     ConnectionLoc=tcpTest.ConnectionLoc,
                     TestNumber=tcpTest.TestNumber,
@@ -102,7 +102,7 @@ for file in parsedFiles:
 
     for udpTest in file.Tests["UDP"]:
         statVals = [elem if isinstance(elem, (float,int)) else 0 for elem in udpTest.get_csvDefaultValues()]
-        api.insert( "UDPResult",
+        db.insert( "UDPResult",
                     oid=newID,
                     ConnectionLoc=udpTest.ConnectionLoc,
                     TestNumber=udpTest.TestNumber,
@@ -116,7 +116,7 @@ for file in parsedFiles:
 
     for pingTest in file.Tests["PING"]:
         rvMos = [elem if isinstance(elem, (float, int)) else 0 for elem in pingTest.get_csvRvMosValues()]
-        api.insert( "PINGResult",
+        db.insert( "PINGResult",
                     oid=newID,
                     ConnectionLoc=pingTest.ConnectionLoc,
                     TestNumber=pingTest.TestNumber,
