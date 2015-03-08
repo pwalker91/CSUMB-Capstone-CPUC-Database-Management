@@ -71,7 +71,7 @@ class CSDI_MySQL():
     #END DEF
 
 
-    #INITIALIZATION ------------------------------------------------------------
+    #INITIAL CONNECT -----------------------------------------------------------
 
     def connect(self):
         """Starts connection and stores le cursor in the object"""
@@ -104,9 +104,29 @@ class CSDI_MySQL():
                 raise RuntimeError("Something went wrong getting tables.")
             tables = [elem[0] for elem in tables]
             if args[1] not in tables:
-                raise ValueError("The table you passed in has not been created.")
+                raise ValueError("The table '{}' has not been created.".format(args[1]))
             return func(*args, **kwargs)
         return checkTableWrapper
+    #END DEF
+
+    def __checkTableAlt(self, query):
+        """
+        This function takes a query string, and splits the table name from it.
+         It then checks that this table has been created within the database.
+        """
+        tableName = query.lower().split("from ")[1].split(" ")[0]
+        if not tableName:
+            raise ValueError("Your query must contain a table name. Please check your query at \n"+
+                             "'{}'".format(query[query.lower().index("from")+4:]))
+        #Now that we know we passed the IF block, and so some kind of data must be in tableName
+        self.cursor.execute("SHOW TABLES")
+        tables = self.cursor.fetchall()
+        if not tables:
+            raise RuntimeError("Something went wrong getting tables.")
+        tables = [elem[0] for elem in tables]
+        if tableName not in tables:
+            raise ValueError("The table '{}' has not been created.".format(tableName))
+        return True
     #END DEF
 
     def __checkColumns(func):
@@ -128,6 +148,9 @@ class CSDI_MySQL():
             return func(*args, **kwargs)
         return checkColumnsWrapper
     #END DEF
+
+
+    # HIDDEN FUNCTIONS FOR EXECUTING QUERIES -----------------------------------
 
     def __executeQuery(self, query, queryData):
         """
@@ -154,6 +177,7 @@ class CSDI_MySQL():
         queryWithData = query.replace("%(","{").replace(")s","}")
         return queryWithData.format(**queryData)
     #END DEF
+
 
     #QUERY GENERATION and EXECUTION --------------------------------------------
 
@@ -252,7 +276,46 @@ class CSDI_MySQL():
     #END DEF
 
 
-    def _executeAQuery(self, *args, **kwargs):
-        return False
+    def _executeQuery(self, *args, **kwargs):
+        """
+        A function for sending queries to the SQL database. You must use either
+         *args or **kwargs, no combination of the two.
+        ARGS/KWARGS:
+            args[0] or kwargs['query']
+                The SQL query you wish to execute
+            args[1] or kwargs['queryData']
+                The data you wish to send with the SQL query. Must be in a dictionary.
+                 Can be empty, or not exist. If it does not exist, then the data
+                 is assumed to already exist within the query.
+                If you wish to send the query with data, be sure that the query
+                 has the appropiate placeholder values, and that each placholder
+                 has a corresponding key in the query data dictionary
+        """
+        #Initial variable declaration
+        if len(args):
+            query = args[0]
+            queryData = args[1]
+        else:
+            if 'query' not in kwargs:
+                raise ValueError("You must pass a query in through the keyword argument 'query'.")
+            query = kwargs['query']
+            if 'queryData' not in kwargs:
+                queryData = {}
+            else:
+                queryData = kwargs['queryData']
+        #END IF/ELSE
+        if not isinstance(query, str):
+            raise ValueError("You must pass in a query as a string. Was given {}".format(type(query)))
+        if not isinstance(queryData, dict):
+            raise ValueError("You must pass in query data as a dictionary. Was given {}".format(type(queryData)))
+        #The last thing we do before we send the query is check that a table has been given, and
+        # then check that each key in queryData has a matching placeholder in the query.
+        self.__checkTableAlt(query)
+        for key in queryData:
+            if key not in query:
+                raise ValueError("Some data that you gave does not have a placeholder in the SQL query.\n"+
+                                 "The item '{}' is missing a placeholder in the query".format(key))
+        #Calling execute, returning the result
+        return self.__executeQuery(query, queryData)
     #END DEF
 #END CLASS
