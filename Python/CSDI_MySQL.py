@@ -17,7 +17,7 @@ import pymysql
 #END IMPORTS
 
 
-class CSDI_MySQL():
+class CSDI_MySQL(object):
 
     """
     This class will connect to a specific database, and generate
