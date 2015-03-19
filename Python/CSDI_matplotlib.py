@@ -8,12 +8,12 @@ from PyDB_API import CSDI_MySQL
 def plotGraph():
     
     # this is the query we will be making
-    query = """SELECT Speed, date FROM test WHERE date >= "2015-01-03";"""
+    #query = """SELECT Speed, date FROM test WHERE date >= "2015-01-03";"""
     results = db.select('test', "speed","date", date="2015-01-03", date_operator=">=")
     print(results)
     x = []
     y = []
-    for records  in results[1]:
+    for records in results[1]:
         x.append(records[0])
         y.append(records[1])
     line, = plt.plot(x, y, 'ko')
