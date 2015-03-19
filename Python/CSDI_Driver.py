@@ -10,6 +10,7 @@ from CSDI_matplotlib_adv.py import CSDI_MPL as mpl
 #is it possible to write the select statement as a string? and feed the string to CSDI_MySQL?
 myDict = {'table':'test', 'type': 'TCP', 'date': 'somedate', 'operator': '>=', 'statistics': 'mean'}
 math = ""
+query = ""
 print (myDict)
 
 def getData(myDict):
@@ -21,6 +22,8 @@ def getData(myDict):
         #this is for the type of statistics they want
         #if they want a specific type, I can include that into the graphing functions and do another if/else to determine which type of graph they want.
         #i know most of this is wrong too.....
+        #looked online to find a way to just take values out of dictionaries and convert it to a string
+        query.join('{},'.format(val) for key, val in myDict.items())
         if (data == 'mean'):
             math = 'mean'
         if (data == 'median'):
