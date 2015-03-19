@@ -9,18 +9,30 @@ from CSDI_matplotlib_adv.py import CSDI_MPL as mpl
     """
 #is it possible to write the select statement as a string? and feed the string to CSDI_MySQL?
 myDict = {'table':'test', 'type': 'TCP', 'date': 'somedate', 'operator': '>=', 'statistics': 'mean'}
+math = ""
+print (myDict)
 
 def getData(myDict):
     for data in myDict:
         #make values from myDict into the form where I can do results = db.select(information from my dict)
         #can i make it all one string and place it into select?
         #cause I want to do it kinda like how we did for select where we initiated query and added to it...
-        print (data)
+        #........
+        #this is for the type of statistics they want
+        #if they want a specific type, I can include that into the graphing functions and do another if/else to determine which type of graph they want.
+        #i know most of this is wrong too.....
+        if (data == 'mean'):
+            math = 'mean'
+        if (data == 'median'):
+            math = 'median'
+        if (data == 'max'):
+            math = 'max'
+        print (math)
     #print (query)
     results = db.select("""information from myDict""")
     graphData(results)
 def graphData(data):
-    mpl.lineGraph(data)
-    mpl.barGraph(data)
+    mpl.lineGraph(data,math)
+    mpl.barGraph(data,math)
     #right? ^^^^?
 
