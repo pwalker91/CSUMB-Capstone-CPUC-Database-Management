@@ -1,0 +1,200 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+        <meta name='author'
+              content='Peter Walker | pwalker@csumb.edu'>
+        <meta name="keywords" content="HTML, data analysis, cpuc, CPUC, csumb, CSUMB">
+        <title>The Prototype Query Page - CSDI</title>
+
+        <!-- Latest jQuery -->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
+
+        <!-- Include Bootstrap Datepicker -->
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
+
+        <!-- My jQuery functions, used for div hiding/unhiding, and setting datepicker options-->
+        <script src="request_jquery.js"></script>
+        <!-- Some specialty styling -->
+        <link rel="stylesheet" href="request_styling.css" />
+    </head>
+
+
+
+    <body>
+        <div class='container-fluid' style="margin:0 auto">
+            <div class='row'>
+                <div class='jumbotron text-center'>
+                    <h1 class='text-center'>Query Request Page</h1>
+                    <p>A simple way to request analyses of Iperf network testing data.</p>
+                </div> <!-- end HEADER -->
+            </div> <!-- end ROW -->
+
+            <div class='row'>
+                <div class='col-xs-10 how-to'>
+                    <dl class="dl-horizontal">
+                        <dt>Test Type</dt>
+                        <dd>Please choose which type of tranmission techonology (i.e., the test conducted) you would like to have analyzed.</dd>
+
+                        <dt>Date</dt>
+                        <dd>Please use the given input box to choose a date from a calendar. This will be one of the criteria used to get specfic statistics.</dd>
+
+                        <dt>Submit</dt>
+                        <dd>Submits the form to be processed so that the query request may be generated.</dd>
+                    </dl>
+                </div><!-- end HOWTO -->
+            </div> <!-- end ROW -->
+            <hr/>
+
+
+            <form id="query_form"
+                  method="post"
+                  action="#"
+                  role='form'>
+            <table class='table table-bordered'>
+
+            <tr><td>
+                <!-- Choosing the test type -->
+                <div class="form-group">
+                    <label class="col-xs-8 col-sm-4 text-align-xs text-align-sm control-label">
+                        <h4>Test Type</h4>
+                    </label>
+                    <div class='col-xs-10 col-sm-8'>
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary">
+                                <input id='tcp'
+                                       value='TCP'
+                                       type="radio"
+                                       class="form-control"
+                                       name="form_ttype"
+                                       autocomplete="off"> TCP
+                            </label>
+                            <label class="btn btn-primary">
+                                <input id="udp"
+                                       value='UDP'
+                                       type="radio"
+                                       class="form-control"
+                                       name="form_ttype"
+                                       autocomplete="off"> UDP
+                            </label>
+                            <label class="btn btn-primary">
+                                <input id="ping"
+                                       value='PING'
+                                       type="radio"
+                                       class="form-control"
+                                       name="form_ttype"
+                                       autocomplete="off"> PING
+                            </label>
+                        </div>
+                        <div class='input-group'>
+                            <div id='tcp_choices' style="display:none">
+                                <select class="form-control" name='form_ttype_tcp_vals'>
+                                    <option value="">- Select an Option -</option>
+                                    <option value='throughput'>Throughput</option>
+                                </select>
+                            </div>
+                            <div id='udp_choices' style="display:none">
+                                <select class="form-control" name='form_ttype_udp_vals'>
+                                    <option value="">- Select an Option -</option>
+                                    <option value='jitter'>Jitter</option>
+                                    <option value='datagram-loss'>Datagram Loss</option>
+                                </select>
+                            </div>
+                            <div id='ping_choices' style="display:none">
+                                <select class="form-control" name='form_ttype_png_vals'>
+                                    <option value="">- Select an Option -</option>
+                                    <option value='delay'>Delay</option>
+                                    <option value='packet-loss'>Packet Loss</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div><!-- end TEST TYPE RADIOs -->
+                </div>
+            </td></tr>
+
+            <tr><td>
+            <!-- A date picker -->
+            <div class='form-group'>
+                <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                    <h4>Date Selection</h4>
+                </label>
+                <div class='col-xs-8 col-sm-3'>
+                    <label>Date</label>
+                    <div class='input-group' id='date'>
+                        <input type="date"
+                               class="form-control"
+                               name="form_date" />
+                        <span class="input-group-addon add-on">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div><!-- end DATE INPUT -->
+                </div>
+                <div class="col-xs-8 col-sm-2">
+                    <label>Date Comparison</label>
+                    <div class='input-group' id='date-comp'>
+                        <select class='form-control' name='form_date_comparator'>
+                            <option value=""></option>
+                            <option value="<=">&lt;&#61;</option>
+                            <option value="=">&#61;</option>
+                            <option value=">=">&gt;&#61;</option>
+                        </select>
+                        <span class='input-group-addon add-on'>
+                            <span class="glyphicon glyphicon-filter"></span>
+                        </span>
+                    </div>
+                </div><!-- end COMPARATOR RADIOs -->
+            </div>
+            </td></tr>
+
+            <tr><td>
+            <!-- Choice of stats function -->
+            <div class='form-group'>
+                <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                    <h4>Statistics</h4>
+                </label>
+                <div class='col-xs-8 col-sm-3'>
+                    <div class="input-group">
+                        <select class="form-control" name='form_stats'>
+                            <option value=""></option>
+                            <option value='mean'>Mean</option>
+                            <option value='median'>Median</option>
+                            <option value='max'>Max</option>
+                        </select>
+                        <span class='input-group-addon add-on'>
+                            <span class="glyphicon glyphicon-stats"></span>
+                        </span>
+                    </div>
+                </div><!-- end STATS FUNC CHOICE -->
+            </div>
+            </td></tr>
+
+            <tr><td>
+            <!-- Form Submit -->
+            <div class='form-group'>
+                <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                    <h4>Complete Form</h4>
+                </label>
+                <div class='col-xs-10 col-sm-8'>
+                    <button type="submit"
+                            name='form_submit'
+                            class="btn btn-lg btn-success">Submit
+                    </button>
+                </div>
+            </div>
+            </td></tr>
+
+            </table>
+            </form><!-- end FORM -->
+
+        </div><!-- end CONTAINER -->
+    </body>
+</html>
