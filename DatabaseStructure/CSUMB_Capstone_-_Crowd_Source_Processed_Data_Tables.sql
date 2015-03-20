@@ -40,9 +40,9 @@ CREATE TABLE `FileInfo` (
     `DistanceMoved`     float          NOT NULL ,
     `ErrorType`         int            NOT NULL DEFAULT 0 ,
     `FileLocation`      varchar(50)    NULL DEFAULT NULL ,
-    `Flag`              bool           NOT NULL ,
+    `Flag`              bool           NOT NULL DEFAULT 0,
     `FlagMessage`       blob           NULL ,
-    CONSTRAINT `Overview_pk` PRIMARY KEY (`Id`)
+    CONSTRAINT `FileInfo_pk` PRIMARY KEY (`Id`)
 ) ENGINE InnoDB
 ;
 

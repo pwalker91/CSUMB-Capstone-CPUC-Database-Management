@@ -34,9 +34,9 @@ CREATE TABLE `FileInfo` (
     `AvgLongitude`      float          NULL DEFAULT NULL ,
     `ErrorType`         varchar(30)    NULL DEFAULT NULL ,
     `FileLocation`      varchar(50)    NULL DEFAULT NULL ,
-    `Flag`              bool           NOT NULL DEFAULT O,
+    `Flag`              bool           NOT NULL DEFAULT 0,
     `FlagMessage`       blob           NULL ,
-    CONSTRAINT `Overview_pk` PRIMARY KEY (`Id`)
+    CONSTRAINT `FileInfo_pk` PRIMARY KEY (`Id`)
 ) ENGINE InnoDB
 ;
 

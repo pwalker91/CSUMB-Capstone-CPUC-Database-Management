@@ -165,6 +165,7 @@ class CSDI_MySQL(object):
                 self.lastResult = (True, self.cursor.fetchall())
             except pymysql.Error as err:
                 print(err)
+                print("QUERY: '{}'".format(asString))
                 self.lastResult = (False, self.lastResult[-1])
         return self.lastResult
     #END DEF
