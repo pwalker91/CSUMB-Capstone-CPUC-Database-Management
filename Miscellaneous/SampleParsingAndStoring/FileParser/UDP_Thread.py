@@ -7,36 +7,38 @@ AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 PURPOSE-  This object will represent a single thread, or pipe, in a network
             speed test. It will hold an array of Measurement objects, and has
             some basic object information
-
-FUNCTIONS:
-    __init__
-    __str__
 ------------------------------------------------------------------------
 """
-
+if __name__=="__main__":
+    raise SystemExit
 
 # IMPORTS
 from _Thread import Thread
 from _Measurement import UDP_ServerReport as ServerReport
 #END IMPORTS
 
-# CLASS
-class UDP_Thread(Thread):
-    # ------------------------------
-    # ---- INHERITED ATTRIBUTES ----
-    # ThreadNumber    = 0
-    # DataDirection   = ""
-    # LocalIP         = ""
-    # LocalPort       = 0000
-    # ServerIP        = ""
-    # ServerPort      = 0000
-    # Measurements    = []
-    # FinalMsmt       = None
 
-    # Class attributes
+class UDP_Thread(Thread):
+
+    """A Thread in a UDP test."""
+
+    '''
+    # ---- INHERITED ATTRIBUTES ----
+    ThreadNumber    = 0
+    DataDirection   = ""
+    LocalIP         = ""
+    LocalPort       = 0000
+    ServerIP        = ""
+    ServerPort      = 0000
+    Measurements    = []
+    FinalMsmt       = None
+
+    # ---- CLASS ATTRIBUTES ----
     DatagramzSent = 0
     ServerReport = None
     # ----------------------------------
+    '''
+
 
     def __init__(self, dataArr=None, threadNum=0, direction="UP", units=("KBytes", "Kbits/sec")):
         """
@@ -70,10 +72,9 @@ class UDP_Thread(Thread):
                 #The actual server report is the line below the current line, so we need to get
                 # this current line's index, and add 1 to it
                 tempIndex = dataArr.index(line) + 1
-                serverReportLines = []
                 #This uses list comprehension to get all of the lines pertaining to the Server Report.
                 # Sometimes, there is more than one line in the Server Report
-                [serverReportLines.append(line) for line in dataArr[tempIndex:] if ("[ " in line)]
+                serverReportLines = [line for line in dataArr[tempIndex:] if ("[ " in line)]
                 #Passing the necessary lines to the Server Report constructor
                 self.ServerReport = ServerReport(data=serverReportLines, units=units)
             #END IF/ELIF
@@ -81,21 +82,21 @@ class UDP_Thread(Thread):
     #END DEF
 
 
-# String printout ------------------------------------------------------------------------------
+# STRING PRINTOUT --------------------------------------------------------------
 
     def __str__(self):
         """Returns a String representation of the object"""
         string = (self.StringPadding +
-                    "Thread Number: " + str(self.ThreadNumber) + "\n" +
+                  "Thread Number: {}".format(self.ThreadNumber) + "\n" +
                   self.StringPadding +
-                    "Data Direction: " + str(self.DataDirection) + "\n" +
+                  "Data Direction: {}".format(self.DataDirection) + "\n" +
                   self.StringPadding +
-                    "Local: " + str(self.LocalIP) +":"+ str(self.LocalPort) + "\n" +
+                  "Local: {}:{}".format(self.LocalIP,self.LocalPort) + "\n" +
                   self.StringPadding +
-                    "Server: " + str(self.ServerIP) +":"+ str(self.ServerPort) + "\n" +
+                  "Server: {}:{}".format(self.ServerIP,self.ServerPort) + "\n" +
                   self.StringPadding +
-                    "Datagrams Sent: " + str(self.DatagramzSent) + "\n"
-                 )
+                  "Datagrams Sent: {}".format(self.DatagramzSent) + "\n"
+                  )
         for msmt in self.Measurements:
             string += str(msmt) +"\n"
         string += ( str(self.FinalMsmt) +"\n"+ str(self.ServerReport) +"\n" )

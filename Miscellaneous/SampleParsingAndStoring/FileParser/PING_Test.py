@@ -6,40 +6,91 @@ AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 
 PURPOSE-  This class will hold an individual Ping test. This class keeps track of the RTT values for each
             ping, and the final ping statistics.
-
-FUNCTIONS:
-  INITIALIZATION
-    __init__
-    parsePings
-  CALCULATIONS
-    calc_rValMOS
-  GETTER
-    get_TimesAsArray
-    get_csvDefaultValues
-    get_csvRvMosValues
-  STRING PRINOUT
-    __str__
 ------------------------------------------------------------------------
 """
-
+if __name__=="__main__":
+    raise SystemExit
 
 # IMPORTS
-from utils.basic_utils import calc_rVal_MOS
+import sys
+from parserUtils.basic_utils import calc_rVal_MOS
 from _Test import Test
+from __Base import Formatting
 #END IMPORTS
 
-# CLASS
+
+
+
+class PING_Packet(Formatting):
+
+    """A simple class for holding the information from a single PING packet"""
+
+    '''
+    # ------------------------------
+    # ---- CLASS VARIABLES ----
+    RTT = -1
+    TTL = 0
+    # ------------------------------
+    '''
+
+    def __init__(self, dataString, _outputType1=True):
+        """Object initialization"""
+        #Inheritting our formatting
+        Formatting.__init__(self)
+        self.StringPadding = self.StringPadding * 3
+        #Setting an array of strings that are key strings we are looking for.
+        # If any are found, then there was an error in the test, and we set our
+        # object attributes to default values
+        possiblePingErrors = ["request timed out",
+                              "request timeout",
+                              "general failure",
+                              "no resources",
+                              "host unreachable",
+                              "net unreachable",
+                              "dest unreachable",
+                              "time to live exceeded" ]
+        if any([error in dataString.lower() for error in possiblePingErrors]):
+            self.RTT = -1
+            self.TTL = 0
+        else:
+            self.RTT = float(dataString.lower().split("time=")[-1]
+                                               .split(" ")[0]
+                                               .split("ms")[0]
+                                               .strip()
+                             )
+            self.TTL = float(dataString.lower().split("ttl=")[-1]
+                                               .split(" ")[0]
+                                               .strip()
+                             )
+        #END IF/ELSE
+    #END DEF
+
+    def __str__(self):
+        """Returning a string representation of the object"""
+        return (self.StringPadding +
+                "RTT={}ms  TTL={}".format(self.RTT, self.TTL))
+    #END DEF
+#END CLASS
+
+
+
+
+
 class PING_Test(Test):
+
+    """A PING test, containing parsed information about ping packets sent"""
+
+    '''
     # ------------------------------
     # ---- INHERITED ATTRIBUTES ----
-    # ConnectionType  = ""
-    # ConnectionLoc   = ""
-    # TestNumber      = 0
-    # ReceiverIP      = ""
-    # StartingLine    = ""
-    # _text           = ""
+    ConnectionType  = ""
+    ConnectionLoc   = ""
+    TestNumber      = 0
+    ReceiverIP      = ""
+    StartingLine    = ""
+    _text           = ""
 
-    # Class attributes
+    # ---- CLASS ATTRIBUTES ----
     Times           = None
     PacketsSent     = 10
     PacketsReceived = 0
@@ -49,21 +100,54 @@ class PING_Test(Test):
     RTTMax          = -1
     RTTAverage      = -1
     is_outputType1  = True
-    # ------------------------
+    # ------------------------------
+    '''
 
 
-    # DESC: Initializing class
-    def __init__(self, dataString="", eastWest=("0.0.0.0", "0.0.0.0")):
+
+    def __new__(cls, *args, **kwargs):
+        """
+        Before creating an instance of the given file as a parsed object, we want to check
+        that the file is indeed a test file. This will see if the necessary text
+        is in the first few lines. If not, then we return None, and the object is not created
+        """
+        #Getting the Data String passed to this constructor that was passed in to the constructor
+        if "dataString" in kwargs:
+            dataString = kwargs["dataString"]
+        else:
+            dataString = args[0]
+        #END IF/ELSe
+        if "ping" not in dataString.lower():
+            if "DEBUG" in kwargs and kwargs["DEBUG"]:
+                print("The raw data passed to this constructor (PING_Test) did not contain "+
+                      "the necessary identifiers.",
+                      file=sys.stderr)
+            return None
+        #END IF
+        inst = Test.__new__(cls, *args, **kwargs)
+        return inst
+    #END DEF
+
+    def __init__(self, dataString="", eastWestIP=("0.0.0.0", "0.0.0.0")):
         """
         Used to initialize an object of this class
         ARGS:
-            self:           reference to the object calling this method (i.e. Java's THIS)
-            dataString:     String, the text that is going to be parsed
-            isMobile:       Boolean, whether this test was taken on a mobile or netbook device
+            self:       reference to the object calling this method (i.e. Java's THIS)
+            dataString: String, the text that is going to be parsed
+            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
         """
+        #If we are at this point, then the dataString contained "ping", and we can
+        # set the ConnectionType to "PING"
+        self.ConnectionType = "PING"
         #Call the parent class' __init__
-        Test.__init__(self, dataString=dataString, eastWest=eastWest)
-        self.Times = {}
+        Test.__init__(self, dataString=dataString, eastWestIP=eastWestIP)
+        self.Times = []
+
+        #A quick check that we do not have weird formatting of our PING test.
+        # Sometimes, there are cases where there are two newline characters between
+        # each line of data.
+        if "\n\n\n" in dataString:
+            self._ErrorHandling__setErrorCode(101)
         #Now we parse out the Pings from the test
         if not self.ContainsErrors:
             #We need to first figure out if the test is from a mobile device,
@@ -74,134 +158,121 @@ class PING_Test(Test):
             else:
                 self.is_outputType1 = False
             #END IF/ELSE
-            self.parsePings()
-        #END IF
+            self.parsePings(dataString)
+        else:
+            self.PacketsSent     = 10
+            self.PacketsReceived = 0
+            self.PacketsLost     = 10
+            self.RTTMin          = -1
+            self.RTTMax          = -1
+            self.RTTAverage      = -1
+        #END IF/ELSE
+        if len(self.Times) != self.PacketsSent:
+            self.PacketsSent = len(self.Times)
     #END DEF
 
 
-# Intialization Functions ----------------------------------------------------------------
+# INITIALIZATION FUNCTIONS -----------------------------------------------------
 
-    # DESC: Parses out all of the Ping test information (individual ping RTTs and total RTT stats) from the text
-    def parsePings(self):
-        """
-        Parses out all of the Ping test information (individual ping RTTs and total RTT stats)
-        from the text stored in self._text
-        """
-        #Getting the Receiver IP address
-        statsStartHere = -1
-        pingCounter = 0
+    def parsePings(self, dataString):
+        """ Parses out all of the Ping test information (individual ping RTTs and total RTT stats)"""
+        #We start our function be splitting the data string into individual chunks,
+        # which we will then parse individually
+        dataChunks = [elem.strip() for elem in dataString.split("\n\n") if elem]
         statsText = "ping statistics" if self.is_outputType1 else "Ping statistics"
-        pingText = "bytes from" if self.is_outputType1 else "Reply from"
-        possiblePingErrors = ["Request timed out", "General failure",
-                              "host unreachable", "net unreachable" ]
-        #One quick check to make sure that there are pings to parse. If not, then
-        # we create a bunch of 0's in self.Times
-        stuffToParse = False
-        for line in self._text:
-            if pingText in line: stuffToParse = True
+        for chunk in dataChunks:
+            if statsText in chunk:
+                self.__parseStats(chunk)
+            #If the string 'bytes of data' is in the chunk, then we are looking
+            # at the chunk holding all of the ping packet results
+            if "bytes of data" in chunk:
+                self.__parseIndividualPings(chunk, "bytes of data")
+            elif "data bytes" in chunk:
+                self.__parseIndividualPings(chunk, "data bytes")
         #END FOR
-        #If there is nothing to parse, then we create a test of no pings
-        if not stuffToParse:
-            for ind in range(1,11):
-                self.Times[ind] = float(0)
-        #END IF
+    #END DEF
 
-        #Now we loop through all of the text until we have parsed all of the pings and
-        # have found the statistics line
-        for line in self._text:
-            #This test comes first so that, when we reach the statistics at the bottom, we read it,
-            # parse it, and then break out of the loop before the other conditional are run
-            if statsText in line:
-                statsStartHere = self._text.index(line)
-                break
-            #Parse the individual ping times from the test
-            else:
-                #This checks to see if there are any error messages in the ping message. If there
-                # was an error, the boolean isErrorPresent is made true, and the loop does not continue to
-                # "if pingText in line", as the line will not have the information we need, and the .split()
-                # will break. A time of 0 is inserted into self.Times as a placeholder.
-                if any( [(error in line) for error in possiblePingErrors] ):
-                    pingCounter += 1
-                    self.Times[pingCounter] = float(0)
-                    continue
-                #END FOR
-                if pingText in line:
-                    pingCounter += 1
-                    self.Times[pingCounter] = float(line.split("time=")[1].split("ms")[0].strip())
-                #END IF
-            #END IF/ELSE
-        #END FOR
-        #This is a last check to make sure that our self.Times dictionary has placeholders
-        # for all of the packets. In CrowdSource Files, missing pings seem to not print anything
-        for ind in range(1,11):
+    def __parseIndividualPings(self, dataString, splitter):
+        #As we know that we are looking at the chunk of data that is the ping
+        # packet RTTs, we want to first get some basic information. All that
+        # we can really glean is the packet size in bytes
+        allData = dataString.split(splitter)[-1].split("\n")
+        #This list comprehension removes all strings that are only a few characters.
+        # Each packet should have caused a message longer than 5 characters to be printed
+        allData = [elem for elem in allData if len(elem)>5]
+        #Now we want to remove any strings that are a redirect message
+        allData = [elem for elem in allData if "redirect host" not in elem.lower()]
+        for packet in allData:
+            self.Times.append(PING_Packet(packet, self.is_outputType1))
+    #END DEF
+
+    def __parseStats(self, dataString):
+        #Depending on whether our ouput was of one type or another, we will follow
+        # different rules for parsing
+        dataString = dataString.split("\n")
+        if self.is_outputType1:
+            #First declare packetsLine to be the first element, and then split it by ",".
+            # Then parse the packets sent and received, and deduce the packets lost
+            packetsLine = dataString[1]
+            packetsLine = packetsLine.split(",")
+            self.PacketsSent = int(packetsLine[0].split(" ")[0])
+            self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
+            self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
+            #This try/except block is needed, as sometimes the min/avg/max numbers
+            # are not printed out by iPerf. This happens in the case of 100% packet loss
             try:
-                __ = self.Times[ind]
-            except KeyError:
-                self.Times[ind] = float(0)
-            #END TRY/EXCEPT
-        #END FOR
-
-        #If the variable statsStartHere is not changed from -1, then we can assume that
-        # the necessary line was never found. If it has changed, then we can parse the statistics
-        if statsStartHere != -1:
-            statsArr = self._text[statsStartHere:]
-            if self.is_outputType1:
-                #First declare packetsLine to be the first element, and then split it by ",".
-                # Then parse the packets sent and received, and deduce the packets lost
-                packetsLine = statsArr[1]
-                packetsLine = packetsLine.split(",")
-                self.PacketsSent = int(packetsLine[0].split(" ")[0])
-                self.PacketsReceived = int(packetsLine[1].strip().split(" ")[0])
-                self.PacketsLost = int(self.PacketsSent - self.PacketsReceived)
-                #This try/except block is needed, as sometimes the min/avg/max numbers
-                # are not printed out by iPerf. This happens in the case of 100% packet loss
-                try:
-                    RTTLine = statsArr[2]
-                    RTTNums = RTTLine.split("=")[1].strip().split("/")
-                    self.RTTMin = float(RTTNums[0])
-                    self.RTTAverage = float(RTTNums[1])
-                    self.RTTMax = float(RTTNums[2])
-                except:
-                    using_defaults_of_0 = True
-            else:
-                #First declare packetsLine to be the first element, and then split it by ",".
-                # Then parse the packets sent and lost
-                packetsLine = statsArr[1]
-                packetsLine = packetsLine.split(",")
-                self.PacketsSent = int(packetsLine[0].split("=")[1].strip())
-                self.PacketsReceived = int(packetsLine[1].split("=")[1].strip())
-                self.PacketsLost = int(packetsLine[2].split("=")[1].strip().split(" ")[0])
-                #This try/except block is needed, as sometimes the min/avg/max numbers
-                # are not printed out by iPerf. This happens in the case of 100% packet loss
-                try:
-                    RTTLine = statsArr[3]
-                    RTTLine = RTTLine.split(",")
-                    self.RTTMin = float(RTTLine[0].split("=")[1][:-2].strip())
-                    self.RTTMax = float(RTTLine[1].split("=")[1][:-2].strip())
-                    self.RTTAverage = float(RTTLine[2].split("=")[1][:-2].strip())
-                except:
-                    using_defaults_of_0 = True
-            #END IF/ELSE
-        #END IF
+                RTTLine = dataString[2]
+                RTTNums = RTTLine.split("=")[1].strip().split("/")
+                self.RTTMin = float(RTTNums[0])
+                self.RTTAverage = float(RTTNums[1])
+                self.RTTMax = float(RTTNums[2])
+            except:
+                self.RTTMin     = -1
+                self.RTTMax     = -1
+                self.RTTAverage = -1
+        else:
+            #First declare packetsLine to be the first element, and then split it by ",".
+            # Then parse the packets sent and lost
+            packetsLine = dataString[1]
+            packetsLine = packetsLine.split(",")
+            self.PacketsSent = int(packetsLine[0].split("=")[1].strip())
+            self.PacketsReceived = int(packetsLine[1].split("=")[1].strip())
+            self.PacketsLost = int(packetsLine[2].split("=")[1].strip().split(" ")[0])
+            #This try/except block is needed, as sometimes the min/avg/max numbers
+            # are not printed out by iPerf. This happens in the case of 100% packet loss
+            try:
+                RTTLine = dataString[3]
+                RTTLine = RTTLine.split(",")
+                self.RTTMin = float(RTTLine[0].split("=")[1][:-2].strip())
+                self.RTTMax = float(RTTLine[1].split("=")[1][:-2].strip())
+                self.RTTAverage = float(RTTLine[2].split("=")[1][:-2].strip())
+            except:
+                self.RTTMin     = -1
+                self.RTTMax     = -1
+                self.RTTAverage = -1
+        #END IF/ELSE
     #END DEF
 
 
-# Calculations ---------------------------------------------------------------------------
+# CALCULATIONS -----------------------------------------------------------------
 
     def calc_rValMOS(self, delayThreshold=150):
         """
-        Calculates the R-Value and MOS score for this connection based on the RTT values recorded in the test.
+        Calculates the R-Value and MOS score for this connection based on the RTT
+        values recorded in the test.
         """
-        #Setting the variables which will hold the float values passed to the
-        # original calc_rVal_MOS function
-        totalCnt = 0.0; totalLost = 0.0
-        totalTPng = float(len(self.Times))
-        totalSum = 0.0; totalMax = 0.0
-        # F(d) -the rate of packets below delay threshold, done by incrementing
-        # this value for every packet that is below delayThreshold and then dividing by
-        # the total number of measurements. This value is recorded in the variable below
-        totalFd = 0.0
         if not self.ContainsErrors:
+            #Setting the variables which will hold the float values passed to the
+            # original calc_rVal_MOS function
+            totalCnt = 0.0
+            totalLost = 0.0
+            totalTPng = float(len(self.Times))
+            totalSum = 0.0
+            totalMax = 0.0
+            # F(d) -the rate of packets below delay threshold, done by incrementing
+            # this value for every packet that is below delayThreshold and then dividing by
+            # the total number of measurements. This value is recorded in the variable below
+            totalFd = 0.0
             #We will now begin to calculate the values that will be passed to the
             # original calculation function
             totalMax = self.RTTMax if (totalMax < self.RTTMax) else totalMax
@@ -210,11 +281,11 @@ class PING_Test(Test):
             # totalSum variable. If the time retrieved is not 0, the value is added
             # to the totalSum variable and totalCnt is incremented. We also increment
             # "Fd" if the time is above the given threshold "delayThreshold"
-            for index in self.Times:
-                time = self.Times[index]
-                if time > 0:
-                    totalCnt += 1; totalSum += time
-                    if (time < delayThreshold):
+            for pingPacket in self.Times:
+                if pingPacket.RTT > 0:
+                    totalCnt += 1
+                    totalSum += pingPacket.RTT
+                    if (pingPacket.RTT < delayThreshold):
                         totalFd+=1
                     #END IF
                 #END IF
@@ -225,90 +296,72 @@ class PING_Test(Test):
             else:
                 return [0.0,1.0]
         else:
-            return [self.ErrorTypes[self.ErrorCode]]*2
+            return [self.ErrorType]*2
     #END DEF
 
 
-# Getter - Times as array of nums --------------------------------------------------------
+# GETTERS ----------------------------------------------------------------------
 
     def get_TimesAsArray(self):
         """Returns a list of the Times values, for more simple use by other scripts"""
-        return [self.Times[ind] for ind in range(0,len(self.Times))]
-    #END DEF
-
-    def get_csvDefaultValues(self):
-        """
-        Returns a List of the default CSV values needed for the creation of a CSV
-        """
-        csvVals = []
-        if not self.ContainsErrors:
-            csvVals.append(self.RTTMin)
-            csvVals.append(self.RTTMax)
-            csvVals.append(self.RTTAverage)
-            LossPercent = int(float(self.PacketsLost)*100/self.PacketsSent)
-            csvVals.append(LossPercent)
-        else:
-            csvVals = [self.ErrorTypes[self.ErrorCode]]*4
-        return csvVals
-    #END DEF
-
-    def get_csvRvMosValues(self):
-        """Returns a List of the R-value and MOS Score values needed for the creation of a CSV"""
-        return self.calc_rValMOS()
+        return [self.Times[ind].RTT for ind in range(len(self.Times))]
     #END DEF
 
 
-# String printout -------------------------------------------------------------------------
+# STRING PRINTOUT --------------------------------------------------------------
 
     def __str__(self):
         """Returns a string representation of the object"""
-        string = (self.StringPadding +
-                        "Test Number: " + str(self.TestNumber) + "\n" +
+        string = (self.StringPadding[:-1] + "-" +
+                  "Test Number: {}\n".format(self.TestNumber) +
                   self.StringPadding +
-                        "Connection Type: " + str(self.ConnectionType) + "\n" +
+                  "Connection Type: {}\n".format(self.ConnectionType) +
                   self.StringPadding +
-                        "Connection Location: " + str(self.ConnectionLoc) + "\n" +
+                  "Connection Location: {}\n".format(self.ConnectionLoc) +
                   self.StringPadding +
-                        "Receiver IP: " + str(self.ReceiverIP) + "\n" +
+                  "Receiver IP: {}\n".format(self.ReceiverIP) +
                   self.StringPadding +
-                        "Contain Errors: " + repr(self.ContainsErrors) + "\n" +
-                        ((self.StringPadding + \
-                            "Error Type: " + self.ErrorTypes[self.ErrorCode] + "\n") \
-                          if self.ContainsErrors else "" ) +
-                        ((self.StringPadding + \
-                            "Error Message: " + self.ErrorMessages[self.ErrorCode] + "\n") \
-                          if self.ContainsErrors else "" )
+                  "Contain Errors: {}\n".format(repr(self.ContainsErrors)) +
+                  ((self.StringPadding +"Error Type: "+self.ErrorType+"\n")
+                   if self.ContainsErrors else ""
+                   ) +
+                  ((self.StringPadding +"Error Message: "+self.ErrorMessage+"\n")
+                   if self.ContainsErrors else ""
+                   )
                   )
         if not self.ContainsErrors:
             #Printing the individual pings in the ping test
             pingTimes = self.StringPadding + "  Ping Times: "
-            #Getting some information on where to split the string later
-            beginningLen = len(pingTimes)
-            #Printing out all of the times
-            for index in self.Times:
-                pingTimes += (str(index) + "=" + str(self.Times[index]) + "ms, ")
-            #Splitting the string in the middle of the pings only if there are more that 7
+            #Putting all of the times into a string. If there were more than 7, then
+            # will will print all of the pings onto two lines. Else, all on one
             if len(self.Times) > 7:
-                timesKeys = list(self.Times.keys()); timesKeys.sort()
-                middleInd = timesKeys[int(len(timesKeys)/2)]
-                locOfMid = pingTimes.index( (str(middleInd)+"=") )
-                pingTimes = pingTimes[:locOfMid] + "\n"+(" "*beginningLen) + pingTimes[locOfMid:-2] + "\n"
-            #END IF
-            string += pingTimes
+                length = len(self.Times)
+                for i in range(int(length/2)):
+                    pingTimes += "{}={}ms, ".format(i+1, self.Times[i].RTT)
+                #This bit takes the ', ' off of the end, tacks on a newline, and then
+                # the necessary number of spaces to line it up with the first row of Ping times
+                pingTimes = pingTimes[:-2]+"\n"+self.StringPadding+(" "*(len("  Ping Times: ")))
+                for i in range(int(length/2), length):
+                    pingTimes += "{}={}ms, ".format(i+1, self.Times[i].RTT)
+            else:
+                for i in range(len(self.Times)):
+                    pingTimes += "{}={}ms, ".format(i+1, self.Times[i].RTT)
+            #END IF/ELSE
+            string += pingTimes[:-2]+"\n"
             #Printing the rest of the information
             string += (self.StringPadding +
-                        "  Packets Sent: " + str(self.PacketsSent) + "\n" +
+                       "  Packets Sent: {}\n".format(self.PacketsSent) +
                        self.StringPadding +
-                        "  Packets Received: " + str(self.PacketsReceived) + "\n" +
+                       "  Packets Received: {}\n".format(self.PacketsReceived) +
                        self.StringPadding +
-                        "  Packets Lost: " + str(self.PacketsLost) + "\n" +
+                       "  Packets Lost: {}\n".format(self.PacketsLost) +
                        self.StringPadding +
-                        "  Round Trip Time Minimum: " + str(self.RTTMin) + "\n" +
+                       "  Round Trip Time Minimum: {}\n".format(self.RTTMin) +
                        self.StringPadding +
-                        "  Round Trip Time Maximum: " + str(self.RTTMax) + "\n" +
+                       "  Round Trip Time Maximum: {}\n".format(self.RTTMax) +
                        self.StringPadding +
-                        "  Round Trip Time Average: " + str(self.RTTAverage) + "\n"
-                      )
+                       "  Round Trip Time Average: {}\n".format(self.RTTAverage)
+                       )
         #END IF
         return string
     #END DEF

@@ -7,12 +7,13 @@ AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 PURPOSE-  This class will hold an individual trace route test. This class keeps track of the
             RTT values for each step along the route, as well as information on the hop. This
             class uses a sub-class included in this file, the Hop class.
-
 ------------------------------------------------------------------------
 """
+if __name__=="__main__":
+    raise SystemExit
 
 # IMPORTS
-from __Base import (Formatting, ErrorHandling)
+from __Base import Formatting
 #END IMPORTS
 
 
@@ -29,16 +30,21 @@ PURPOSE-  This class will hold an individual hop within the traceroute. This obj
 ------------------------------------------------------------------------
 """
 
-# CLASS
+
 class Hop(Formatting):
+
+    """A single traceroute 'hop', which is the router IP, name, and RTT"""
+
+    '''
     # ------------------------------
-    # Class attributes
+    # ---- CLASS ATTRIBUTES ----
     HopNum      = 0
     RTT         = 0.0
     RouterName  = ""
     RouterIP    = ""
     _Timeout    = False
-    # ------------------------
+    # ------------------------------
+    '''
 
 
     def __init__(self, dataString):
@@ -72,8 +78,7 @@ class Hop(Formatting):
         HopSplit = [info for info in HopSplit if info]
         #Checking that there wasn't a weird error of some kind
         if len(HopSplit) != 3:
-            self.ContainsErrors = True
-            self.ErrorCode = 404
+            self._ErrorHandling__setErrorCode(404)
         #END IF
 
         #We now get the router name, IP, and RTT from our now array of 3 elements
@@ -117,13 +122,15 @@ class Hop(Formatting):
     def __str__(self):
         """Creating a string representation of our object"""
         if self._Timeout:
-            return ( self.StringPadding +
-                        str(self.HopNum) + ("   " if self.HopNum<10 else "  ") + "* * *")
+            return (self.StringPadding +
+                    str(self.HopNum) + ("   " if self.HopNum<10 else "  ") + "* * *"
+                    )
         else:
-            return ( self.StringPadding +
-                        str(self.HopNum) + ("   " if self.HopNum<10 else "  ") +
-                        str(self.RouterName) + "  ("+str(self.RouterIP)+")  " +
-                        str(self.RTT)+" ms")
+            return (self.StringPadding +
+                    str(self.HopNum) + ("   " if self.HopNum<10 else "  ") +
+                    str(self.RouterName) + "  ("+str(self.RouterIP)+")  " +
+                    str(self.RTT)+" ms"
+                    )
         #END IF/ELSE
     #END DEF
 #END CLASS
@@ -154,37 +161,73 @@ FUNCTIONS:
 """
 
 # IMPORTS
+import sys
 from _Test import Test
 #END IMPORTS
 
-# CLASS
+
 class TCRT_Test(Test):
+
+    """
+    A Traceroute Test, which are the RTTs from the device running the test
+     to all routers along a network path to a specified destination
+    """
+
+    '''
     # ------------------------------
     # ---- INHERITED ATTRIBUTES ----
-    # ConnectionType  = ""
-    # ConnectionLoc   = ""
-    # TestNumber      = 0
-    # ReceiverIP      = ""
-    # StartingLine    = ""
-    # _text           = ""
+    ConnectionType  = ""
+    ConnectionLoc   = ""
+    TestNumber      = 0
+    ReceiverIP      = ""
+    StartingLine    = ""
+    _text           = ""
 
-    # Class attributes
+    # ---- CLASS ATTRIBUTES ----
     Hops        = None
     MaxHops     = 0
     PacketSize  = 0
     # ------------------------
+    '''
 
 
-    def __init__(self, dataString="", eastWest=("0.0.0.0", "0.0.0.0")):
+
+    def __new__(cls, *args, **kwargs):
+        """
+        Before creating an instance of the given file as a parsed object, we want to check
+        that the file is indeed a test file. This will see if the necessary text
+        is in the first few lines. If not, then we return None, and the object is not created
+        """
+        #Getting the Data String passed to this constructor that was passed in to the constructor
+        if "dataString" in kwargs:
+            dataString = kwargs["dataString"]
+        else:
+            dataString = args[0]
+        #END IF/ELSe
+        if "traceroute" not in dataString.lower():
+            if "DEBUG" in kwargs and kwargs["DEBUG"]:
+                print("The raw data passed to this constructor (TCRT_Test) did not contain "+
+                      "the necessary identifiers.",
+                      file=sys.stderr)
+            return None
+        #END IF
+        inst = Test.__new__(cls, *args, **kwargs)
+        return inst
+    #END DEF
+
+    def __init__(self, dataString="", eastWestIP=("0.0.0.0", "0.0.0.0")):
         """
         Used to initialize an object of this class
         ARGS:
-            self:           reference to the object calling this method (i.e. Java's THIS)
-            dataString:     String, the text that is going to be parsed
-            isMobile:       Boolean, whether this test was taken on a mobile or netbook device
+            self:       reference to the object calling this method (i.e. Java's THIS)
+            dataString: String, the text that is going to be parsed
+            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
         """
+        #If we are at this point, then the dataString contained "traceroute", and we can
+        # set the ConnectionType to "TCRT"
+        self.ConnectionType = "TCRT"
         #Call the parent class' __init__
-        Test.__init__(self, dataString=dataString, eastWest=eastWest)
+        Test.__init__(self, dataString=dataString, eastWestIP=eastWestIP)
         self.Hops = {}
 
         #We need to get some basic information from the traceroute command call
@@ -199,8 +242,6 @@ class TCRT_Test(Test):
             info = I_need_this.split(",")
             self.MaxHops = int(info[1].split("hops")[0].strip())
             self.PacketSize = int(info[2].split("byte")[0].strip())
-        #END IF
-
         #Now we parse out the Hops from the test text (in dataString)
         if not self.ContainsErrors:
             '''
@@ -220,7 +261,7 @@ class TCRT_Test(Test):
     #END DEF
 
 
-# Intialization Functions ----------------------------------------------------------------
+# INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def parseHops(self):
         """
@@ -239,7 +280,7 @@ class TCRT_Test(Test):
     #END DEF
 
 
-# Getter - Times as array of nums --------------------------------------------------------------
+# GETTERS ----------------------------------------------------------------------
 
     def get_RTTsAsArray(self):
         """
@@ -249,8 +290,7 @@ class TCRT_Test(Test):
         RETURNS:
             List, the values in the objects in self.Hops in sequence
         """
-        keys = list(self.Hops.keys())
-        keys.sort()
+        keys = sorted(list(self.Hops.keys()))
         return [ self.Hops[key].RTT for key in keys ]
     #END DEF
 
@@ -277,33 +317,33 @@ class TCRT_Test(Test):
         return csvVals
     #END DEF
 
-# String printout ------------------------------------------------------------------------------
+
+# STRING PRINTOUT --------------------------------------------------------------
 
     def __str__(self):
         """Returns a string representation of the object"""
-        string = (self.StringPadding +
-                    "Test Number: " + str(self.TestNumber) + "\n" +
+        string = (self.StringPadding[:-1] + "-" +
+                  "Test Number: {}\n".format(self.TestNumber) +
                   self.StringPadding +
-                    "Connection Type: " + str(self.ConnectionType) + "\n" +
+                  "Connection Type: {}\n".format(self.ConnectionType) +
                   self.StringPadding +
-                    "Connection Location: " + str(self.ConnectionLoc) + "\n" +
+                  "Connection Location: {}\n".format(self.ConnectionLoc) +
                   self.StringPadding +
-                    "Receiver IP: " + str(self.ReceiverIP) + "\n" +
+                  "Receiver IP: {}\n".format(self.ReceiverIP) +
                   self.StringPadding +
-                    "Max Hops: " + str(self.MaxHops) +
-                    "  Packet Size: " + str(self.PacketSize) + " bytes\n" +
+                  "Max Hops: {}".format(self.MaxHops) +
+                  "  Packet Size: {} bytes\n".format(self.PacketSize) +
                   self.StringPadding +
-                    "Contain Errors: " + repr(self.ContainsErrors) + "\n" +
-                      ((self.StringPadding + \
-                          "Error Type: " + self.ErrorTypes[self.ErrorCode] + "\n") \
-                        if self.ContainsErrors else "" ) +
-                      ((self.StringPadding + \
-                          "Error Message: " + self.ErrorMessages[self.ErrorCode] + "\n") \
-                        if self.ContainsErrors else "" )
+                  "Contain Errors: {}\n".format(repr(self.ContainsErrors)) +
+                  ((self.StringPadding + "Error Type: " +self.ErrorType+ "\n")
+                   if self.ContainsErrors else ""
+                   ) +
+                  ((self.StringPadding + "Error Message: " +self.ErrorMessage+ "\n")
+                   if self.ContainsErrors else ""
+                   )
                   )
         if not self.ContainsErrors:
-            keys = list(self.Hops.keys())
-            keys.sort()
+            keys = sorted(list(self.Hops.keys()))
             for key in keys:
                 string += (str(self.Hops[key]) +"\n")
         #END IF

@@ -8,91 +8,151 @@ PURPOSE-  This class will hold just an individual TCP speed test.
             This takes a chunk of text (as a string), and parses out all of the header information,
             like the server connected to, measuring format, etc. It then splits the test measurements
             into their individual threads, and passing the resulting strings to the Thread object.
-
-FUNCTIONS:
-  INITIALIZATION:
-    __init__
-    parseThreads
-    checkForOutputErrors
-  THREAD VALUE GETTERS
-    get_ThreadSumValues
-    get_ThreadsValues
-  FOR STAT ANALYSIS (append to CSV)
-    get_csvDefaultValues
-    get_csvStatValues
-    get_csvQualValues
-  STRING PRINTOUT
-    __str__
 ------------------------------------------------------------------------
 """
-
+if __name__=="__main__":
+    raise SystemExit
 
 # IMPORTS
+import sys
 from statistics import pstdev, median
 from _Test import Test
 from TCP_Thread import TCP_Thread
 #END IMPORTS
 
-# CLASS
+
 class TCP_Test(Test):
+
+    """A TCP test, which is 4 Upload and 4 Download threads connected to a server"""
+
+    '''
     # ------------------------------
     # ---- INHERITED ATTRIBUTES ----
-    # ConnectionType  = ""
-    # ConnectionLoc   = ""
-    # Threads         = None
-    # TestNumber      = 0
-    # ReceiverIP      = ""
-    # Port            = 0000
-    # TestInterval    = 0
-    # MeasuringFmt    = None  #[kmKM] (Kbits, Mbits, KBytes, MBytes)
-    # _mform_short    = None
-    # _text           = ""
-    # iPerfCommand    = ""
-    # StartingLine    = ""
+    ConnectionType  = ""
+    ConnectionLoc   = ""
+    Threads         = None
+    TestNumber      = 0
+    ReceiverIP      = ""
+    Port            = 0000
+    TestInterval    = 0
+    MeasuringFmt    = None  #[kmKM] (Kbits, Mbits, KBytes, MBytes)
+    _mform_short    = None
+    _text           = ""
+    iPerfCommand    = ""
+    StartingLine    = ""
 
-    # Class attributes
+    # ---- CLASS ATTRIBUTES ----
     ThreadsByNum    = None
     WindowSize      = 0
     ThreadNumbers   = None
     # ------------------------------
+    '''
 
 
-    def __init__(self, dataString="", eastWest=("0.0.0.0", "0.0.0.0")):
+
+    def __new__(cls, *args, **kwargs):
+        """
+        Before creating an instance of the given file as a parsed object, we want to check
+        that the file is indeed a test file. This will see if the necessary text
+        is in the first few lines. If not, then we return None, and the object is not created
+        """
+        #Getting the Data String passed to this constructor that was passed in to the constructor
+        if "dataString" in kwargs:
+            dataString = kwargs["dataString"]
+        else:
+            dataString = args[0]
+        #END IF/ELSe
+        if "tcp" not in dataString.lower():
+            if "DEBUG" in kwargs and kwargs["DEBUG"]:
+                print("The raw data passed to this constructor (TCP_Test) did not contain "+
+                      "the necessary identifiers.",
+                      file=sys.stderr)
+            return None
+        #END IF
+        inst = Test.__new__(cls, *args, **kwargs)
+        return inst
+    #END DEF
+
+    def __init__(self, dataString="", eastWestIP=("0.0.0.0", "0.0.0.0")):
         """
         Used to initialize an object of this class
         ARGS:
             self:       reference to the object calling this method (i.e. Java's THIS)
             dataString: String, the raw text that will be parsed
-            eastWest:   Tuple of two Strings, first String is the IP address of the East server, second the West
+            eastWestIP: Tuple of two Strings, first String is the IP address of the East server, second the West
         """
+        #If we are at this point, then the dataString contained "TCP", and we can
+        # set the ConnectionType to "TCP"
+        self.ConnectionType = "TCP"
         #Call the parent class' __init__
-        Test.__init__(self, dataString=dataString, eastWest=eastWest)
+        Test.__init__(self, dataString=dataString, eastWestIP=eastWestIP)
+
         #If we were unable to parse out the iPerfCommand line from the text, then
         # we assume that there was an error of some kind that was not caught, and exit
         if not self.iPerfCommand:
-            raise RuntimeError("For some reason, the Iperf command line was not parsed.")
-        #Getting the window size
-        self.WindowSize = self.iPerfCommand[self.iPerfCommand.find("-w"):].split(" ")[1].strip()
-        if not self.ContainsErrors:
-            #Declaring and creating the Ping Threads for this test
-            self.Threads = { "UP" : [], "DOWN" : [] }
-            self.ThreadsByNum = {}
-            #This will run the function that creates the Ping Threads, but will only
-            # clear self.text if there were no errors
-            self.parseThreads()
-            #Doing a few more checks for errors
+            self._ErrorHandling__setErrorCode(101, "Iperf Command Line not Found")
+            #raise RuntimeError("For some reason, the Iperf command line was not parsed.")
+        else:
+            #Getting the window size
+            self.WindowSize = self.iPerfCommand[self.iPerfCommand.find("-w"):].split(" ")[1].strip()
             if not self.ContainsErrors:
-                self.checkForOutputErrors()
-        #END IF
+                #Declaring and creating the Ping Threads for this test
+                self.Threads = {"UP":[],
+                                "DOWN":[]
+                                }
+                self.ThreadsByNum = {}
+                #This will run the function that creates the Ping Threads, but will only
+                # clear self.text if there were no errors
+                self.parseThreads()
+                #Doing a few more checks for errors
+                if not self.ContainsErrors:
+                    self.__checkForOutputErrors()
+            #END IF
+        #END IF/ELSE
     #END DEF
 
 
-# Intialization Functions ----------------------------------------------------------------
+
+# INITIALIZATION FUNCTIONS -----------------------------------------------------
 
     def parseThreads(self):
-        """
-        Given the data stored in self._text, parses the Iperf output into individual TCP_Threads
-        """
+        """Given the data stored in self._text, parses the Iperf output into individual TCP_Threads"""
+        #We first call the sorting method, which will return a boolean and the strings
+        # in self._text sorted by thread number. If the boolean is true, the threads are sorted
+        (sorted_, tempThreads) = self.__sortThreadsByNum()
+        if not sorted_:
+            return
+
+        #Now that every thread is sorted into an array of string, we can split them into
+        # upload and download threads, and pass it to the TCP_Thread object
+        #Grabbing a list of all of the thread numbers from this test
+        self.ThreadNumbers = list(tempThreads.keys())
+        #Initializaing tempThreadsByDirection to have the necessary keys (thread numbers),
+        # and each key holds another dictionary of 2 arrays, linked to the keys UP and DOWN
+        (againSorted_, tempThreadsByDirection) = self.__sortThreadsByNumDir(tempThreads)
+        if not againSorted_:
+            return
+
+        #Now that everything is split by thread number and by direction, we can call
+        # the TCP Thread object creation
+        for threadNum in tempThreadsByDirection:
+            #Creating the TCP_Thread objects for the Upload and Download threads
+            upThread = TCP_Thread(dataArr=tempThreadsByDirection[threadNum]["UP"],
+                                  threadNum=threadNum, direction="UP",
+                                  units=self.MeasuringFmt)
+            downThread = TCP_Thread(dataArr=tempThreadsByDirection[threadNum]["DOWN"],
+                                    threadNum=threadNum, direction="DOWN",
+                                    units=self.MeasuringFmt)
+            #Appending the TCP_Thread objects to their respective direction in self.Threads
+            # and thread number / direction in ThreadsByNum
+            self.Threads["UP"].append(upThread)
+            self.Threads["DOWN"].append(downThread)
+            self.ThreadsByNum[threadNum]["UP"] = upThread
+            self.ThreadsByNum[threadNum]["DOWN"] = downThread
+        #END FOR
+    #END DEF
+
+    def __sortThreadsByNum(self):
         #This block does the initial organization, going through each line and
         # putting them into the array whose key corresponds with their thread number.
         tempThreads = {}
@@ -120,32 +180,31 @@ class TCP_Test(Test):
             # At the end, it sums up the number of "connected with"s, and uses that in the next
             # block to determine if there was an output error
             checkThreadsForErr[threadNum] = sum( [1 if ("connected with" in line) else 0 for line in thread] )
-        oneLess = 0; oneMore = 0
+        oneLess = 0
+        oneMore = 0
+        _wasAnError = False
         for threadNum, value in checkThreadsForErr.items():
             if value == 3:
                 oneMore = threadNum
-                self.ContainsErrors = True
+                _wasAnError = True
             if value == 1:
                 oneLess = threadNum
-                self.ContainsErrors = True
+                _wasAnError = True
         #END FOR
         #If an error was found, then we need to set the appropiate messages, and then exit this function
-        if self.ContainsErrors:
-            self.ErrorCode = 101
-            self.ErrorMessages[101] = ("There was an error in the TCP test output. "+
-                                    "Threads #" +str(oneMore)+ " had one extra thread start,"+
-                                    " and #" +str(oneLess)+ " had one less." )
+        if _wasAnError:
+            specialMessage = ("There was an error in the TCP test output. "+
+                              "Threads #" +str(oneMore)+ " had one extra thread start,"+
+                              " and #" +str(oneLess)+ " had one less." )
+            self._ErrorHandling__setErrorCode(101, specialMessage)
             self.Threads = {}
             #If there was an error, then we return with what amounts to an empty TCP Test
-            return
+            return (False, None)
         #END IF
+        return (True, tempThreads)
+    #END DEF
 
-        #Now that every thread is sorted into an array of string, we can split them into
-        # upload and download threads, and pass it to the TCP_Thread object
-        #Grabbing a list of all of the thread numbers from this test
-        self.ThreadNumbers = list(tempThreads.keys())
-        #Initializaing tempThreadsByDirection to have the necessary keys (thread numbers),
-        # and each key holds another dictionary of 2 arrays, linked to the keys UP and DOWN
+    def __sortThreadsByNumDir(self, tempThreads):
         tempThreadsByDirection = {}
         for threadNum in self.ThreadNumbers:
             tempThreadsByDirection[threadNum] = {"UP": [], "DOWN": []}
@@ -173,46 +232,32 @@ class TCP_Test(Test):
         #One last check for another funny error. This is where the thread only had
         # one good measurement (from 0.0 to 1.0). We check the length of the array,
         # and if it is less than 3, then we have that funny error.
-        err_threadNum = 0; err_threadDir = ""
+        err_threadNum = 0
+        err_threadDir = ""
+        _wasAnError = False
         for threadNum in tempThreadsByDirection:
             for direction in tempThreadsByDirection[threadNum]:
                 if len(tempThreadsByDirection[threadNum][direction]) < 3:
-                    self.ContainsErrors = True
-                    err_threadNum = threadNum; err_threadDir = direction
+                    _wasAnError = True
+                    err_threadNum = threadNum
+                    err_threadDir = direction
                     break
             #END FOR
         #END FOR
         #If an error was found, then we need to set the appropiate messages, and then exit this function
-        if self.ContainsErrors:
-            self.ErrorCode = 101
-            self.ErrorMessages[101] = ("There was an error in the TCP test output. "+
-                                    "Threads #" +str(err_threadNum)+ " in the "+err_threadDir+
-                                    " direction did not have enough measurements" )
+        if _wasAnError:
+            specialMessage = ("There was an error in the TCP test output. "+
+                              "Threads #" +str(err_threadNum)+ " in the "+err_threadDir+
+                              " direction did not have enough measurements" )
+            self._ErrorHandling__setErrorCode(101, specialMessage)
             self.Threads = {}
             #If there was an error, then we return with what amounts to an empty TCP Test
-            return
+            return (False, None)
         #END IF
-
-        #Now that everything is split by thread number and by direction, we can call
-        # the TCP Thread object creation
-        for threadNum in tempThreadsByDirection:
-            #Creating the TCP_Thread objects for the Upload and Download threads
-            upThread = TCP_Thread(dataArr=tempThreadsByDirection[threadNum]["UP"],
-                                    threadNum=threadNum, direction="UP",
-                                    units=self.MeasuringFmt)
-            downThread = TCP_Thread(dataArr=tempThreadsByDirection[threadNum]["DOWN"],
-                                    threadNum=threadNum, direction="DOWN",
-                                    units=self.MeasuringFmt)
-            #Appending the TCP_Thread objects to their respective direction in self.Threads
-            # and thread number / direction in ThreadsByNum
-            self.Threads["UP"].append(upThread)
-            self.Threads["DOWN"].append(downThread)
-            self.ThreadsByNum[threadNum]["UP"] = upThread
-            self.ThreadsByNum[threadNum]["DOWN"] = downThread
-        #END FOR
+        return (True, tempThreadsByDirection)
     #END DEF
 
-    def checkForOutputErrors(self):
+    def __checkForOutputErrors(self):
         """
         After all of the threads have been initialized, this function checks for
         some special cases of output errors, i.e. final measurement is 0.0 - 0.0 sec,
@@ -226,19 +271,23 @@ class TCP_Test(Test):
                 #If the start time and end time of the final measurement
                 # are the exact same, then there is a weird error. We set the boolean
                 # to true, and clear this object of thread objects
+                if not thread.FinalMsmt:
+                    specialMessage = (direction + " Thread #{}".format(thread.ThreadNumber) +
+                                      " had no final measurement in it's output.")
+                    self._ErrorHandling__setErrorCode(101, specialMessage)
+                    break
                 if thread.FinalMsmt.TimeStart == thread.FinalMsmt.TimeEnd:
-                    self.ContainsErrors = True
-                    self.ErrorCode = 101
-                    self.ErrorMessages[101] = (direction + " Thread #" + str(thread.ThreadNumber) +" had a bad " +
-                                            "final measurement. (Time was from 0.0 to 0.0 seconds)")
+                    specialMessage = (direction + " Thread #{}".format(thread.ThreadNumber) +
+                                      " had a bad final measurement. (Time was from 0.0 to 0.0 seconds)")
+                    self._ErrorHandling__setErrorCode(101, specialMessage)
                     break
                 if (thread.FinalMsmt.Speed > 1000000) and (thread.Measurements[0].Speed == 0):
-                    self.ContainsErrors = True
-                    self.ErrorCode = 101
                     from math import log10
-                    self.ErrorMessages[101] = (direction + " Thread #" + str(thread.ThreadNumber) +" had a bad " +
-                                            "final measurement. (Measured speed was in the order of 10^" +
-                                            str(int(log10(thread.FinalMsmt.Speed))) + ")")
+                    specialMessage = (direction + " Thread #{}".format(thread.ThreadNumber) +
+                                      " had a bad final measurement. (Measured speed was in the order "+
+                                      "of 10^{})".format(int(log10(thread.FinalMsmt.Speed)))
+                                      )
+                    self._ErrorHandling__setErrorCode(101, specialMessage)
                     break
                 #END IF/ELIF
             #END FOR
@@ -250,7 +299,8 @@ class TCP_Test(Test):
     #END DEF
 
 
-# Thread value Getters -------------------------------------------------------------------
+
+# THREAD VALUE GETTERS ---------------------------------------------------------
 
     def get_ThreadSumValues(self, direction="DOWN", attribute="Speed"):
         """
@@ -281,8 +331,10 @@ class TCP_Test(Test):
         for interval in range(maxThreadLength):
             temp = 0
             for array in allValues:
-                try: temp += array[interval]
-                except: pass
+                try:
+                    temp += array[interval]
+                except:
+                    pass
             #END FOR
             threads_summed.append(temp)
         #END FOR
@@ -309,130 +361,32 @@ class TCP_Test(Test):
     #END DEF
 
 
-# For statistical analysis ----------------------------------------------------------------------
 
-    def get_csvDefaultValues(self):
-        """
-        Returns a List of the default CSV values needed for the creation of a CSV
-        """
-        csvVals = []
-        #If there was no error, there are values to calculate
-        # Otherwise, we return an array of "self._error_Type"
-        if not self.ContainsErrors:
-            upSum = 0; dnSum = 0
-            for thread in self.Threads["UP"]:
-                upSum += thread.FinalMsmt.Speed
-            for thread in self.Threads["DOWN"]:
-                dnSum += thread.FinalMsmt.Speed
-            csvVals = [upSum, dnSum]
-        else:
-            csvVals = [self.ErrorTypes[self.ErrorCode]]*2
-        return csvVals
-    #END DEF
-
-    def get_csvStatValues(self):
-        """
-        This creates an array of 4 values that will be appended to the Results CSV
-        provided by CPUC. If there was an error in the test, the 4 values returned are the error type.
-        Otherwise, the 4 values are the StDev and Median for both thread directions for this test
-        """
-        csvVals = []
-        #If there was no error, there are values to StDev and Median
-        # Otherwise, we return an array of "None"
-        if not self.ContainsErrors:
-            #Calculating the stDev's and medians of the Up and Down threads
-            upThread = self.get_ThreadSumValues(direction="UP", attribute="Speed")
-            downThread = self.get_ThreadSumValues(direction="DOWN", attribute="Speed")
-            csvVals.append( pstdev(upThread) )
-            csvVals.append( median(upThread) )
-            csvVals.append( pstdev(downThread) )
-            csvVals.append( median(downThread) )
-        else:
-            csvVals = [self.ErrorTypes[self.ErrorCode]]*4
-        return csvVals
-    #END DEF
-
-    def get_csvQualValues(self):
-        """
-        This function calculates the quality of the TCP connection.
-        Quality is determined by either Time or Data. Time is the average total time it took for
-        the TCP threads to complete transfer. Data is a score between 1 and 0, where
-        a time interval is given a 1 if it is transmitting data, and a 0 if it is not. The 1's
-        and 0's are totaled up and averaged.
-        """
-        qualVals = []
-        #If there are not errors, then we calculate the quality of the test. Otherwise, we
-        # we return a List of the error type
-        if not self.ContainsErrors:
-            ttlUpTime   = float(0); numUpThreads = 0
-            upPosSpeeds = float(0); numUpSpeeds  = 0
-            ttlDnTime   = float(0); numDnThreads = 0
-            dnPosSpeeds = float(0); numDnSpeeds  = 0
-            #This block calculates the TCP Quality based on the total time
-            # it took the thread to complete their downloads
-            #For each thread, get the total time (final measurement timeEnd)
-            for thread in self.Threads["UP"]:
-                ttlUpTime += thread.FinalMsmt.TimeEnd
-                numUpThreads += 1
-            #END FOR
-            for thread in self.Threads["DOWN"]:
-                ttlDnTime += thread.FinalMsmt.TimeEnd
-                numDnThreads += 1
-            #END FOR
-            #This block calculates the TCP Quality based on the data score,
-            # a value between 1 and 0 based on how many intervals in the threads were
-            # either downloading or uploading data
-            speeds = self.get_ThreadsValues(direction="UP")
-            #This adds the number of intervals from each thread to the numUpSpeeds variable,
-            # and will be used later to calculate the score (between 1 and 0)
-            numUpSpeeds += sum( [len(thread) for thread in speeds] )
-            for thread in speeds:
-                for elem in thread:
-                    if elem > 0: upPosSpeeds+=1
-            #END FOR
-            speeds = self.get_ThreadsValues(direction="DOWN")
-            numDnSpeeds += sum( [len(thread) for thread in speeds] )
-            for thread in speeds:
-                for elem in thread:
-                    if elem > 0: dnPosSpeeds+=1
-            #END FOR
-            #This append the values to the array. The values are the TCP UP quality based
-            # on time, then number of non-zero speeds, then the TCP DOWN quality based on
-            # time, then number of non-zero speeds
-            qualVals = [(ttlUpTime/numUpThreads), (upPosSpeeds/numUpSpeeds),
-                        (ttlDnTime/numDnThreads), (dnPosSpeeds/numDnSpeeds) ]
-        else:
-            qualVals = [self.ErrorTypes[self.ErrorCode]]*4
-        #DND IF/ELSE
-        return qualVals
-    #END DEF
-
-
-# String printout -------------------------------------------------------------------------------
+# STRING PRINTOUT --------------------------------------------------------------
 
     def __str__(self):
         """Returns a string represenation of the object"""
-        string = (self.StringPadding +
-                    "Test Number: " + str(self.TestNumber) + "\n" +
+        string = (self.StringPadding[:-1] + "-" +
+                  "Test Number: {}\n".format(self.TestNumber) +
                   self.StringPadding +
-                    "Connection Type: " + str(self.ConnectionType) + "\n" +
+                  "Connection Type: {}\n".format(self.ConnectionType) +
                   self.StringPadding +
-                    "Connection Location: " + str(self.ConnectionLoc) + "\n" +
+                  "Connection Location: {}\n".format(self.ConnectionLoc) +
                   self.StringPadding +
-                    "Receiver IP: " + str(self.ReceiverIP) + ":" + str(self.Port) + "\n" +
+                  "Receiver IP: {}:{}\n".format(self.ReceiverIP,self.Port) +
                   self.StringPadding +
-                    "Test Interval: " + str(self.TestInterval) +
-                    "  Window Size: " + str(self.WindowSize) +
-                    "  Measurement Format: " + str(self.MeasuringFmt[0]) +
-                        ", " + str(self.MeasuringFmt[1]) + "\n" +
+                  "Test Interval: {}".format(self.TestInterval) +
+                  "  Window Size: {}".format(self.WindowSize) +
+                  "  Measurement Format: {}, {}\n".format(self.MeasuringFmt[0],
+                                                          self.MeasuringFmt[1]) +
                   self.StringPadding +
-                    "Contain Errors: " + repr(self.ContainsErrors) + "\n" +
-                      ((self.StringPadding + \
-                          "Error Type: " + self.ErrorTypes[self.ErrorCode] + "\n") \
-                        if self.ContainsErrors else "" ) +
-                      ((self.StringPadding + \
-                          "Error Message: " + self.ErrorMessages[self.ErrorCode] + "\n") \
-                        if self.ContainsErrors else "" )
+                  "Contain Errors: {}\n".format(repr(self.ContainsErrors)) +
+                  ((self.StringPadding +"Error Type: "+self.ErrorType+"\n")
+                   if self.ContainsErrors else ""
+                   ) +
+                  ((self.StringPadding +"Error Message: "+self.ErrorMessage+"\n")
+                   if self.ContainsErrors else ""
+                   )
                   )
         #Printing out the Threads, if the test did not contain errors
         if not self.ContainsErrors:

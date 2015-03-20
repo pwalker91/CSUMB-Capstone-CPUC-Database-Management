@@ -7,14 +7,10 @@ AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 PURPOSE-  This object will represent a single thread, or pipe, in a network
             speed test. It will hold an array of Measurement objects, and has
             some basic object information
-
-FUNCTIONS:
-    __init__
-    arrayOfMsmts
-    __str__
 ------------------------------------------------------------------------
 """
-
+if __name__=="__main__":
+    raise SystemExit
 
 # IMPORTS
 from __Base import Formatting
@@ -22,10 +18,14 @@ from _Measurement import Measurement as Msmt
 from _Measurement import Final_Measurement as FMsmt
 #END IMPORTS
 
-# CLASS
+
 class Thread(Formatting):
-    # ----------------------------------
-    # Class attributes
+
+    """An abstract Thread class that takes care of most parsing"""
+
+    '''
+    # ------------------------------
+    # ---- CLASS ATTRIBUTES ----
     ThreadNumber    = 0
     DataDirection   = ""
 
@@ -36,7 +36,8 @@ class Thread(Formatting):
 
     Measurements    = []
     FinalMsmt       = None
-    # ----------------------------------
+    # ------------------------------
+    '''
 
     def __init__(self, dataArr=None, threadNum=0, direction="UP", units=("KBytes", "Kbits/sec")):
         """
@@ -72,7 +73,9 @@ class Thread(Formatting):
         #END FOR
         #Removing the line from the array of pings that contains the connection info
         # and then creating all of the pings from the remaining strings
-        allMeasurements = [line for line in dataArr if "connected with" not in line]
+        allMeasurements = [dataLine for dataLine in dataArr
+                           if "connected with" not in dataLine]
+        self.FinalMsmt = None
         for line in allMeasurements:
             #We do a quick check for the string stored in units[1]. If that string is
             # present in a line, then it must be a measurement that we want to parse
@@ -87,7 +90,6 @@ class Thread(Formatting):
                     # measurement, and then a final measurement. We delete the old object,
                     # and create a new one of type Final_Measurement
                     if (newMsmt.TimeStart == 0) and (len(self.Measurements) == 1):
-                        del newMsmt
                         FinalMsmt = FMsmt(data=line, units=units)
                         self.FinalMsmt = FinalMsmt
                         break
@@ -95,7 +97,6 @@ class Thread(Formatting):
                         self.Measurements.insert(int(newMsmt.TimeStart), newMsmt)
                     #END IF/ELSE
                 else:
-                    del newMsmt
                     FinalMsmt = FMsmt(data=line, units=units)
                     self.FinalMsmt = FinalMsmt
                 #END IF/ELSE
@@ -123,19 +124,19 @@ class Thread(Formatting):
     #END DEF
 
 
-# String printout ------------------------------------------------------------------------------
+# STRING PRINTOUT --------------------------------------------------------------
 
     def __str__(self):
         """Returns a string representation of the object"""
         string = (self.StringPadding +
-                    "Thread Number: " + str(self.ThreadNumber) +"\n" +
+                  "Thread Number: {}\n".format(self.ThreadNumber) +
                   self.StringPadding +
-                    "Data Direction: " + str(self.DataDirection) +"\n" +
+                  "Data Direction: {}\n".format(self.DataDirection) +
                   self.StringPadding +
-                    "Local: "+ str(self.LocalIP) +":"+ str(self.LocalPort) +"\n" +
+                  "Local: {}:{}\n".format(self.LocalIP,self.LocalPort) +
                   self.StringPadding +
-                    "Server: "+ str(self.ServerIP) +":"+ str(self.ServerPort) +"\n"
-                 )
+                  "Server: {}:{}\n".format(self.ServerIP,self.ServerPort)
+                  )
         for msmt in self.Measurements:
             string += str(msmt) + "\n"
         string += str(self.FinalMsmt) + "\n"

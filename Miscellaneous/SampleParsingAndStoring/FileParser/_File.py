@@ -7,87 +7,80 @@ AUTHOR(S):    Peter Walker    pwalker@csumb.edu
 PURPOSE-  This object will hold a raw data file's header information (see list of variables)
             and then parses individual tests from the remaining text, storing them as a series of
             objects in the Tests variable
-
-FUNCTIONS:
-  INITIALIZATION
-    __init__
-    loadHeaderInfo
-    parseLineAndSetAttr
-    setEmptysToDefault
-  PARSING TESTS
-    findAndParseTCPTests
-    findAndParsePINGTests
-    findAndParseTCRTTests
-    readAllTestsFromFile
-  GETTERS
-    getTest
-  STRING PRINTOUT
-    printTests
-    __str__
-  COMPARISONS
-    <
-    <=
-    >
-    >=
-    ==
-    !=
 ------------------------------------------------------------------------
 """
+if __name__=="__main__":
+    raise SystemExit
 
 
 # IMPORTS
+import os
+import sys
 from datetime import datetime
-#Importing necessary data_utils functions
-from utils.basic_utils import (getLinesWith, monthAbbrToNum,
-                                calcTCPThroughput, calc_rVal_MOS)
-#Import some global vars from data_utils
+#Importing necessary basic_utils functions
+from parserUtils.basic_utils import (getLinesWith, monthAbbrToNum)
+#Importing the necessary abstract classes and sub-classes
 from __Base import (Formatting, ErrorHandling)
-#Importing the different kinds of tests from their respective modules
 from TCP_Test import TCP_Test
-#UDP Tests are outputed slightly differently among different file types,
-# so we'll let them specify how to differentiate and store them
-#from UDP_Test import UDP_Test
+from UDP_Test import UDP_Test
 from PING_Test import PING_Test
 from TCRT_Test import TCRT_Test
 #END IMPORTS
 
-# CLASS
+
 class File(Formatting, ErrorHandling):
+
+    """
+    An abstract class that is the basis of the objects returned to a user
+     asking for a file to be parsed.
+    Inheritted by FieldTest_File and CrowdSource_File
+    """
+
+    '''
     # ------------------------------
-    # Class attributes
-    FilePath    = ""
-    Filename    = ""
-    Date        = ""
-    Time        = ""
-    EastWestSrvr = None
-    Tests       = None
-    TestsByNum  = None
+    # ---- CLASS ATTRIBUTES ----
+    FilePath        = ""
+    Filename        = ""
+    Date            = ""
+    Time            = ""
+    EastWestSrvrIPs = None
+    Tests           = None
+    TestsByNum      = None
     _fileContentsByTest = None
     # ------------------------------
+    '''
 
-    def __init__(self, filePath="", eastWest=("0.0.0.0", "0.0.0.0")):
+
+
+    def __init__(self, filePath="", eastWestIP=("0.0.0.0", "0.0.0.0")):
         """
         Initializes the object by parsing the data in the given file path
         ARGS:
             self:       reference to the object calling this method (i.e. Java's THIS)
             filePath:   String, containing absolute path to raw data file
+            eastWest:   Tuple of Strings, the IP addresses of the East and West server
         """
+        #Calling Formatting and ErrorHandling's initialization
         Formatting.__init__(self)
         ErrorHandling.__init__(self)
+        #To be updated while the software improves??
+        # May be used to determine whether an object was parsed with a specific
+        # version of the software
         self.ObjVersion = 0.9
-        self.Tests = { "TCP" : [],
-                       "UDP" : [],
-                       "PING": [],
-                       "TCRT" : [] }
+        self.Tests = { "TCP":[],
+                       "UDP":[],
+                       "PING":[],
+                       "TCRT":[] }
         self.TestsByNum = {}
-        self.FilePath = filePath
-        self.EastWestSrvr = eastWest
+        self.FilePath = os.path.abspath(filePath)
+        self.EastWestSrvrIPs = eastWestIP
         self.Filename = self.FilePath.split("/")[-1]
         self.loadHeaderInfo()
     #END INIT
 
 
-# Initialization functions ---------------------------------------------------------------------
+
+# INITIALIZATION FUNCTIONS ---------------------------------------------------------------------
 
     def loadHeaderInfo(self):
         """Initializes the object by parsing the data in the given file path."""
@@ -95,11 +88,16 @@ class File(Formatting, ErrorHandling):
         with open(self.FilePath) as fs:
             #Reading in the Date and Time of the test
             datetime = getLinesWith(fs, "Testing started at")
+
             #If we were returned something, then we need to parse the date and time
+            #
+            # TODO : Use datetime objects
+            #
             if datetime:
                 datetime = datetime[0].split("Testing started at")[1]
                 #Removing the day of the week from the remaining text
                 datetime = datetime[4:-1].strip()
+
                 #Determining the Month, Day, and Time from the first part of the text
                 monthName = datetime[:3]
                 month = str(monthAbbrToNum(monthName))
@@ -108,6 +106,7 @@ class File(Formatting, ErrorHandling):
                 datetime = datetime[2:].strip()
                 time = str(datetime[:8])
                 datetime = datetime[8:].strip()
+
                 #The year cannot be assumed to be in the same place, in the same format, so we
                 # will split on " 20", and the next two characters must be the suffix
                 year = "20" + datetime.split(" 20")[1][:2]
@@ -122,6 +121,7 @@ class File(Formatting, ErrorHandling):
                 topChunk = allText.split("\n")[:5]
                 from re import search
                 datetime = ""
+
                 for line in topChunk:
                     #Searches for a line which contains any two characters at the start
                     # of a line (hopefully numbers), then a forward slash "/", then two more
@@ -138,7 +138,7 @@ class File(Formatting, ErrorHandling):
         #END WITH FILE
     #END DEF
 
-    def parseLineAndSetAttr(self, fileStream, delimiter, attribute, hasParts=False, **kwargs):
+    def parseLineAndSetAttr(self, fileStream, delimiter, attribute, hasParts=False):
         """
         Takes a file stream, and parses a specific line, gets the necessary values
         from the line, and sets them in the object. If the object does not have the specified
@@ -153,48 +153,49 @@ class File(Formatting, ErrorHandling):
             raise ValueError("You have not passed through an open file stream")
         #Now that we know we have an open file stream, we can perform the parsing function.
         #But first, we check that the delimiter is a string
-        if not isinstance(delimiter, str):
-            raise ValueError("The delimiter must be a string")
+        if not isinstance(delimiter, str) and not hasParts:
+            raise ValueError("The delimiter was {}, and must be a string.".format(type(delimiter)))
+        if not isinstance(delimiter, list) and hasParts:
+            raise ValueError("The delimiter was {}, and must be a list.".format(type(delimiter)))
+
         #We check the variable hasParts, which is set to true if there are parts of the line that
         # hold separate values, like the OS and Java information in Phone versions of this testing
-        line = getLinesWith(fileStream, delimiter)
-        #If there is something in line, then we parse it out. Otherwise, the function is done, and
-        # nothing is set that wasn't there
-        if line:
-            if not hasParts:
+        if not hasParts:
+            #If there is something in line, then we parse it out. Otherwise, the function is done, and
+            # nothing is set that wasn't there
+            if attribute not in self.__dict__:
+                self.__dict__[attribute] = ""
+            line = getLinesWith(fileStream, delimiter)
+            if line:
                 value = line[0].split(delimiter)[1].strip()
                 if not value:
                     value = "NA"
                 self.__dict__[attribute] = value
-            else:
-                #We need to check that the necessary keyword arguements have been passed through
-                # the function if hasParts was set to True
-                if "subDelims" not in kwargs.keys():
-                    raise KeyError("You did not pass the necessary keyword arg through the function.\n" +
-                                    "Missing: subDelims. Is a: List of sub-delimiters")
-                if not isinstance(kwargs["subDelims"], list):
-                    raise TypeError("You did not pass the necessary keyword arg through the function.\n" +
-                                    "Attr: subDelims. Was not a: List of sub-delimiters")
-                if "subAttrs" not in kwargs.keys():
-                    raise KeyError("You did not pass the necessary keyword arg through the function.\n" +
-                                    "Missing: subAttrs. Is a: List of attributes to set")
-                if not isinstance(kwargs["subAttrs"], list):
-                    raise TypeError("You did not pass the necessary keyword arg through the function.\n" +
-                                    "Attr: subAttrs. Was not a: List of attributes to set")
-                if len(kwargs["subAttrs"]) != len(kwargs["subDelims"]):
-                    raise ValueError("subDelims and subAttrs must have the same number of values")
-                #END IFs
-                #Now we are going to loop through each sub-delimiter, splitting the string on it. We also
-                # keep track of what it's index is. The value parsed is then put into the variable
-                # name from the tuple in subAttrs at the same index.
-                for key, delimiter in enumerate(kwargs["subDelims"]):
-                    value = line[0].split(delimiter)[1].split(",")[0].strip()
+        else:
+            #We need to check that the necessary argument types have been passed through
+            # the function if hasParts was set to True
+            if not isinstance(attribute, list):
+                raise TypeError("You need to pass in a LIST of attributes to set")
+            if len(delimiter) != len(attribute):
+                raise ValueError("'delimiter' and 'attribute' must have the same number of values")
+            #END IFs
+            #Now we are going to loop through each sub-delimiter, splitting the string on it. We also
+            # keep track of what it's index is. The value parsed is then put into the variable
+            # name from the tuple in subAttrs at the same index.
+            for subDelimiter in delimiter:
+                subDelimInd = delimiter.index(subDelimiter)
+                #If there is something in line, then we parse it out. Otherwise, the function is done, and
+                # nothing is set that wasn't there
+                if attribute[subDelimInd] not in self.__dict__:
+                    self.__dict__[attribute[subDelimInd]] = ""
+                line = getLinesWith(fileStream, subDelimiter)
+                if line:
+                    value = line[0].split(subDelimiter)[1].strip().split(",")[0].strip()
                     if not value:
                         value = "NA"
-                    self.__dict__[kwargs["subAttrs"][key]] = value
-                #END FOR
-            #END IF/ELSE
-        #END IF
+                    self.__dict__[attribute[subDelimInd]] = value
+            #END FOR
+        #END IF/ELSE
     #END DEF
 
     def setEmptysToDefault(self, attributes):
@@ -213,13 +214,15 @@ class File(Formatting, ErrorHandling):
     #END DEF
 
 
-# Test Parse functions --------------------------------------------------------------------------
 
-    def findAndParseTCPTests(self):
+# TEST PARSER FUNCTION --------------------------------------------------------------------------
+
+    def __findAndParseTests(self, type_):
         """
         This takes the contents of the file being parsed, splits the content by "Staring Test"
-        (to included any error messages in the tests) and the creates the TCP Test objects.
-        Assumes that self._fileContentsByTest contains all of the tests
+         (to included any error messages in the tests) using the readAllTestsFromFile function,
+         and the creates the specified Test objects. Assumes that self._fileContentsByTest
+         contains all of the tests.
         """
         #First we run the readAllTestsFromFile function, to make sure that self._fileContentsByTest
         # is set, and contains all of the test output
@@ -228,92 +231,45 @@ class File(Formatting, ErrorHandling):
         # inside of the IF block
         if not self.ContainsErrors:
             for chunk in self._fileContentsByTest:
-                if "TCP" in chunk:
-                    try:
-                        #The chunk holds a TCP Test, so we pass it to the constructor, and then
-                        # append the test to our tests. We append in two places; in the TCP category
-                        # and in the NUM category (inserted at the index that corresponds to the test number)
-                        #The if statement is one last check to make sure that the test actually contains
-                        # some basic information
-                        if "Iperf command line" in chunk:
-                            parsedTest = TCP_Test(dataString=chunk, eastWest=self.EastWestSrvr)
-                            self.Tests[parsedTest.ConnectionType].append(parsedTest)
-                            self.TestsByNum[int(parsedTest.TestNumber)] = parsedTest
-                        #END IF
-                    except:
-                        raise RuntimeError("Something went wrong when trying to put the TCP test into this "+
-                                           "File object.\nFilePath: "+self.FilePath)
-                    #END TRY/EXCEPT
-                #END IF
+                if type_ == "TCP":
+                    parsedTest = TCP_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
+                if type_ == "UDP":
+                    parsedTest = UDP_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
+                if type_ == "PING":
+                    parsedTest = PING_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
+                if type_ == "TCRT":
+                    parsedTest = TCRT_Test(dataString=chunk, eastWestIP=self.EastWestSrvrIPs)
+                #If the line above returned an object (and not None), and the object's
+                # ErrorCode is not 1, then we have correctly parsed a Test, and can
+                # add it to our list.
+                if parsedTest:
+                    self.Tests[parsedTest.ConnectionType].append(parsedTest)
+                    self.TestsByNum[int(parsedTest.TestNumber)] = parsedTest
+                else:
+                    pass #If we are passing, then the test was not a TCP test
+                #END IF/ELSE
             #END FOR
         #END IF
+    #END DEF
+
+    def findAndParseTCPTests(self):
+        """Calls a private function to find and parse all TCP tests"""
+        self.__findAndParseTests("TCP")
+    #END DEF
+
+    def findAndParseUDPTests(self):
+        """Calls a private function to find and parse all UDP tests"""
+        self.__findAndParseTests("UDP")
     #END DEF
 
     def findAndParsePINGTests(self):
-        """
-        This takes the contents of the file being parsed, splits the content by "Staring Test"
-        (to included any error messages in the tests) and the creates the PING Test objects.
-        Assumes that self._fileContentsByTest contains all of the tests
-        """
-        #First we run the readAllTestsFromFile function, to make sure that self._fileContentsByTest
-        # is set, and contains all of the test output
-        self.readAllTestsFromFile()
-        #If the function above ran and did not hit any major errors, then we can run the code
-        # inside of the IF block
-        if not self.ContainsErrors:
-            for chunk in self._fileContentsByTest:
-                #This is checking if any of the strings in the above list are present
-                # in the current chunk. We then check if the string "Checking Connectivity"
-                # is not in the chunk. If it's not, then we have a Ping test
-                possibleStrings = ["Ping", "ping", "PING"]
-                isAPingTest = any( [(string in chunk) for string in possibleStrings] )
-                if ( isAPingTest and ("Checking Connectivity" not in chunk) ):
-                    try:
-                        #The chunk holds a PING Test, so we pass it to the constructor, and then
-                        # append the test to our tests. We append in two places; in the PING category
-                        # and in the NUM category (inserted at the index that corresponds to the test number)
-                        parsedTest = PING_Test(dataString=chunk, eastWest=self.EastWestSrvr)
-                        self.Tests[parsedTest.ConnectionType].append(parsedTest)
-                        self.TestsByNum[int(parsedTest.TestNumber)] = parsedTest
-                        #END IF
-                    except:
-                        raise RuntimeError("Something went wrong when trying to put the PING test into this "+
-                                           "File object.\nFilePath: "+self.FilePath)
-                    #END TRY/EXCEPT
-                #END IF
-            #END FOR
-        #END IF
+        """Calls a private function to find and parse all PING tests"""
+        self.__findAndParseTests("PING")
     #END DEF
 
     def findAndParseTCRTTests(self):
-        """
-        This takes the contents of the file being parsed, splits the content by "Staring Test"
-        (to included any error messages in the tests) and the creates the TRCT Test objects.
-        Assumes that self._fileContentsByTest contains all of the tests
-        """
-        #First we run the readAllTestsFromFile function, to make sure that self._fileContentsByTest
-        # is set, and contains all of the test output
-        self.readAllTestsFromFile()
-        #If the function above ran and did not hit any major errors, then we can run the code
-        # inside of the IF block
-        if not self.ContainsErrors:
-            for chunk in self._fileContentsByTest:
-                #Making sure that the chunk is a traceroute test
-                if any( [(string in chunk) for string in ["traceroute", "Traceroute"]] ):
-                    try:
-                        #The chunk holds a TRACERT Test, so we pass it to the constructor, and then
-                        # append the test to our tests. We append in two places; in the TRACRT category
-                        # and in the NUM category (inserted at the index that corresponds to the test number)
-                        parsedTest = TCRT_Test(dataString=chunk, eastWest=self.EastWestSrvr)
-                        self.Tests[parsedTest.ConnectionType].append(parsedTest)
-                        self.TestsByNum[int(parsedTest.TestNumber)] = parsedTest
-                    except:
-                        raise RuntimeError("Something went wrong when trying to put the TCRT test into this "+
-                                           "File object.\nFilePath: "+self.FilePath)
-                    #END TRY/EXCEPT
-                #END IF
-            #END FOR
-        #END IF
+        """Calls a private function to find and parse all TCRT tests"""
+        self.__findAndParseTests("TCRT")
     #END DEF
 
     def readAllTestsFromFile(self):
@@ -325,21 +281,19 @@ class File(Formatting, ErrorHandling):
         """
         #This is a check to see if the function has already run and found an
         # error in the output. This way, we don't unnecessarily run the function again
-        if not self.ContainsErrors and self._fileContentsByTest == None:
+        if not self.ContainsErrors and "_fileContentsByTest" not in self.__dict__:
             #We need to first open the file, and read all of the contents into one big string
             with open(self.FilePath) as fs:
                 allText = fs.read()
             #END WITH FILE
             if "Connectivity Test Failed" in allText and "Starting Test" not in allText:
-                self.ContainsErrors = True
-                self.ErrorCode = 311
+                self._ErrorHandling__setErrorCode(311)
                 return
             #First splitting the contents into sections. These sections are all of the areas
             # bounded by a "Starting Test"
             self._fileContentsByTest = allText.split("Starting Test")
             if len(self._fileContentsByTest) == 1:
-                self.ContainsErrors = True
-                self.ErrorCode = 310
+                self._ErrorHandling__setErrorCode(310)
                 return
             #END IF
             #Re-appending "Starting Test" to all of the chunks of text output
@@ -348,31 +302,32 @@ class File(Formatting, ErrorHandling):
     #END DEF
 
 
-# Getters -----------------------------------------------------------------------------------
 
-    def getTest(self, testType, **kwargs):
+# ATTRIBUTE GETTERS -------------------------------------------------------------------------
+
+    def getTest(self, type_, **kwargs):
         """
         Gets the object that meets the specified values. Type of test (PING, TCP, or UDP) must
         be given, but all other attributes must be given through keyword arguments
         ARGS:
             self:       reference to the object calling this method (i.e. Java's THIS)
-            testType:   String, the type of test that will be searched for
+            type_:      String, the type of test that will be searched for
             kwargs:     Strings, the attributes that the test must have.
         RETURNS:
             List of type _Test objects that meet the specified attributes in kwargs
         """
         #Checking that the type is one of the possible types
-        if testType not in self.Tests.keys():
-            raise ValueError("The \"testType\" was not of the possible types. "+str(self.Tests.keys()))
+        if type_ not in self.Tests.keys():
+            raise ValueError("The \"type_\" was not of the possible types. "+str(self.Tests.keys()))
         #If no other attributes were passed in through kwargs, then we just return all
         # of the test of that type
         if len(kwargs) == 0:
-            return self.Tests[testType]
+            return self.Tests[type_]
         #Otherwise, we will go through all of the tests, and find the ones that have
         # the specified attributes.
         else:
             matchingTests = []
-            for test in self.Tests[testType]:
+            for test in self.Tests[type_]:
                 matchesAll = True
                 #This will go through all of the key/value pairs in kwargs, and test
                 # if the test has the attributes. If any are found to not match, then
@@ -396,7 +351,8 @@ class File(Formatting, ErrorHandling):
     #END DEF
 
 
-# String printout ----------------------------------------------------------------------------
+
+# STRING PRINTOUT ----------------------------------------------------------------------------
 
     def printTests(self):
         """
@@ -404,7 +360,7 @@ class File(Formatting, ErrorHandling):
         tests, then it returns a string saying there were no tests
         """
         text = ""
-        testNumKeys = list(self.TestsByNum.keys()); testNumKeys.sort()
+        testNumKeys = sorted(list(self.TestsByNum.keys()))
         for aTestNum in testNumKeys:
             text += str(self.TestsByNum[aTestNum])
         #END FOR
@@ -416,29 +372,29 @@ class File(Formatting, ErrorHandling):
     def __str__(self):
         """Returns a string represenation of the object"""
         return (self.StringPadding +
-                    "Filename: " + str(self.Filename) + "\n" +
+                "Filename: {}\n".format(self.Filename) +
                 self.StringPadding +
-                    "DateTime of Speed Test: " + str(self.Date) + " " + str(self.Time) + "\n" +
+                "DateTime of Speed Test: {} {}\n".format(self.Date,self.Time) +
                 self.StringPadding +
-                    "Contain Major Errors: " + repr(self.ContainsErrors) + "\n" +
-                    ((self.StringPadding + \
-                        "Error Type: " + self.ErrorTypes[self.ErrorCode] + "\n") \
-                      if self.ContainsErrors else "" ) +
-                    ((self.StringPadding + \
-                        "Error Message: " + self.ErrorMessages[self.ErrorCode] + "\n") \
-                      if self.ContainsErrors else "" ) +
+                "Contain Major Errors: {}\n".format(repr(self.ContainsErrors)) +
+                ((self.StringPadding + "Error Type: " +self.ErrorType+ "\n")
+                 if self.ContainsErrors else ""
+                 ) +
+                ((self.StringPadding + "Error Message: " +self.ErrorMessage+ "\n")
+                 if self.ContainsErrors else ""
+                 ) +
                 self.printTests()
                 )
     #END DEF
 
 
-# Comparisons ----------------------------------------------------------------------------
+# COMPARISONS ----------------------------------------------------------------------------
 
     def __sameType(func):
         def wrapper(*args, **kwargs):
             if not isinstance(args[1], args[0].__class__):
                 raise TypeError("You must compare the same type of object.\n"+
-                            "Was given: "+str(type(args[0]))+" & "+str(type(args[1])))
+                                "Was given: "+str(type(args[0]))+" & "+str(type(args[1])))
             return func(*args, **kwargs)
         return wrapper
     #END DEF
