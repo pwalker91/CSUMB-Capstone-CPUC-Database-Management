@@ -133,7 +133,7 @@ db.connect()
 
 print("Inserting...")
 for file in parsedFiles:
-    print(" Inserted {} of {}...".format(parsedFiles.index(file)+1, len(parsedFiles)), end="\r")
+    print(" Inserted {} of {} records...".format(parsedFiles.index(file)+1, len(parsedFiles)), end="\r")
     avgLat = [elem[0] for elem in file.AllCoordPairs if elem[0]!=0]
     avgLng = [elem[1] for elem in file.AllCoordPairs if elem[1]!=0]
     newID = db.insert( "FileInfo",
