@@ -1,6 +1,10 @@
 .text-align-xs {
     text-align: left;
 }
+
+.pad-bottom {
+    margin-bottom: 20px;
+}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
     .text-align-sm {
