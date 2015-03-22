@@ -19,18 +19,13 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
 
-        <!-- Include Bootstrap Datepicker -->
-        <link rel="stylesheet"
-              href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
-        <link rel="stylesheet"
-              href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
-        <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.min.js"></script>
-
-        <!-- My jQuery functions, used for div hiding/unhiding, and setting datepicker options-->
-        <script src="request_jquery.js"></script>
+        <!-- My jQuery functions, used for div hiding/unhiding, and setting form options-->
+        <script src="http://hosting.otterlabs.org/walkerpeterj/CSDI/request_jquery/generic_jquery.js"></script>
+        <script src="http://hosting.otterlabs.org/walkerpeterj/CSDI/request_jquery/file_info_jq.js"></script>
+        <script src="http://hosting.otterlabs.org/walkerpeterj/CSDI/request_jquery/test_type_jq.js"></script>
         <!-- Some specialty styling -->
         <link rel="stylesheet"
-              href="request_styling.css" />
+              href="http://hosting.otterlabs.org/walkerpeterj/CSDI/request_styling.css" />
     </head>
 
 
@@ -49,8 +44,14 @@
                     <dt>Test Type</dt>
                     <dd>Please choose which type of tranmission techonology (i.e., the test conducted) you would like to have analyzed.</dd>
 
-                    <dt>Date</dt>
-                    <dd>Please use the given input box to choose a date from a calendar. This will be one of the criteria used to get specfic statistics.</dd>
+                    <dt>File Info Criteria</dt>
+                    <dd></dd>
+
+                    <dt>Test Type Criteria</dt>
+                    <dd></dd>
+
+                    <dt>Statistics</dt>
+                    <dd></dd>
 
                     <dt>Submit</dt>
                     <dd>Submits the form to be processed so that the query request may be generated.</dd>
@@ -72,6 +73,7 @@
                         <label class="col-xs-12 col-sm-4 text-align-xs text-align-sm control-label">
                             <h4>Test Type</h4>
                         </label>
+                        <!-- Buttons for choosing Test Type -->
                         <div class='col-xs-12 col-sm-8 input-col'>
                             <!-- Buttons to choose Test Type -->
                             <div class="btn-group" data-toggle="buttons">
@@ -98,31 +100,12 @@
                                 </label>
                             </div>
                             <!-- Dropdown to choose Test Type values to graph -->
-                            <div class='input-group'>
-                                <div id='tcp_choices' style="display:none">
-                                    <select class="form-control" name='form_ttype_tcp_vals'>
-                                        <option value="">- Select an Option -</option>
-                                        <option value='throughput'>Throughput</option>
-                                    </select>
-                                </div>
-                                <div id='udp_choices' style="display:none">
-                                    <select class="form-control" name='form_ttype_udp_vals'>
-                                        <option value="">- Select an Option -</option>
-                                        <option value='jitter'>Jitter</option>
-                                        <option value='datagram-loss'>Datagram Loss</option>
-                                    </select>
-                                </div>
-                                <div id='ping_choices' style="display:none">
-                                    <select class="form-control" name='form_ttype_ping_vals'>
-                                        <option value="">- Select an Option -</option>
-                                        <option value='delay'>Delay</option>
-                                        <option value='packet-loss'>Packet Loss</option>
-                                    </select>
-                                </div>
+                            <div class='input-group' name='form_ttype_vals'>
                             </div>
                         </div> <!-- end TEST TYPE RADIOs -->
                     </div>
                 </div></div>
+                <hr/>
 
 
 
@@ -136,26 +119,29 @@
                         <div class='form-inline col-xs-10 col-sm-8'>
                             <div class="input-group col-xs-10 col-sm-2">
                                 <input type='button'
-                                       id='show_date_div'
-                                       name='show_date_div'
+                                       id='file_crit_button'
+                                       name='file_crit_button'
                                        class='btn btn-primary'
-                                       value='Show Date' />
+                                       value='Add Criteria' />
                             </div>
                             <div class="input-group col-xs-10 col-sm-4">
                                 <select class="form-control" name='form_file_crit'>
                                     <option value=""></option>
+                                    <option value='LocationID'>Location ID Number</option>
                                     <option value='Date'>Date</option>
                                     <option value='Time'>Time</option>
                                     <option value='DeviceType'>Device Type</option>
+                                    <option value='NetworkCarrier'>Cellular Network Carrier</option>
                                 </select>
                             </div>
                         </div> <!-- end TEST TYPE CRITERIA DROPDOWN CHOICE -->
                     </div>
                 </div></div>
-                <div class='row pad-bottom'><div class='col-xs-12'>
+                <div class='row'><div class='col-xs-12'>
                     <table name='file_criteria' class='table table-bordered'>
                     </table>
                 </div></div>
+                <hr/>
 
 
                 <!-- Choosing any criteria for the Specific Test Type Information -->
@@ -168,24 +154,23 @@
                     <div class='form-inline col-xs-10 col-sm-8'>
                         <div class="input-group col-xs-10 col-sm-2">
                             <input type='button'
-                                   id='show_loc_div'
-                                   name='show_loc_div'
+                                   id='ttype_crit_button'
+                                   name='ttype_crit_button'
                                    class='btn btn-primary'
-                                   value='Show Con Loc' />
+                                   value='Add Criteria' />
                         </div>
                         <div class="input-group col-xs-10 col-sm-4">
                             <select class="form-control" name='form_ttype_crit'>
-                                <option value=""></option>
-                                <option value='ConnectionLoc'>Connection Location</option>
                             </select>
                         </div>
                     </div> <!-- end TEST TYPE CRITERIA DROPDOWN CHOICE -->
                     </div>
                 </div></div>
-                <div class='row pad-bottom'><div class='col-xs-12'>
-                    <table name='test_type_criteria' class='table table-bordered'>
+                <div class='row'><div class='col-xs-12'>
+                    <table name='ttype_criteria' class='table table-bordered'>
                     </table>
                 </div></div>
+                <hr/>
 
 
 
@@ -211,6 +196,7 @@
                     </div> <!-- end STATS FUNC CHOICE -->
                 </div>
                 </div></div>
+                <hr/>
 
                 <!-- the submit button -->
                 <div class='row pad-bottom'><div class='col-xs-12'>
@@ -235,4 +221,5 @@
             <div class='row container'>
             </div> <!-- end CONTAINER ROW -->
         </div>
-    </
+    </body>
+</html>

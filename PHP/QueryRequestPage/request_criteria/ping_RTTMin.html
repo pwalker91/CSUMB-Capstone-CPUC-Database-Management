@@ -1,22 +1,24 @@
 <div class='form-group form-elem'>
     <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
-        <h4>Date Selection</h4>
+        <h4>RTT Minimum Filtering</h4>
     </label>
     <div class='col-xs-10 col-sm-3 input-col'>
-        <label>Date</label>
+        <label>RTT Minimum Value</label>
         <div class='input-group' id='date'>
-            <input type="date"
+            <input type="number"
                    class="form-control"
-                   name="form_file_Date" />
+                   name="form_ttype_ping_RTTMin"
+                   min='0'
+                   step='any' />
             <span class="input-group-addon add-on">
-                <span class="glyphicon glyphicon-calendar"></span>
+                <span class="glyphicon glyphicon-signal"></span>
             </span>
         </div><!-- end DATE INPUT -->
     </div>
-    <div class="col-xs-10 col-sm-3 input-col">
-        <label>Date Comparison</label>
+    <div class="col-xs-10 col-sm-4 input-col">
+        <label>RTT Minimum Comparison</label>
         <div class='input-group' id='date-comp'>
-            <select class='form-control' name='form_file_Date_comparator'>
+            <select class='form-control' name='form_ttype_ping_RTTMin_comparator'>
                 <option value=""></option>
                 <option value="<=">&lt;&#61;</option>
                 <option value="=">&#61;</option>

@@ -1,98 +1,58 @@
+/*
+*   AUTHOR:     Peter Walker (pwalker@csumb.edu)
+*   DATE:       18 March 2015
+*   PURPOSE:    This file has a number of jQuery functions that are used in different
+*                places within the request.php page, but mostly are for either
+*                showing or hiding elements.
+*/
+
+
 if ($(document).ready( function() {
-    $('.datePicker').datepicker({
-        format: "yyyy-mm-dd",
-        todayBtn: "linked",
-        autoclose: true,
-        todayHighlight: true
-    });
-
-    function resetSelect(selectTag) {
-        $("#"+selectTag).val("");
-    }
-    function showPNG() {
-        $('#tcp_choices').hide();
-        resetSelect('tcp_choices');
-        $('#udp_choices').hide();
-        resetSelect('udp_choices');
-        $('#ping_choices').show();
-    }
-    function showUDP() {
-        $('#tcp_choices').hide();
-        resetSelect('tcp_choices');
-        $('#udp_choices').show();
-        $('#ping_choices').hide();
-        resetSelect('ping_choices');
-    }
-    function showTCP() {
-        $('#tcp_choices').show();
-        $('#udp_choices').hide();
-        resetSelect('udp_choices');
-        $('#ping_choices').hide();
-        resetSelect('ping_choices');
-    }
-
-    $('input[name="form_ttype"]:radio').change( function() {
-        if ($(this).val()=="PING") { showPNG(); }
-        else if ($(this).val()=="UDP") { showUDP(); }
-        else if ($(this).val()=="TCP") { showTCP(); }
-    });
-
-
-
-    //For adding rows to either the File criteria, or the Test Type criteria
-    $('input[name="show_date_div"]').click( function() {
-        $('table[name="file_criteria"]').append(
-            $("<tr>", {
-                class: "field-start"
-            }).append(
-                $("<td>").load("request_criteria/file_date.html")
-            )
-        );
-    });
-
-    $('input[name="show_loc_div"]').click( function() {
-        $('table[name="test_type_criteria"]').append(
-            $("<tr>", {
-                class: "field-start"
-            }).append(
-                $("<td>").load("request_criteria/tcp_loc.html")
-            )
-        );
-    });
-
-
-
-    //For showing or removing an error from the form
+    //For showing or removing an error from the form. This will add
+    // the 'has-error' class to the parent div that is a 'form-elem' class, and
+    // to the parent div that is of 'input-col' class.
+    // It will also change the background of the parent 'field-start' div
+    // to have a red background
     function showError(elem){
         console.log("ERROR: No value in "+elem.name);
-        var input_col = $(elem).parents("div.input-col");
-        $(input_col)
+        $(elem).parents("div.input-col")
             .addClass("has-error");
-        var form_grp = $(input_col).parents("div.form-elem");
-        $(form_grp)
+        var $form_elem = $(elem).parents("div.form-elem");
+        $($form_elem)
             .addClass("has-error");
-        $(form_grp).parents('.field-start')
+        $($form_elem).parents('.field-start')
             .css('background-color', '#F0B2B2');
     }
+    //This is the opposite of show error. It removed the red background color,
+    // and removes the 'has-error' class.
+    // However, this removing is only done to the 'form-elem' and 'field-start'
+    // elements if no other child elements in the 'form-elem' have errors.
     function removeError(elem){
-        var input_col = $(elem).parents("div.input-col")
-        $(input_col)
+        $(elem).parents("div.input-col")
             .removeClass("has-error");
-        var form_grp = $(input_col).parents("div.form-elem");
+        var $form_elem = $(elem).parents("div.form-elem");
         var noErrors = true;
-        $(form_grp).children('div.input-col').each(function() {
+        $($form_elem).children('div.input-col').each(function() {
             if ($(this).hasClass("has-error")) {
                 noErrors = false;
             }
         });
         if (noErrors) {
-            $(form_grp)
+            $($form_elem)
                 .removeClass("has-error");
-            $(form_grp).parents('.field-start')
+            $($form_elem).parents('.field-start')
                 .css('background-color', 'transparent');
         }
     }
 
+
+
+    //When the query form is submitted, we need to check that all of the inputs
+    // have been filled out.
+    // We are going to check every type of input currently used that has
+    // a 'form-elem' class. If an error is found, we show that error with showError(),
+    // and set ERRORSFOUND to true. We will then return the NOT of that boolean once
+    // we complete
     $("#query_form").submit(function (){
         var ERRORSFOUND = false;
         //Checking that a radio button has been checked
@@ -153,12 +113,10 @@ if ($(document).ready( function() {
     //Our date picker that will pass the date selected
     // to the AJAX function
     $( ".datepicker" ).datepicker({
-
         format: "yyyy-mm-dd",
         todayBtn: "linked",
         autoclose: true,
         todayHighlight: true
-
         /*
         onSelect: function() {
             var date = $(this).val().split("/");
@@ -170,4 +128,26 @@ if ($(document).ready( function() {
                     'date': newDate //,
                     //'elem2': val2
                 },
-      
+                cache: false,
+                success: function(json, status) {
+                    console.log(status);
+                    console.log(json);
+                    var $description = $('<p>').text(json);
+                    $('#info')
+                        .empty()
+                        .append($description);
+                },
+                error: function(xhr, desc, err) {
+                    console.log(xhr);
+                    console.log("Details: " + desc + "\nError:" + err);
+                    var $errorMsg = $('<p>').text("Oops. Something went wrong...");
+                    var $errorInfo = $('<p>').text("Details: " + desc + "\nError:" + err);
+                    $('#info')
+                        .empty()
+                        .append($errorMsg)
+                        .append($errorInfo);
+                }
+            });
+        } /
+    });*/
+}));
