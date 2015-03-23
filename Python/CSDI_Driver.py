@@ -1,3 +1,10 @@
+"""README
+    So to first explain how I want this to work, I was thinking something along the lines like this:
+            Go through json data to find what table that is being asked to be queried
+            Based on the table, go through if/else statements to do the correct select statement for speeds and dates. For right now strictly doing speeds vrs dates
+            For the speeds select statement and date select statement, based on FK's assign speed and dates to their specific arrays
+            Send data to MPL"""
+
 import sys
 import json
 from CSDI_MySQL import CSDI_MySQL as db#talk to them
@@ -15,29 +22,55 @@ if (myDict['table'] == 'TCPResults'):
     speeds = db.select('TCPResults', "Oid", "DownSpeed", DownSpeed = "0", DownSpeed_operator=">")
     dates = db.select('FileInfo', "Id", "Date", Date = myDict['date'], Date_operator= myDict['date_operator'])
     print(speeds)
-    #from here:
-""" 1) do forloop to collect speeds for when 
-        Oid from "speeds" == Id from "dates"
+#from here:
+""" 1) do forloop to collect speeds for when
+    Oid from "speeds" == Id from "dates"
     2) in same for loop for dates store dates in seperate array where
-        Oid == Id
-        
+    Oid == Id
+    
     Example:
-        for rows in speeds:
-            if (dates['Id'] == speeds['Oid'])
-                store speeds
-        for rows in dates:
-            if (dates['Id'] == speeds['Oid'])  
-                store according dates
+    for rows in speeds:
+    if (dates['Id'] == speeds['Oid'])
+    store speeds
+    for rows in dates:
+    if (dates['Id'] == speeds['Oid'])
+    store according dates
     3) send data to mpl api
     4) issues:
-            When running select statement: 
-            "args[0].cursor.execute("SHOW COLUMNS FROM {}".format(args[1]))
-            AttributeError: 'str' object has no attribute 'cursor'"
-    5) Pretty sure the select statement is correct
+    When running select statement:
+    "args[0].cursor.execute("SHOW COLUMNS FROM {}".format(args[1]))
+    AttributeError: 'str' object has no attribute 'cursor'"
+    5) Pretty sure the select statement is correct"""
+if (myDict['table'] == 'UDPResults'):
+    speeds = db.select('UDPResults', "Oid", "DownSpeed", DownSpeed = "0",DownSpeed_operator=">")
+    dates = db.select('FileInfo', "Id", "Date", Date = myDict['date'], Date_operator= myDict['date_operator'])
+    print(speeds)
+    #from here:
+    """ 1) do forloop to collect speeds for when
+            Oid from "speeds" == Id from "dates"
+        2) in same for loop for dates store dates in seperate array where
+            Oid == Id
+            Example:
+                for rows in speeds:
+                    if (dates['Id'] == speeds['Oid'])
+                        store speeds
+                for rows in dates:
+                    if (dates['Id'] == speeds['Oid'])
+                        store according dates
+        3) send data to mpl api
+        4) issues:
+            When running select statement:
+                "args[0].cursor.execute("SHOW COLUMNS FROM {}".format(args[1]))
+                AttributeError: 'str' object has no attribute 'cursor'"
+        5) Pretty sure the select statement is correct"""
 
 
 
-
+"""
+After if/else statements
+send data to graph maybe like 
+graph(speeds, dates, myDict['statistics'])
+"""
 
 
 
