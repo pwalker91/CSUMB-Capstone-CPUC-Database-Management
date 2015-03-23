@@ -6,13 +6,8 @@ from statistics import mean
 from pylab import *
 from CSDI_MySQL import CSDI_MySQL #talk to them
 
-class CSDI_MPL(self, data):
-    def getQueryResults():
-        results = db.select('test', "speed","provider", "id", speed="0", speed_operator=">")
-        print (results)
-        dataForGraph(results)
-
-    def dataForGraph(results):
+class CSDI_MPL(data):
+    def dataForGraph(data):
         #init lists to store data pertaining to specific providers speed and id, this is the y axis
         atemp = []
         vtemp = []
@@ -38,8 +33,8 @@ class CSDI_MPL(self, data):
             if (records[1] == 'sprint'):
                 stemp.append(records[0])
                 sid.append(records[2])
-        lineGraph(atemp, aid, vtemp, vid, ttemp, tid, stemp, sid)
-    def lineGraph(att, attid, verizon, verizonid, tmobile, tmobileid, sprint, sprintid):
+        #lineGraph(atemp, aid, vtemp, vid, ttemp, tid, stemp, sid)
+    def lineGraph():
     
         #because of the way graph material is set up we use %id as x and %temp as y
         #labeled them and colored them according to their marketing colors. IE Att is blue and white
