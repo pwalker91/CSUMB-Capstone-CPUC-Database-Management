@@ -9,6 +9,7 @@ import sys
 import json
 from CSDI_MySQL import CSDI_MySQL as db#talk to them
 #from CSDI_matplotlib_adv.py import CSDI_MPL as mpl
+
 myDict = {'table':'TCPResults',
           'table_val':'Throughtput',
           'file_criteria': {
