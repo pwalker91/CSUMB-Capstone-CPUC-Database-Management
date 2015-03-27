@@ -1,19 +1,18 @@
 """
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 PyDB_API.PY
 
-AUTHOR(S):  Peter Walker: pwalker@csumb.edu
-            Nicholas Moradi: nmoradi@csumb.edu
+AUTHOR(S):  Peter Walker        pwalker@csumb.edu
+            Nicholas Moradi     nmoradi@csumb.edu
 
 PURPOSE-  This module will be used for data manipulation in MySQL Databases.
             Ability to SELECT and INSERT. Creates a class that will use multiple
             functions to do what it needs to do.
--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
 """
 
 #IMPORTS
 import pymysql
-
 #END IMPORTS
 
 
@@ -40,6 +39,7 @@ class CSDI_MySQL(object):
     connection = None
     cursor = None
     # ------------------------------
+
 
     def __init__(self, **kwargs):
         """
@@ -139,14 +139,22 @@ class CSDI_MySQL(object):
             columnsList = [column[0] for column in args[0].cursor.fetchall()]
             givenColumns = list(args[2:])
             if "*" in givenColumns:
-                givenColumns.remove(givenColumns.index("*"))
-            [givenColumns.append(key) for key in kwargs if "_operator" not in key]
+                givenColumns.remove("*")
+            [givenColumns.append(key) for key in kwargs if "_COMP" not in key]
             for column in givenColumns:
                 if column not in columnsList:
                     raise RuntimeError("The given column, '{}'".format(column)+
                                        ", is not in the given table, '{}'".format(args[1]))
             return func(*args, **kwargs)
         return checkColumnsWrapper
+    #END DEF
+
+    def __checkConnected(func):
+        def checkConnectedWrapper(*args, **kwargs):
+            if not args[0].connection or not args[0].cursor:
+                raise RuntimeError("You must be connected to a data to execute this query.")
+            return func(*args, **kwargs)
+        return checkConnectedWrapper
     #END DEF
 
 
@@ -162,7 +170,18 @@ class CSDI_MySQL(object):
             self.lastQuery = asString
             try:
                 self.cursor.execute(query, queryData)
-                self.lastResult = (True, self.cursor.fetchall())
+                #This block will first get all of the results. But we are not sure if the
+                # user knows the order in which the columns are, so we want to insert
+                # the column names in front of the results returned
+                #Making sure that we have column names (ie. cursor.description is not None)
+                if self.cursor.description:
+                    #Getting the first element from each item in cursor.description
+                    columnsReturned = tuple( [columnInfo[0] for columnInfo in self.cursor.description] )
+                    allResults = list(self.cursor.fetchall())
+                    allResults.insert(0, columnsReturned)
+                    self.lastResult = (True, tuple(allResults))
+                else:
+                    self.lastResult = (True, ())
             except pymysql.Error as err:
                 print(err)
                 print("QUERY: '{}'".format(asString))
@@ -182,8 +201,9 @@ class CSDI_MySQL(object):
 
     #QUERY GENERATION and EXECUTION --------------------------------------------
 
-    @__checkColumns
+    @__checkConnected
     @__checkTable
+    @__checkColumns
     def insert(self, table, **kwargs):
         """
         Runs an INSERT query with table and kwargs.
@@ -194,6 +214,8 @@ class CSDI_MySQL(object):
         **KWARGS:
             key     Dictionary key, the column to insert a value into
             value   String/Integer/Date/Time, the value to insert
+        RETURNS:
+            BOOLEAN or INT. False on failure, or the row ID of the new row inserted
         """
         query = "INSERT INTO {} (".format(table)
         for key in kwargs:
@@ -204,13 +226,13 @@ class CSDI_MySQL(object):
         query = query[:-2]+")"
         flag, results = self.__executeQuery(query, kwargs)
         if flag:
-            newflag, results = self.__executeQuery("SELECT LAST_INSERT_ID()",{})
-            return results[0][0]
+            return self.cursor.lastrowid
         return flag
     #END DEF
 
-    @__checkColumns
+    @__checkConnected
     @__checkTable
+    @__checkColumns
     def select(self, table, *args, **kwargs):
         """
         Creates a simple function using correct tables, columns and values to
@@ -230,16 +252,22 @@ class CSDI_MySQL(object):
             Key/Value pairs, which represent the column/value pairs in the table
              that form the criteria of the query.
             Key/operator pairs, where the key is the column name, followed
-             by '_operator'. This can be '=', '>', etc.
+             by '_COMP'. This can be '=', '>', etc.
             The only conjunction available is 'AND'. If you wish to execute a
              more selective query, you must call _executeAQuery().
+        RETURNS:
+            The results of the query executing. These will be a tuple, containing:
+             BOOLEAN        - Whether the given query was able to execute correctly
+             pymysql RESULT - Which itself contains an array of...
+                Tuple of column headers (Strings)
+                Tuples of results (in the order specified by the column headers)
         """
         #kwargs.keys() gets all the key values from kwargs, and puts into a list form.
         #The list function is applied to make it mutable
-        #We then add each element from the keys to the new array if "_operator"
+        #We then add each element from the keys to the new array if "_COMP"
         # is not in the key name. The resulting array is all of the keys in
         # kwargs that are column names.
-        trueKeys = [elem for elem in list(kwargs.keys()) if "_operator" not in elem]
+        trueKeys = [elem for elem in list(kwargs.keys()) if "_COMP" not in elem]
         #This checks that each element in 'args' is a column within the table,
         # or that the argkey is '*'
         if len(args)<1:
@@ -248,31 +276,42 @@ class CSDI_MySQL(object):
 
         #Adding the columns after SELECT, the columns the user wants returned
         query = "SELECT "
-        for argkey in args:
-            query += "{}, ".format(argkey)
+        #If the user wants all columns, then we only want to use the "*", otherwise,
+        # append each column name
+        if "*" in args:
+            query += "*, "
+        else:
+            for argkey in args:
+                query += "{}, ".format(argkey)
+        #END IF/ELSE
         query = query[:-2] + " FROM {} WHERE ".format(table)
-        for kwargskey in trueKeys:
-            #adding to the query what we are looking for
-            #kwarg key = column name, kwargs[kwargskey + _operator] is grabbing
-            # the mathematical operator from kwargs
-            #kwargskey is being used as a placeholder in query string
-            acceptableOps = ["=", "<>", ">", ">=", "<", "<="]
-            if kwargskey+"_operator" not in kwargs:
-                kwargs[kwargskey+"_operator"] = "="
-            else:
-                if kwargs[kwargskey+"_operator"] not in acceptableOps:
-                    print("You gave an incorrect SQL predicate. "+
-                          "Was given '{}'".format(kwargs[kwargskey+"_operator"]))
-                    return self.lastResult
-            #END IF/ELSE
+        #If no ops were given, then we just want to query everything
+        if len(kwargs)==0:
+            query += "1=1"
+        else:
+            for kwargskey in trueKeys:
+                #adding to the query what we are looking for
+                #kwarg key = column name, kwargs[kwargskey + _COMP] is grabbing
+                # the mathematical operator from kwargs
+                #kwargskey is being used as a placeholder in query string
+                acceptableOps = ["=", "<>", ">", ">=", "<", "<="]
+                if kwargskey+"_COMP" not in kwargs:
+                    kwargs[kwargskey+"_COMP"] = "="
+                else:
+                    if kwargs[kwargskey+"_COMP"] not in acceptableOps:
+                        print("You gave an incorrect SQL predicate. "+
+                              "Was given '{}'".format(kwargs[kwargskey+"_COMP"]))
+                        return self.lastResult
+                #END IF/ELSE
 
-            #Now we actually create the criteria, subbing in the column name,
-            # operator, and conjunction
-            query +=" {} {} %({})s AND".format(kwargskey,
-                                               kwargs[kwargskey+"_operator"],
-                                               kwargskey)
-        #Removing the AND from the end of our query
-        query = query.rsplit(" ",1)[0]
+                #Now we actually create the criteria, subbing in the column name,
+                # operator, and conjunction
+                query +=" {} {} %({})s AND".format(kwargskey,
+                                                   kwargs[kwargskey+"_COMP"],
+                                                   kwargskey)
+            #Removing the AND from the end of our query
+            query = query.rsplit(" ",1)[0]
+        #END IF/ELSE
         return self.__executeQuery(query, kwargs)
     #END DEF
 
