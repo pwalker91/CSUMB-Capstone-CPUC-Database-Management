@@ -4,8 +4,8 @@
 CSDI GRAPHING DRIVER.PY
 
 AUTHOR(S):  Peter Walker        pwalker@csumb.edu
-            Nicholas Moradi     nmoradi@csumb.edu
-
+    (kinda) Nicholas Moradi     nmoradi@csumb.edu
+ 
 PURPOSE-    This is going to be the main script called
 --------------------------------------------------------------------------------
 """
@@ -14,13 +14,14 @@ import sys
 import json
 import hashlib
 from CSDI_MySQL import CSDI_MySQL as DB
+from CSDI_matplotlib_adv import CSDI_MPL
 #from CSDI_matplotlib_adv import CSDI_MPL as mpl
 #END IMPORTS
 
 
 #We need to first connect to the necessary databases.
-PageDB = DB(database='Capstone_Page', password='thedefault')
-DataDB = DB(database='Capstone', password='thedefault')
+PageDB = DB(database='CapStone', password='root')
+DataDB = DB(database='testdb', password='root')
 PageDB.connect()
 DataDB.connect()
 
@@ -91,12 +92,13 @@ for PAGE in PAGE_RESULTS:
         types = {type(val) for val in VALUES[key]}
         print(types)
     '''
-    """
-    MAKE IMAGE WITH MATPLOTLIB SCRIPT
-    """
+    
+    dataToGraph = CSDI_MPL()
+    dataToGraph.barGraph(VALUES)
+    
 
     #Converting the data used into JSON
-    dataJSON = json.dumps(VALUES)
+    """dataJSON = json.dumps(VALUES)
 
     #Some metadata on the data used to create the graph
     metadata = {}
@@ -119,12 +121,12 @@ for PAGE in PAGE_RESULTS:
                   )
 
     #Updating PageRequest with a TRUE in IsGenerated
-    UPDATE = """UPDATE PageRequest
+    UPDATE = "UPDATE PageRequest
                 SET IsGenerated=1
                 WHERE Id=%(ID)s
-             """
+             "
     UPDATE_DAT = {"ID":PAGE[page_headers.index("Id")]}
-    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)
+    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)"""
 
     #Send email to PAGE[page_headers.index("ContactEmail")]
 
