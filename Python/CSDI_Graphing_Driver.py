@@ -94,11 +94,11 @@ for PAGE in PAGE_RESULTS:
     '''
     
     dataToGraph = CSDI_MPL()
-    dataToGraph.barGraph(VALUES)
+    file_path = dataToGraph.barGraph(VALUES)
     
 
     #Converting the data used into JSON
-    """dataJSON = json.dumps(VALUES)
+    dataJSON = json.dumps(VALUES)
 
     #Some metadata on the data used to create the graph
     metadata = {}
@@ -115,18 +115,18 @@ for PAGE in PAGE_RESULTS:
     #Finally inserting our information into the PageResult page
     PageDB.insert("PageResults",
                   CalculatedData=dataJSON,
-                  ImagePath="/a/s/d/f/image.jpg",
+                  ImagePath=file_path,
                   MetaInfo=metadataJSON,
                   PageHash=pageHash
                   )
 
     #Updating PageRequest with a TRUE in IsGenerated
-    UPDATE = "UPDATE PageRequest
+    UPDATE = """UPDATE PageRequest
                 SET IsGenerated=1
                 WHERE Id=%(ID)s
-             "
+             """
     UPDATE_DAT = {"ID":PAGE[page_headers.index("Id")]}
-    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)"""
+    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)
 
     #Send email to PAGE[page_headers.index("ContactEmail")]
 

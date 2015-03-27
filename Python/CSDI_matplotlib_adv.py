@@ -23,7 +23,6 @@ class CSDI_MPL():
     def barGraph(self, data):
         #this shows the value of mean at the top of the bar graph for each provider
         def autolabel(rects):
-            # attach some text labels
             for rect in rects:
                 height = rect.get_height()
                 ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
@@ -32,27 +31,15 @@ class CSDI_MPL():
         #new objective find out how to create graphs dynamically
         #but for now this will work
         N = 1
-        providers = []
-        speeds = []
-        """for keys, vals in data.items():
-            STDEVs.append(statistics.pstdev(vals))
-            providers.append(keys)
-            speeds.append(vals)"""
         fig, ax = plt.subplots()
         width = .35
         ind = np.arange(N)
-        """num_of_graphs = len(providers)
-        print (num_of_graphs)
-        graph = [num_of_graphs]
-        for i in range(num_of_graphs):
-            for key, val in data.items():
-                graph[i] = ax.bar(ind, statistics.mean(vals) , width, color = 'b', yerr = statistics.pstdev(vals))"""
-        #this ^^^^^^^^^^^^ is my biggest issue:
-        #"AssertionError: incompatible sizes: argument 'height' must be length 1 or scalar"
-        #main part to create graph...
-        #if graphs are only providers/speeds, this will work fine however, looking to make it more automated and less hardcoded. 
-        speed_tuple = tuple(tuple(x) for x in speeds)
-        stdev_tuple = tuple(STDEVs)
+        #main part to create graph
+        #if graphs are only providers/speeds, this will work fine however, looking to make it more automated and less hardcoded.
+        
+        #speed_tuple = tuple(tuple(x) for x in speeds)
+        #stdev_tuple = tuple(STDEVs)
+        #For Nick's notes ^^^^
         for keys, vals in data.items():
             if keys == 'AT&T':
                 graph1 = ax.bar(ind, statistics.mean(vals) , width, color = 'b', yerr = statistics.pstdev(vals))
@@ -78,9 +65,9 @@ class CSDI_MPL():
         autolabel(graph2)
         autolabel(graph3)
         autolabel(graph4)
-        plt.savefig("MeanSpeeds_vs_Providers.png")
-        filepath = os.path.join(os.getcwd(), "MeanSpeeds_vs_Providers.png")
-        plt.show()
+        plt.savefig("MeanSpeedsProviders.png")
+        filepath = os.path.join(os.getcwd(), "MeanSpeedsProviders.png")
+        #plt.show()
         print (filepath)
         return filepath
 
