@@ -22,6 +22,13 @@ for key in VALUES:
 class CSDI_MPL():
     #barGraph that has mean and I bars for standard deviation
     def barGraph(self, data):
+        #this shows the value of mean at the top of the bar graph for each provider
+        def autolabel(rects):
+            # attach some text labels
+            for rect in rects:
+                height = rect.get_height()
+                ax.text(rect.get_x()+rect.get_width()/2., 1.05*height, '%d'%int(height),
+                        ha='center', va='bottom')
         #if I am only worried about speeds and providers is this ok?
         #new objective find out how to create graphs dynamically
         #but for now this will work
@@ -38,6 +45,7 @@ class CSDI_MPL():
         #this ^^^^^^^^^^^^ is my biggest issue:
         #"AssertionError: incompatible sizes: argument 'height' must be length 1 or scalar"
         #main part to create graph...
+        #if graphs are only providers/speeds, this will work fine however, looking to make it more automated and less hardcoded. 
         speed_tuple = tuple(tuple(x) for x in speeds)
         stdev_tuple = tuple(STDEVs)
         for keys, vals in data.items():
@@ -51,13 +59,21 @@ class CSDI_MPL():
                 graph4 = ax.bar(ind+ (3 * width), statistics.mean(vals), width, color = 'k', yerr = statistics.pstdev(vals))
         ax.set_ylabel('Speeds')
         ax.set_title('Mean of Speeds with standard deviation grouped by Provider')
-        ax.set_xticks(ind)
+        ax.set_xticks(ind/4)
+        #provides a legend to distinguish graphs
+        ax.legend((graph1[0], graph2[0], graph3[0], graph4[0]), ('AT&T', 'Verizon', 'Sprint', 'T-Mobile'))
+        #tried setting tick labels at the bottom, however not working
         ticklabels = ""
         for key in providers:
             ticklabels += "'{}', ".format(key)
         ticklabels = "(" + ticklabels[:-2] + ")"
-        print (ticklabels)
         ax.set_xticklabels(ticklabels)
+
+        autolabel(graph1)
+        autolabel(graph2)
+        autolabel(graph3)
+        autolabel(graph4)
+
         plt.show()
 
 
