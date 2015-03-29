@@ -4,9 +4,10 @@
 CSDI GRAPHING DRIVER.PY
 
 AUTHOR(S):  Peter Walker        pwalker@csumb.edu
-    (kinda) Nicholas Moradi     nmoradi@csumb.edu
- 
-PURPOSE-    This is going to be the main script called
+            Nicholas Moradi     nmoradi@csumb.edu
+
+PURPOSE-    This is going to be the main script called when analyses need to be
+             processed. It will be run on a schedule, likely every 20 minutes.
 --------------------------------------------------------------------------------
 """
 #IMPORTS
@@ -14,21 +15,19 @@ import sys
 import json
 import hashlib
 from CSDI_MySQL import CSDI_MySQL as DB
-from CSDI_matplotlib_adv import CSDI_MPL
-#from CSDI_matplotlib_adv import CSDI_MPL as mpl
+from CSDI_matplotlib import barGraph
 #END IMPORTS
 
 
 #We need to first connect to the necessary databases.
-PageDB = DB(database='CapStone', password='root')
-DataDB = DB(database='testdb', password='root')
+PageDB = DB(database='Capstone_Page', password='thedefault')
+DataDB = DB(database='Capstone', password='thedefault')
 PageDB.connect()
 DataDB.connect()
 
 #Our first step is to get all of the pages that have not been generated yet
 EXECUTED, results_pageGen = PageDB.select("PageRequest", "*", IsGenerated=False)
 page_headers, *PAGE_RESULTS = results_pageGen
-
 #Now that we have our results, (initially, just one), we will go through each
 # one and generate its image
 newpageCount = 0
@@ -44,8 +43,8 @@ for PAGE in PAGE_RESULTS:
                  'test_criteria': { 'DownSpeed':100,
                                     'DownSpeed_COMP':">="
                                     },
-                 'grouping': "NetworkCarrier",
-                 'statistics': 'mean'
+                 'grouping_file': "NetworkCarrier",
+                 'grouping_test': "ConnectionLoc"
                  }
     TestJSON2 = json.dumps(TestJSON)
     TestJSON = json.loads(TestJSON2)
@@ -60,7 +59,6 @@ for PAGE in PAGE_RESULTS:
     # indexes, which I will use later
     file_headers, *FILE_RESULTS = results_Files
     IdInd = file_headers.index("Id")
-    groupingInd = file_headers.index(TestJSON['grouping'])
 
 
     #Now we will actually get the results from the requested table
@@ -73,32 +71,39 @@ for PAGE in PAGE_RESULTS:
         #Again, splitting headers from results
         val_headers, *VAL_RESULTS = results_Vals
         valInd = val_headers.index(TestJSON['table_val'])
+        fileGroupingInd = ROW[file_headers.index(TestJSON['grouping_file'])]
         #If the category these results belong to does not yet have an array, then
-        # we create it
-        if ROW[groupingInd] not in VALUES:
-            VALUES[ROW[groupingInd]] = []
+        # we create it. We create it by getting the attribute of the file requested
+        # in 'grouping_file', and combining it with the attribute of the test
+        # specified in 'grouping_test'
         #For each result returned, get the value we want (based on JSON 'table_val')
         # and append it to the correct group
         for VAL_ROW in VAL_RESULTS:
-            VALUES[ROW[groupingInd]].append( VAL_ROW[valInd] )
+            if TestJSON['grouping_test']:
+                testGroupingInd = VAL_ROW[val_headers.index(TestJSON['grouping_test'])]
+            else:
+                testGroupingInd = ""
+            GROUP_IND = "{} {}".format(fileGroupingInd, testGroupingInd)
+            if GROUP_IND not in VALUES:
+                VALUES[GROUP_IND] = []
+            VALUES[GROUP_IND].append( VAL_ROW[valInd] )
     #END FOR
 
 
     '''
-    This is just a test to see what is in the arrays that I want to use
-
+    #This is just a test to see what is in the arrays that I want to use
+    print(len(VALUES))
     for key in VALUES:
         print("{}: {}".format(key, len(VALUES[key])))
         types = {type(val) for val in VALUES[key]}
         print(types)
-    '''
-    
-    dataToGraph = CSDI_MPL()
-    dataToGraph.barGraph(VALUES)
-    
+    #'''
+
+    #Creating the image, and storing its path on the system
+    imagePath = barGraph(VALUES)
 
     #Converting the data used into JSON
-    """dataJSON = json.dumps(VALUES)
+    dataJSON = json.dumps(VALUES)
 
     #Some metadata on the data used to create the graph
     metadata = {}
@@ -115,18 +120,18 @@ for PAGE in PAGE_RESULTS:
     #Finally inserting our information into the PageResult page
     PageDB.insert("PageResults",
                   CalculatedData=dataJSON,
-                  ImagePath="/a/s/d/f/image.jpg",
+                  ImagePath=imagePath,
                   MetaInfo=metadataJSON,
                   PageHash=pageHash
                   )
 
     #Updating PageRequest with a TRUE in IsGenerated
-    UPDATE = "UPDATE PageRequest
+    UPDATE = """UPDATE PageRequest
                 SET IsGenerated=1
                 WHERE Id=%(ID)s
-             "
+             """
     UPDATE_DAT = {"ID":PAGE[page_headers.index("Id")]}
-    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)"""
+    PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)
 
     #Send email to PAGE[page_headers.index("ContactEmail")]
 
