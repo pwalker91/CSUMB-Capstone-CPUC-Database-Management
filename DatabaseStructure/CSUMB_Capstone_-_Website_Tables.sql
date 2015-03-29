@@ -9,36 +9,37 @@
 -- tables
 -- Table HelpRequest
 CREATE TABLE `HelpRequest` (
-  `Id` smallint(6) NOT NULL AUTO_INCREMENT,
-  `InsertTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Name` varchar(50) DEFAULT NULL,
-  `Email` varchar(50) NOT NULL,
-  `Subject` varchar(30) NOT NULL,
-  `Message` blob NOT NULL,
-  `PhoneNumber` varchar(20) DEFAULT NULL,
-  `LastPageVisited` varchar(50) NOT NULL,
+  `Id`              smallint(6)     NOT NULL AUTO_INCREMENT,
+  `InsertTimestamp` timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Name`            varchar(80)     DEFAULT NULL,
+  `Email`           varchar(80)     NOT NULL,
+  `Subject`         varchar(30)     NOT NULL,
+  `Message`         blob            NOT NULL,
+  `PhoneNumber`     varchar(20)     DEFAULT NULL,
+  `LastPageVisited` varchar(50)     NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table Query
 CREATE TABLE `PageRequest` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `InsertTimestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `AnalysisOpts` blob NOT NULL,
-  `ContactEmail` varchar(50) NOT NULL,
-  `ContactName` varchar(50) DEFAULT NULL,
-  `IsGenerated` tinyint(1) NOT NULL,
-  `ErrorEncountered` tinyint(1) NOT NULL,
+  `Id`                  int(11)     NOT NULL AUTO_INCREMENT,
+  `InsertTimestamp`     timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `AnalysisOpts`        blob        NOT NULL,
+  `ContactEmail`        varchar(80) NOT NULL,
+  `ContactName`         varchar(80) DEFAULT NULL,
+  `IsGenerated`         tinyint(1)  NOT NULL DEFAULT 0,
+  `ErrorEncountered`    tinyint(1)  NOT NULL DEFAULT 0,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Table Results
 CREATE TABLE `PageResults` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `CalculatedData` blob NOT NULL,
-  `ImagePath` varchar(100) NOT NULL,
-  `MetaInfo` blob NOT NULL,
-  `PageHash` varchar(10) NOT NULL,
+  `Id`              int(11)         NOT NULL AUTO_INCREMENT,
+  `InsertTimestamp` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `CalculatedData`  blob            NOT NULL,
+  `ImagePath`       varchar(300)    NOT NULL,
+  `MetaInfo`        blob            NOT NULL,
+  `PageHash`        varchar(10)     NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
