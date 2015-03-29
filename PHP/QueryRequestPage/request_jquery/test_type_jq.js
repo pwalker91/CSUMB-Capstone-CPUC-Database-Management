@@ -10,81 +10,90 @@ if ($(document).ready( function() {
     //This function is for when a user is choosing a type of test
     // to have analysis done for, and hiding/showing the necessary DIVs.
     $('input[name="form_ttype"]:radio').change( function() {
-        if ($(this).val()=="PING") {
+        if ($(this).val()=="PINGResults") {
             //Appending all of the necessary options for this kind
             // of test to our Test Type Criteria section of the form
-            $('div[name="form_ttype_vals"]').empty()
+            $('div[name="form_ttype_val"]').empty()
                 .append($('<select>')
-                            .attr('name', 'form_ttype_ping_vals')
+                            .attr('name', 'form_ttype_ping_val')
                             .addClass('form-control')
-                            .append($('<option>').val(''))
-                            .append($('<option>')
-                                        .val('delay').text('Delay'))
-                            .append($('<option>')
-                                        .val('packet loss').text('Packet Loss'))
-                        );
+                            .append( $('<option>').val('').text('- Please Choose a Value -') )
+                            .append( $('<option>').val('RTTAverage').text('Delay') )
+                            .append( $('<option>').val('PacketsLost').text('Packet Loss') )
+                        )
+                .append($('<span>')
+                    .addClass("input-group-addon")
+                    .addClass("add-on")
+                    .append($('<span>')
+                            .addClass("glyphicon")
+                            .addClass("glyphicon-signal")
+                            )
+                );
             //Modifying the SELECT element in the 'Test Type Criteria' area to
             // have new options, specific to that type of test
             $('select[name="form_ttype_crit"]').empty()
-                .append($('<option>').val(""))
-                .append($('<option>')
-                            .val('ConnectionLoc').text('Connection Location'))
-                .append($('<option>')
-                            .val('RTTMin').text('RTT Minimum'))
-                .append($('<option>')
-                            .val('RTTMax').text('RTT Maximum'))
-                .append($('<option>')
-                            .val('RTTAverage').text('RTT Average'))
-                .append($('<option>')
-                            .val('RValue').text('R-Value'))
-                .append($('<option>')
-                            .val('MOS').text('MOS Score'));
+                .append( $('<option>').val('').text('- Please Choose a Value -') )
+                .append( $('<option>').val('ConnectionLoc').text('Connection Location') )
+                .append( $('<option>').val('RTTMin').text('RTT Minimum') )
+                .append( $('<option>').val('RTTMax').text('RTT Maximum') )
+                .append( $('<option>').val('RTTAverage').text('RTT Average') )
+                .append( $('<option>').val('RValue').text('R-Value') )
+                .append( $('<option>').val('MOS').text('MOS Score') );
         }
-        else if ($(this).val()=="UDP") {
-            $('div[name="form_ttype_vals"]').empty()
+        else if ($(this).val()=="UDPResults") {
+            $('div[name="form_ttype_val"]').empty()
                 .append($('<select>')
-                            .attr('name', 'form_ttype_udp_vals')
+                            .attr('name', 'form_ttype_udp_val')
                             .addClass('form-control')
-                            .append($('<option>').val(''))
-                            .append($('<option>')
-                                        .val('jitter').text('Jitter'))
-                            .append($('<option>')
-                                        .val('datagram loss').text('Datagram Loss'))
-                        );
+                            .append( $('<option>').val('').text('- Please Choose a Value -') )
+                            .append( $('<option>').val('Jitter').text('Jitter') )
+                            .append( $('<option>').val('Loss').text('Datagram Loss') )
+                        )
+                .append($('<span>')
+                    .addClass("input-group-addon")
+                    .addClass("add-on")
+                    .append($('<span>')
+                            .addClass("glyphicon")
+                            .addClass("glyphicon-signal")
+                            )
+                );
             $('select[name="form_ttype_crit"]').empty()
-                .append($('<option>').val(""))
-                .append($('<option>')
-                            .val('ConnectionLoc').text('Connection Location'))
-                .append($('<option>')
-                            .val('Jitter').text('Jitter Time'))
-                .append($('<option>')
-                            .val('Loss').text('Percent Datagrams Lost'))
-                .append($('<option>')
-                            .val('Time').text('Test Time Interval'));
+                .append( $('<option>').val('').text('- Please Choose a Value -') )
+                .append( $('<option>').val('ConnectionLoc').text('Connection Location') )
+                .append( $('<option>').val('Jitter').text('Jitter Time') )
+                .append( $('<option>').val('Loss').text('Percent Datagrams Lost') )
+                .append( $('<option>').val('Time').text('Test Time Interval') );
         }
-        else if ($(this).val()=="TCP") {
-            $('div[name="form_ttype_vals"]').empty()
+        else if ($(this).val()=="TCPResults") {
+            $('div[name="form_ttype_val"]').empty()
                 .append($('<select>')
-                            .attr('name', 'form_ttype_tcp_vals')
+                            .attr('name', 'form_ttype_tcp_val')
                             .addClass('form-control')
-                            .append($('<option>').val(''))
-                            .append($('<option>')
-                                        .val('throughput').text('Throughput'))
-                        );
+                            .append( $('<option>').val('').text('- Please Choose a Value -') )
+                            .append( $('<option>').val('UpSpeed').text('Throughput - Upload Speed') )
+                            .append( $('<option>').val('DownSpeed').text('Throughput - Download Speed') )
+                        )
+                .append($('<span>')
+                    .addClass("input-group-addon")
+                    .addClass("add-on")
+                    .append($('<span>')
+                            .addClass("glyphicon")
+                            .addClass("glyphicon-signal")
+                            )
+                );
             $('select[name="form_ttype_crit"]').empty()
-                .append($('<option>').val(""))
-                .append($('<option>')
-                            .val('ConnectionLoc').text('Connection Location'))
-                .append($('<option>')
-                            .val('Speed').text('Throughput Speed'))
-                .append($('<option>')
-                            .val('StdDev').text('Throughput Standard Deviation'))
-                .append($('<option>')
-                            .val('Median').text('Throughput Median'))
-                .append($('<option>')
-                            .val('Period').text('Throughput Time Interval'))
-                .append($('<option>')
-                            .val('Pct').text('Throughput Active Percentage'));
+                .append( $('<option>').val('').text('- Please Choose a Value -') )
+                .append( $('<option>').val('ConnectionLoc').text('Connection Location') )
+                .append( $('<option>').val('UpSpeed').text('Upload Speed Average') )
+                .append( $('<option>').val('UpStdDev').text('Upload Speed Standard Deviation') )
+                .append( $('<option>').val('UpMedian').text('Upload Speed Median') )
+                .append( $('<option>').val('UpPeriod').text('Upload Time Interval') )
+                .append( $('<option>').val('UpPct').text('Active Uploading Percentage') )
+                .append( $('<option>').val('DownSpeed').text('Download Speed Average') )
+                .append( $('<option>').val('DownStdDev').text('Download Speed Standard Deviation') )
+                .append( $('<option>').val('DownMedian').text('Download Speed Median') )
+                .append( $('<option>').val('DownPeriod').text('Download Time Interval') )
+                .append( $('<option>').val('DownPct').text('Active Downloading Percentage') );
         }
         else {
             $('#tcp_choices').hide();
@@ -121,7 +130,7 @@ if ($(document).ready( function() {
         //We only want to start checking if an html file exists if the user
         // has chosen a test type.
         if (testType) {
-            testType = testType.toLowerCase();
+            testType = testType.toLowerCase().split("results")[0];
             //If the user didn't pick anything, then we continue
             if (crit) {
                 if ($table.find("tr."+crit).length == 0 ) {
@@ -139,8 +148,7 @@ if ($(document).ready( function() {
                             .append(
                                 $("<tr>", { class: "field-start "+crit })
                                 .append( $("<td>").load(pageLink) )
-                                .append(
-                                    $("<td>")
+                                .append( $("<td>")
                                     .append($('<input>')
                                         .attr('type', 'button')
                                         .addClass('btn')

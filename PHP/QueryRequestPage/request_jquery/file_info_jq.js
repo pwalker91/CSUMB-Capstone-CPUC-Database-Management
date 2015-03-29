@@ -47,4 +47,32 @@ if ($(document).ready( function() {
                         $table
                         .append(
                             $("<tr>", { class: "field-start "+crit })
-                            .append( $("<td>").load(
+                            .append( $("<td>").load(pageLink) )
+                            .append( $("<td>")
+                                .append($('<input>')
+                                    .attr('type', 'button')
+                                    .addClass('btn')
+                                    .addClass('btn-default')
+                                    .addClass("remove-crit-button")
+                                    .val("Remove")
+                                    .click(function() {
+                                        $(this).parents('tr.field-start').remove();
+                                    })
+                                )
+                            )
+                        )
+                    }
+                    else {
+                        console.log("The page for the '"+crit+"' field does not exist.");
+                    }
+                });
+            }
+            else {
+                console.log("The form already contains an input for the '"+crit+"' field.");
+            }
+        }
+        else {
+            console.log("No criteria field has been chosen.");
+        }
+    });
+}));

@@ -74,35 +74,38 @@
                             <h4>Test Type</h4>
                         </label>
                         <!-- Buttons for choosing Test Type -->
-                        <div class='col-xs-12 col-sm-8 input-col'>
+                        <div class='col-xs-12 col-sm-4 input-col'>
                             <!-- Buttons to choose Test Type -->
                             <div class="btn-group" data-toggle="buttons">
                                 <label class="btn btn-primary">
                                     <input id='tcp'
-                                           value='TCP'
+                                           value='TCPResults'
                                            type="radio"
                                            class="form-control"
                                            name="form_ttype"> TCP
                                 </label>
                                 <label class="btn btn-primary">
                                     <input id="udp"
-                                           value='UDP'
+                                           value='UDPResults'
                                            type="radio"
                                            class="form-control"
                                            name="form_ttype"> UDP
                                 </label>
                                 <label class="btn btn-primary">
                                     <input id="ping"
-                                           value='PING'
+                                           value='PINGResults'
                                            type="radio"
                                            class="form-control"
                                            name="form_ttype"> PING
                                 </label>
                             </div>
-                            <!-- Dropdown to choose Test Type values to graph -->
-                            <div class='input-group' name='form_ttype_vals'>
-                            </div>
                         </div> <!-- end TEST TYPE RADIOs -->
+                        <div class='col-xs-12 col-sm-4 input-col'>
+                            <label>Value to Analyze</label>
+                            <!-- Dropdown to choose Test Type values to graph -->
+                            <div class='input-group' name='form_ttype_val'>
+                            </div>
+                        </div> <!-- end STATS FUNC CHOICE -->
                     </div>
                 </div></div>
                 <hr/>
@@ -126,7 +129,7 @@
                             </div>
                             <div class="input-group col-xs-10 col-sm-4">
                                 <select class="form-control" name='form_file_crit'>
-                                    <option value=""></option>
+                                    <option value="">- Please Choose a Value -</option>
                                     <option value='LocationID'>Location ID Number</option>
                                     <option value='Date'>Date</option>
                                     <option value='Time'>Time</option>
@@ -179,21 +182,42 @@
                 <!-- Choice of stats function -->
                 <div class='form-group form-elem'>
                     <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
-                        <h4>Statistics</h4>
+                        <h4>Grouping Criteria</h4>
                     </label>
-                    <div class='col-xs-8 col-sm-3 input-col'>
-                        <div class="input-group">
-                            <select class="form-control" name='form_stats'>
-                                <option value=""></option>
-                                <option value='mean'>Mean</option>
-                                <option value='median'>Median</option>
-                                <option value='max'>Max</option>
+                    <div class='col-xs-12 col-sm-4 input-col'>
+                        <label><h4>Grouping by Test</h4></label>
+                        <div>
+                            <input type='radio'
+                                   name='form_ttype_group'
+                                   id='form_ttype_grp_1'
+                                   value='true'>
+                            <label for='form_ttype_grp_1'>Separate East and West</label>
+                        </div>
+                        <div>
+                            <input type='radio'
+                                   name='form_ttype_group'
+                                   id='form_ttype_grp_2'
+                                   value='false'>
+                            <label for='form_ttype_grp_2'>Group East and West Together</label>
+                        </div>
+                    </div>
+                    <div class='col-xs-12 col-sm-4 input-col'>
+                        <label><h4>Grouping by File</h4></label>
+                        <!-- Dropdown to choose Test Type values to graph -->
+                        <div class='input-group'>
+                            <select class="form-control" name='form_ftype_group'>
+                                <option value="">- Please Choose a Value -</option>
+                                <option value='LocationID'>Location ID Number</option>
+                                <option value='Date'>Date</option>
+                                <option value='Time'>Time</option>
+                                <option value='DeviceType'>Device Type</option>
+                                <option value='NetworkCarrier'>Cellular Network Carrier</option>
                             </select>
                             <span class='input-group-addon add-on'>
                                 <span class="glyphicon glyphicon-stats"></span>
                             </span>
                         </div>
-                    </div> <!-- end STATS FUNC CHOICE -->
+                    </div> <!-- end FILE GROUPING CHOICE -->
                 </div>
                 </div></div>
                 <hr/>
