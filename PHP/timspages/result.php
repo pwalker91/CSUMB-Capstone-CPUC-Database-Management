@@ -25,40 +25,57 @@
 
 <?php
     $sql = "SELECT *
-    FROM Results
-    WHERE PageHash=$_GET[d]
+    FROM PageResults
+    WHERE PageHash=\"$_GET[d]\"
     ";
     $result = $conn->query($sql);
     while($row = $result->fetch_assoc()) {
-        echo '<img src="http://hosting.otterlabs.org/classes/dycktimothya/cpuc/'.$row["ImagePath"]. '"/>';
-    }
-    echo "<br/><center><table border =1><script>";
-    $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) {
-        echo $row["CalculatedData"];
-    }
+    echo '<img src="http://hosting.otterlabs.org/classes/dycktimothya/cpuc/'.$row["ImagePath"]. '"/>';
     
-    echo ' var i=0
-    while (i < 3){
-        document.write(
-                       "<tr><td>"+ employees[i].firstName + "</td><td>" + employees[i].lastName +"</td></tr>");
-        i++;
+    
+        $json = json_decode($row["CalculatedData"]);
+       // echo json_encode($json);
+       // echo "<br>";
+        $moo = json_decode($row["MetaInfo"]);
+        //echo "<br>";
+        //echo json_encode($moo);
+        
+        
+        }
+    echo "<br>";
+
+//echo json_encode($moo);
+    echo "<table border=1>";
+    foreach($moo->columnNames as $item){
+            echo "<tr><td>";
+        echo $item;
+            echo "</td>";
+        foreach($json->$item as $test){
+            echo "<td>" . $test . "</td>";
+        }
+            echo "</tr>";
     }
+    echo "</table>";
+
     
-    </script></table></center';
     
-    $conn->close();
     
     ?>
 </td>
 <td >
 raw data<br/>
-email yourself<br/>
-help
+<?php
+echo json_encode($moo);
+
+
+    $conn->close();
+    ?>
 </td>
 </tr>
 <tr>
 <td>
+email yourself<br/>
+help<br/>
 related searches
 </td>
 </tr>
