@@ -35,13 +35,18 @@ CREATE TABLE `PageRequest` (
 -- Table Results
 CREATE TABLE `PageResults` (
   `Id`              int(11)         NOT NULL AUTO_INCREMENT,
-  `InsertTimestamp` timestamp   NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `Fid`             int(11)         NOT NULL,
+  `InsertTimestamp` timestamp       NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `CalculatedData`  blob            NOT NULL,
   `ImagePath`       varchar(300)    NOT NULL,
   `MetaInfo`        blob            NOT NULL,
   `PageHash`        varchar(10)     NOT NULL,
-  PRIMARY KEY (`Id`)
+  PRIMARY KEY (`Id`),
+  KEY `Fid` (`Fid`),
+  CONSTRAINT `pageresults_ibfk_1`
+    FOREIGN KEY (`Fid`) REFERENCES `PageRequest` (`Id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 -- End of file.
