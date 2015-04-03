@@ -1,22 +1,22 @@
 <div class='form-group form-elem'>
     <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
-        <h4>RTT Minimum Filtering</h4>
+        <h4>TCP Download Throughput Standard Deviation Filtering</h4>
     </label>
-    <div class='col-xs-10 col-sm-3 input-col'>
-        <label><h4>RTT Minimum Value</h4></label>
-        <div class='input-group' id='rttmin'>
+    <div class='col-xs-10 col-sm-4 input-col'>
+        <label><h4>Throughput Standard Deviation Value</h4></label>
+        <div class='input-group' id='upstd'>
             <input type="number"
                    class="form-control"
-                   name="form_ttype_ping_RTTMin"
+                   name="form_ttype_tcp_DownStdDev"
                    min='0'
                    step='any' />
-            <span class="input-group-addon add-on">ms</span>
+            <span class="input-group-addon add-on">KBytes/sec</span>
         </div><!-- end DATE INPUT -->
     </div>
-    <div class="col-xs-10 col-sm-4 input-col">
-        <label><h4>RTT Minimum Comparison</h4></label>
-        <div class='input-group' id='rttmin-comp'>
-            <select class='form-control' name='form_ttype_ping_RTTMin_COMP'>
+    <div class="col-xs-10 col-sm-3 input-col">
+        <label><h4>Value Comparison</h4></label>
+        <div class='input-group' id='upstd-comp'>
+            <select class='form-control' name='form_ttype_tcp_DownStdDev_COMP'>
                 <option value=""></option>
                 <option value="<=">&lt;&#61;</option>
                 <option value="=">&#61;</option>
