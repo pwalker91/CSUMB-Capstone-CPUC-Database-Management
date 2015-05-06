@@ -1,7 +1,7 @@
 <html>
 <head>
 <style>
-	body 
+	body
 	{
    		 background-image: url('images/wireless-tower.jpg');
     		 background-repeat: no-repeat;
@@ -10,31 +10,18 @@
 	}
 
 
-	h1 
+	h1
 	{
     	color: #000000;
     	margin-left: 40px;
     	text-shadow: 2px 2px #58B9ED;
-	} 
-	table, th, td 
+	}
+	table, th, td
 	{
    		border: 1px solid black;
-	} 
+	}
 </style>
 <title>Results</title>
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "cpuc";
-    $dbname = "cpuc";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    ?>
 
 </head>
 <center>
@@ -61,7 +48,7 @@
 
 
         }
-      
+
     echo "<br />";
 
 //echo json_encode($moo);
@@ -74,7 +61,7 @@
         foreach($json->$item as $test){
             echo "<td>" . $test;
         }
-        echo "</td></td></table></tr>";	
+        echo "</td></td></table></tr>";
     }
 
 

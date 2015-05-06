@@ -1,19 +1,6 @@
 <html>
 <head>
 <title>Sampled Results</title>
-<?php
-    $servername = "localhost";
-    $username = "root";
-    $password = "cpuc";
-    $dbname = "cpuc";
-
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-    ?>
 
 </head>
 <body>

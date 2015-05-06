@@ -4,19 +4,6 @@
 <html>
 <head>
     <title>CalSpeed Data Imaging</title>
-    <?php
-        $servername = "localhost";
-        $username = "root";
-        $password = "cpuc";
-        $dbname = "cpuc";
-
-        // Create connection
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        // Check connection
-        if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);
-        }
-    ?>
 <style>
 body {
     background-color: #000000;
@@ -34,7 +21,7 @@ color: black;
     -.75px -.75px 0 #fff,
     .75px -.75px 0 #fff,
     -.75px .75px 0 #fff,
-    .75px .75px 0 #fff;  
+    .75px .75px 0 #fff;
 
 }
 
@@ -68,8 +55,8 @@ color: black;
 			</h3>
 			</center>
     		</td>
-	</tr>	
-</h3	
+	</tr>
+</h3
         <tr>
 	   <td colspan=3 class="doda" style="font-size:18px">
 		<br/>

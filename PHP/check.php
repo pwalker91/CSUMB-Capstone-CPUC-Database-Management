@@ -1,11 +1,6 @@
 <?php
 if(isset($_GET['submit']))
 {
-  $host = "localhost";
-  $username = "root";
-  $password = "cpuc";
-  $dbname = "cpuc";
-
   //create connection
   $db = new PDO("mysql:host=$host;dbname=$dbname;", $username, $password);
   // Sets Error handling to Exception so it shows ALL errors when trying to get data
