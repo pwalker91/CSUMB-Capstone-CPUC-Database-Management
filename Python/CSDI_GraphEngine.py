@@ -16,12 +16,13 @@ import json
 import hashlib
 from CSDI_MySQL import CSDI_MySQL as DB
 from CSDI_matplotlib import barGraph
+from sensitiveInfo import PASSWORD
 #END IMPORTS
 
 
 #We need to first connect to the necessary databases.
-PageDB = DB(database='Capstone_Page', password='thedefault')
-DataDB = DB(database='Capstone', password='thedefault')
+PageDB = DB(database='Capstone_Page', password=PASSWORD)
+DataDB = DB(database='Capstone', password=PASSWORD)
 PageDB.connect()
 DataDB.connect()
 
