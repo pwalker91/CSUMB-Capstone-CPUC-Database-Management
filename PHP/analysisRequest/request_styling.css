@@ -1,0 +1,24 @@
+.text-align-xs {
+    text-align: left;
+}
+.pad-bottom {
+    margin-bottom: 20px;
+}
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+    .text-align-sm {
+        text-align: right;
+    }
+}
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .text-align-md {
+        text-align: right;
+    }
+}
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .text-align-lg {
+        text-align: right;
+    }
+}
