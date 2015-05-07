@@ -52,6 +52,7 @@ if (isset($_POST['form_submit'])) {
     #Now we make our JSON string. Our next step is to insert the information into
     # the database
     $theJSON = json_encode($toBeJSON);
+    $theJSON = str_replace("[]","{}",$theJSON);
 
     #Including our DB Connection info, and then insert into the database
     require("/home/ubuntu/csdi_www/_db_conn_default.php");
