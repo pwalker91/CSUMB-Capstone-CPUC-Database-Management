@@ -1,0 +1,317 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+        <meta name='author'
+              content='Peter Walker | pwalker@csumb.edu'>
+        <meta name="keywords"
+              content="HTML, data analysis, cpuc, CPUC, csumb, CSUMB">
+        <title>The Prototype Query Page - CSDI</title>
+
+        <!-- Latest jQuery -->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
+
+        <!-- My jQuery functions, used for div hiding/unhiding, and setting form options-->
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/generic_jquery.js"></script>
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/file_info_jq.js"></script>
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/test_type_jq.js"></script>
+        <!-- Some specialty styling -->
+        <link rel="stylesheet" href="http://54.200.224.217/csdi/_csdi_style.css" />
+        <link rel="stylesheet" href="http://54.200.224.217/csdi/request_help/request_styling.css" />
+    </head>
+
+
+
+    <body>
+        <div class='container' name='page_container' id='page_container'>
+            <div class='row'>
+                <div class='jumbotron text-center clear'>
+                    <br/>
+                    <img src="images/logo.png" height="100">
+                    <h1>CalSPEED Data Imaging</h1>
+                    <p>Tranforming the way you analyze California Cellular Network Performance</p>
+                </div> <!-- end JUMBOTRON -->
+            </div> <!-- end ROW -->
+
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">CSDI</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="home.php">Home</a></li>
+                            <li class="active"><a href="request.php">Request</a></li>
+                            <li class="dropdown">
+                                <a href="#"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false">Results<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Recent Results</a></li>
+                                    <li><a href="#">Popular Results</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.php">Help/Contact</a></li>
+                        </ul>
+                        <!--
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        -->
+                    </div>
+                </div> <!-- END CONTAINER -->
+            </nav>
+
+            <div class='row pad-bottom'>  <div class='col-xs-12 text-center'>
+                <h1>Query Request Page</h1>
+                <p>A simple way to request analyses of Iperf network testing data.</p>
+            </div> </div>
+            <hr/>
+
+            <div class='row pad-bottom'> <div class='col-xs-12'>
+                <dl class="dl-horizontal">
+                    <dt>Test Type</dt>
+                    <dd>Please choose which type of tranmission techonology (i.e., the test conducted) you would like to have analyzed.</dd>
+
+                    <dt>File Info Criteria</dt>
+                    <dd>Please choose the basic test file information by which to filter test files you will consider.<br/>For instance, if you wish to only consider test files that were created by a device using an AT&T, you would choose the Cellular Network Carrier field, and insert AT&T.</dd>
+
+                    <dt>Test Type Criteria</dt>
+                    <dd>Based on your choice in the Test Type field, this area will populate with fields by which to specify which types of individual tests to consider.<br/>For instance, if you were to choose TCP in the Test Type field, this area would populate with options such as Average Download Speed, Download Speed Standard Deviation, and many more.</dd>
+
+                    <dt>Statistics</dt>
+                    <dd>Once you have selected your criteria by which to narrow the data that will be used, this option provides a more specific grouping choice.</dd>
+
+                    <dt>Submit</dt>
+                    <dd>Submits the form to be processed so that the query request may be generated.</dd>
+                </dl>
+            </div> </div> <!-- end ROW -->
+            <hr/>
+
+
+            <div class='row container'> <div class='col-xs-12'>
+            <!-- START OF FORM -->
+            <form id="query_form"
+                  method="post"
+                  action="#"
+                  role='form'>
+
+                <!-- TEST TYPE -->
+                <!-- Choosing the test type -->
+                <div class='row pad-bottom'><div class='col-xs-12 field-start'>
+                    <div class="form-inline form-elem">
+                        <label class="col-xs-12 col-sm-4 text-align-xs text-align-sm control-label">
+                            <h4>Test Type</h4>
+                        </label>
+                        <!-- Buttons for choosing Test Type -->
+                        <div class='col-xs-12 col-sm-4 input-col'>
+                            <!-- Buttons to choose Test Type -->
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary">
+                                    <input id='tcp'
+                                           value='TCPResults'
+                                           type="radio"
+                                           class="form-control"
+                                           name="form_ttype"> TCP
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input id="udp"
+                                           value='UDPResults'
+                                           type="radio"
+                                           class="form-control"
+                                           name="form_ttype"> UDP
+                                </label>
+                                <label class="btn btn-primary">
+                                    <input id="ping"
+                                           value='PINGResults'
+                                           type="radio"
+                                           class="form-control"
+                                           name="form_ttype"> PING
+                                </label>
+                            </div>
+                        </div> <!-- end TEST TYPE RADIOs -->
+                        <div class='col-xs-12 col-sm-4 input-col'>
+                            <label>Value to Analyze</label>
+                            <!-- Dropdown to choose Test Type values to graph -->
+                            <div class='input-group' name='form_ttype_val'>
+                            </div>
+                        </div> <!-- end STATS FUNC CHOICE -->
+                    </div>
+                </div></div>
+                <hr/>
+
+
+                <!-- FILE TYPE CRITERIA -->
+                <!-- Choosing any criteria for the File Information -->
+                <div class='row pad-bottom'><div class='col-xs-12'>
+                    <!-- Criteria for File Info -->
+                    <div class='form-group'>
+                        <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                            <h3>File Info Criteria</h3>
+                        </label>
+                        <div class='form-inline col-xs-10 col-sm-8'>
+                            <div class="input-group col-xs-10 col-sm-2">
+                                <input type='button'
+                                       id='file_crit_button'
+                                       name='file_crit_button'
+                                       class='btn btn-primary'
+                                       value='Add Criteria' />
+                            </div>
+                            <div class="input-group col-xs-10 col-sm-4">
+                                <select class="form-control" name='form_file_crit'>
+                                    <option value="">- Please Choose a Field -</option>
+                                    <option value='LocationID'>Location ID Number</option>
+                                    <option value='Date'>Date</option>
+                                    <option value='Time'>Time</option>
+                                    <option value='DeviceType'>Device Type</option>
+                                    <option value='NetworkCarrier'>Cellular Network Carrier</option>
+                                </select>
+                            </div>
+                        </div> <!-- end TEST TYPE CRITERIA DROPDOWN CHOICE -->
+                    </div>
+                </div></div>
+                <div class='row'><div class='col-xs-12'>
+                    <table name='file_criteria' class='table table-bordered'>
+                    </table>
+                </div></div>
+                <hr/>
+
+
+                <!-- TEST TYPE CRITERIA -->
+                <!-- Choosing any criteria for the Specific Test Type Information -->
+                <div class='row pad-bottom'><div class='col-xs-12'>
+                    <!-- Criteria for Test Type -->
+                    <div class='form-group'>
+                    <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                        <h3>Test Type Criteria</h3>
+                    </label>
+                    <div class='form-inline col-xs-10 col-sm-8'>
+                        <div class="input-group col-xs-10 col-sm-2">
+                            <input type='button'
+                                   id='ttype_crit_button'
+                                   name='ttype_crit_button'
+                                   class='btn btn-primary'
+                                   value='Add Criteria' />
+                        </div>
+                        <div class="input-group col-xs-10 col-sm-4">
+                            <select class="form-control" name='form_ttype_crit'>
+                            </select>
+                        </div>
+                    </div> <!-- end TEST TYPE CRITERIA DROPDOWN CHOICE -->
+                    </div>
+                </div></div>
+                <div class='row'><div class='col-xs-12'>
+                    <table name='ttype_criteria' class='table table-bordered'>
+                    </table>
+                </div></div>
+                <hr/>
+
+
+                <!-- GROUPING CRITERIA -->
+                <!-- Chosing the type of statistics to perform -->
+                <div class='row pad-bottom'><div class='col-xs-12 field-start'>
+                <!-- Choice of stats function -->
+                <div class='form-group form-elem'>
+                    <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                        <h4>Grouping Criteria</h4>
+                    </label>
+                    <div class='col-xs-12 col-sm-4 input-col'>
+                        <label><h4>Value Grouping by Test</h4></label>
+                        <div>
+                            <input type='radio'
+                                   name='form_ttype_group'
+                                   id='form_ttype_grp_1'
+                                   value='true'>
+                            <label for='form_ttype_grp_1'>Separate East and West</label>
+                        </div>
+                        <div>
+                            <input type='radio'
+                                   name='form_ttype_group'
+                                   id='form_ttype_grp_2'
+                                   value='false'>
+                            <label for='form_ttype_grp_2'>Group East and West Together</label>
+                        </div>
+                    </div>
+                    <div class='col-xs-12 col-sm-4 input-col'>
+                        <label><h4>Value Grouping by File</h4></label>
+                        <!-- Dropdown to choose Test Type values to graph -->
+                        <div class='input-group'>
+                            <select class="form-control" name='form_ftype_group'>
+                                <option value="">- Please Choose a Field to group by-</option>
+                                <option value='LocationID'>Location ID Number</option>
+                                <option value='Date'>Date</option>
+                                <option value='Time'>Time</option>
+                                <option value='DeviceType'>Device Type</option>
+                                <option value='NetworkCarrier'>Cellular Network Carrier</option>
+                            </select>
+                            <span class='input-group-addon add-on'>
+                                <span class="glyphicon glyphicon-stats"></span>
+                            </span>
+                        </div>
+                    </div> <!-- end FILE GROUPING CHOICE -->
+                </div>
+                </div></div>
+                <hr/>
+
+
+                <!-- EMAIL -->
+                <div class='row pad-bottom'><div class='col-xs-12'>
+                <!-- EMAIL FIELD -->
+                <div class='form-group'>
+                    <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                        <h4>Email Address</h4>
+                    </label>
+                    <div class='col-xs-10 col-sm-4'>
+                        <input type="text"
+                               class="form-control"
+                               name="contactName"
+                               placeholder="Enter Contact Name">
+                    </div>
+                    <div class='col-xs-10 col-sm-4'>
+                        <input type="email"
+                               class="form-control"
+                               name="contactEmail"
+                               placeholder="Enter Email">
+                    </div>
+                </div>
+                </div></div> <!-- end EMAIL -->
+                <hr/>
+
+                <!-- the submit button -->
+                <div class='row pad-bottom'><div class='col-xs-12'>
+                <!-- Form Submit -->
+                <div class='form-group'>
+                    <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+                        <h4>Complete Form</h4>
+                    </label>
+                    <div class='col-xs-10 col-sm-8'>
+                        <button type="submit"
+                                name='form_submit'
+                                class="btn btn-lg btn-success">Submit
+                        </button>
+                    </div>
+                </div>
+                </div></div>
+
+            </form> <!-- end FORM -->
+            </div> </div> <!-- end CONTAINER ROW -->
+        </div>
+    </body>
+</html>

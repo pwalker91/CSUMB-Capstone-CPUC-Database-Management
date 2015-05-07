@@ -1,0 +1,28 @@
+<div class='form-group form-elem'>
+    <label class='col-xs-8 col-sm-4 text-align-xs text-align-sm control-label'>
+        <h4>Location ID Selection</h4>
+    </label>
+    <div class='col-xs-12 col-sm-4 input-col'>
+        <label><h4>Location ID Number</h4></label>
+        <div class='input-group' id='loc-id'>
+            <input type="number"
+                   step='1'
+                   class="form-control"
+                   name="form_file_LocationID" />
+        </div><!-- end LOCATION ID INPUT -->
+    </div>
+    <div class="col-xs-12 col-sm-4 input-col">
+        <label><h4>Location ID Number Comparison</h4></label>
+        <div class='input-group' id='loc-id-comp'>
+            <select class='form-control' name='form_file_LocationID_COMP'>
+                <option value=""></option>
+                <option value="<=">Less Than or Equal To</option>
+                <option value="=">Equal To</option>
+                <option value=">=">Greater Than or Equal To</option>
+            </select>
+            <span class='input-group-addon add-on'>
+                <span class="glyphicon glyphicon-filter"></span>
+            </span>
+        </div>
+    </div><!-- end COMPARATOR RADIOs -->
+</div>

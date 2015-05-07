@@ -1,13 +1,14 @@
+<!DOCTYPE HTML>
 <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport"
               content="width=device-width, initial-scale=1.0">
         <meta name='author'
-              content='Timothy Dyck'>
+              content='Peter Walker | pwalker@csumb.edu'>
         <meta name="keywords"
               content="HTML, data analysis, cpuc, CPUC, csumb, CSUMB">
-        <title>Results</title>
+        <title>The Prototype Query Page - CSDI</title>
 
         <!-- Latest jQuery -->
         <script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -18,9 +19,17 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
 
+        <!-- My jQuery functions, used for div hiding/unhiding, and setting form options-->
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/generic_jquery.js"></script>
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/file_info_jq.js"></script>
+        <script src="http://54.200.224.217/csdi/request_help/request_jquery/test_type_jq.js"></script>
         <!-- Some specialty styling -->
         <link rel="stylesheet" href="http://54.200.224.217/csdi/_csdi_style.css" />
+        <link rel="stylesheet" href="http://54.200.224.217/csdi/request_help/request_styling.css" />
     </head>
+
+
+
     <body>
         <div class='container' name='page_container' id='page_container'>
             <div class='row'>
@@ -43,8 +52,8 @@
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="home.php">Home</a></li>
-                            <li><a href="request.php">Request</a></li>
-                            <li class="dropdown active">
+                            <li class="active"><a href="request.php">Request</a></li>
+                            <li class="dropdown">
                                 <a href="#"
                                    class="dropdown-toggle"
                                    data-toggle="dropdown"
@@ -69,41 +78,12 @@
                     </div>
                 </div> <!-- END CONTAINER -->
             </nav>
+
+            <div class='row pad-bottom'> <div class='col-xs-12 text-center'>
+                <p>
+                    Thank you for the submission of your query request. You will be emailed a link to the results of your query.
+                </p>
+            </div> </div> <!-- end ROW -->
         </div>
-
-
-
-        <?php
-            include("_db_conn_default.php");
-            $conn = getConn();
-
-            $sql = "SELECT * "
-                    ."FROM PageResults "
-                    ."WHERE PageHash='".$_GET['h']."';";
-            $result = $conn->query($sql);
-
-            while ($row = $result->fetch_assoc()) {
-                $var = substr_replace($row["ImagePath"] ,"",0,59);
-                echo '<table><img src="./images' .$var. '" style="width:304px;height:228px";/></table>';
-
-                $json = json_decode($row["CalculatedData"]);
-                $moo = json_decode($row["MetaInfo"]);
-            }
-	    echo "moo";
-            echo "<br />";
-
-            foreach ($moo->columnNames as $item) {
-                echo "<tr>";
-                echo "<table bgcolor = #FFFFFF align=left>";
-                echo "<td>";
-                echo $item;
-                foreach ($json->$item as $test) {
-                    echo "<td>" . $test;
-                }
-                echo "</td></td></table></tr>";
-            }
-        ?>
-
-
     </body>
 </html>
