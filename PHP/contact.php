@@ -25,13 +25,15 @@ if (isset($_POST['submit'])) {
         <meta charset="utf-8">
         <meta name="description" content="">
         <meta name="author" content="Nicholas Moradi">
-        <meta http-equiv="refresh" content="0; url=http://54.200.224.217/csdi/home.php" />
+        <meta http-equiv="refresh" content="0; url=./home.php" />
     </head>
     <body>
+        <hr/>
         <footer>
-            <p>
-                &copy; Copyright  by Nicholas Moradi
-            </p>
+            <div class="container">
+                <p class="muted credit">Website designed and built by Peter Walker, Timothy Dyck, and Nicholas Moradi.</p>
+                <p class="muted credit">Senior Capstone project of <a href="https://csumb.edu/">California State University of Monterey Bay</a>, 2015.</p>
+            </div>
         </footer>
     </body>
 </html>
@@ -64,10 +66,11 @@ if (isset($_POST['submit'])) {
               href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
         <!-- Latest compiled and minified JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
+        <!-- Google captcha API -->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
 
         <!-- Some specialty styling -->
-        <link rel="stylesheet" href="http://54.200.224.217/csdi/_csdi_style.css" />
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <link rel="stylesheet" href="./_csdi_style.css" />
     </head>
 
     <body>
@@ -158,6 +161,14 @@ if (isset($_POST['submit'])) {
                 </fieldset>
             </form>
         </div>
+
+        <hr/>
+        <footer>
+            <div class="container">
+                <p class="muted credit">Website designed and built by Peter Walker, Timothy Dyck, and Nicholas Moradi.</p>
+                <p class="muted credit">Senior Capstone project of <a href="https://csumb.edu/">California State University of Monterey Bay</a>, 2015.</p>
+            </div>
+        </footer>
     </body>
 </html>
 <?php

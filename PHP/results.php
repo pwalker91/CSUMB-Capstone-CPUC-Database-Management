@@ -1,97 +1,174 @@
+<!DOCTYPE HTML>
 <html>
-<head>
-<title>Sampled Results</title>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport"
+              content="width=device-width, initial-scale=1.0">
+        <meta name='author'
+              content='Timothy Dyck'>
+        <meta name="keywords"
+              content="HTML, data analysis, cpuc, CPUC, csumb, CSUMB">
+        <title>Results</title>
 
-</head>
-<body>
-  <h1>overview </h1>
-<?php
+        <!-- Latest jQuery -->
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+        <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.css">
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.js"></script>
 
-      $sel=$_POST["id"];
-      $sql = "SELECT * FROM FileInfo";
-      $result = $conn->query($sql);
+        <!-- Some specialty styling -->
+        <link rel="stylesheet" href="./_csdi_style.css" />
+    </head>
+    <body>
+        <div class='container' name='page_container' id='page_container'>
+            <div class='row'>
+                <div class='jumbotron text-center clear'>
+                    <br/>
+                    <img src="images/logo.png" height="100">
+                    <h1>CalSPEED Data Imaging</h1>
+                    <p>Tranforming the way you analyze California Cellular Network Performance</p>
+                </div> <!-- end JUMBOTRON -->
+            </div> <!-- end ROW -->
 
-      if ($result->num_rows > 0) {
-          // output data of each row
-          echo "<table border=1><tr><td>id</td><td>Timestamp</td><td>OSName_OSArchitecture_OSVersion</td><td>JavaVersion_JavaVendor</td><td>DeviceID</td><td>DeviceType</td><td>Server</td><td>Host</td><td>NetworkCarrier</td><td>NetworkProvider</td><td>NetworkOperator</td><td>ConnectionType</td><td>LocationID</td><td>Tester</td><td>Date</td><td>Time</td><td>Latitude</td><td>Longitude</td><td>AvgLatitude</td><td>AvgLongitude</td><td>ErrorType</td><td>FileLocation</td><td>Flag</td><td>FlagMessage</td></tr>";
-          while($row = $result->fetch_assoc()) {
-              echo "<tr><td>".$row["Id"]."</td><td>".$row["InsertTimestamp"]."</td><td>".$row["OSName"]."</td><td>".$row["JavaVendor"]."</td><td>".$row["DeviceID"]."</td><td>".$row["DeviceType"]."</td><td>".$row["Server"]."</td><td>".$row["Host"]."</td><td>".$row["NetworkCarrier"]."</td><td>".$row["NetworkProvider"]."</td><td>".$row["NetworkOperator"]."</td><td>".$row["ConnectionType"]."</td><td>".$row["LocationID"]."</td><td>".$row["Tester"]."</td><td>".$row["Date"]."</td><td>".$row["Time"]."</td><td>".$row["Latitude"]."</td><td>".$row["Longitude"]."</td><td>".$row["AvgLatitude"]."</td><td>".$row["AvgLongitude"]."</td><td>".$row["ErrorType"]."</td><td>".$row["FileLocation"]."</td><td>".$row["Flag"]."</td><td>".$row["FlagMessage"]."</td></tr>";
-          }
-          echo "</table>";
-      } else {
-          echo "no data available";
-      }
+            <nav class="navbar navbar-default navbar-fixed-top">
+                <div class="container">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">CSDI</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="home.php">Home</a></li>
+                            <li><a href="request.php">Request</a></li>
+                            <li class="dropdown active">
+                                <a href="#"
+                                   class="dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   role="button"
+                                   aria-expanded="false">Results<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="#">Recent Results</a></li>
+                                    <li><a href="#">Popular Results</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="contact.php">Help/Contact</a></li>
+                        </ul>
+                        <!--
+                        <form class="navbar-form navbar-left" role="search">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
+                        -->
+                    </div>
+                </div> <!-- END CONTAINER -->
+            </nav>
+        </div>
 
 
+        <?php
+        if (isset($_GET['h'])) {
+            include("_db_conn_default.php");
+            $db = getConn();
 
-    echo "<h1>PING Results </h1>";
+            $sql = "SELECT *
+                    FROM PageResults
+                    WHERE PageHash=:pagehash";
+            $opts = array(":pagehash" => $_GET['h']);
 
-    $sql = "SELECT * FROM PINGResults";
-    $result = $conn->query($sql);
+            $stmt = $db->prepare($sql);
+            $stmt->execute($opts);
+            $result = $stmt->fetchAll();
 
-    if ($result->num_rows > 0) {
-        // output data of each row
-        echo "<table border=1><tr><td>ConnectionLoc</td><td>TestNumber</td><td>PacketsSent</td><td>PacketsReceived</td><td>PacketsLost</td><td>RTTMin</td><td>RTTMax</td><td>RTTAverage</td><td>RValue</td><td>MOS</td><td>ErrorType</td></tr>";
-        while($row = $result->fetch_assoc()) {
-          echo "<tr><td>".$row["ConnectionLoc"]."</td><td>".$row["TestNumber"]."</td><td>".$row["PacketsSent"]."</td><td>".$row["PacketsReceived"]."</td><td>".$row["PacketsLost"]."</td><td>".$row["RTTMin"]."</td><td>".$row["RTTMax"]."</td><td>".$row["RTTAverage"]."</td><td>".$row["RValue"]."</td><td>".$row["MOS"]."</td><td>".$row["ErrorType"]."</td></tr>";
+            if (empty($result)) {
+                ?>
 
+                <div class='row'>
+                <div class='col-xs-3'></div>
+                <div class='col-xs-6 text-center'>
+                    <p style="font-size: 140%;">
+                        <b>We're sorry.</b><br/>
+                        There are no results associated with this link.<br/><hr/>
+                        Please consider going to the <a href="request.php" class="alert-link">Request Page</a> to complete<br/>
+                        the form for requesting new analyses.
+                    </p>
+                </div>
+                </div>
+
+                <?php
+            } else {
+                $result = $result[0];
+                $imagePath = str_replace("/home/ubuntu/csdi_www",
+                                         "http://54.200.224.217/csdi/",
+                                         $result['ImagePath']);
+                #Decoding JSON. The 'true' is so that we get an array rather than an object
+                $meta = json_decode($result['MetaInfo'], true);
+                ?>
+
+                <div class='row'>
+                    <div class='col-xs-12 text-center'>
+                        <img src=<?=$imagePath;?> />
+                    </div>
+                </div>
+                <hr />
+
+                <div class='row'>
+                    <div class='col-xs-12 col-sm-4 col-sm-offset-4 text-center'>
+                        <table class='table'>
+                            <tr>
+                                <th>Total Number of Data Points</th>
+                                <td><?=$meta['dataPoints'];?></td>
+                            </tr>
+                            <tr>
+                                <th>Number of Test Files Used</th>
+                                <td><?=$meta['filesUsed'];?></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class='row'>
+                    <div class='col-xs-12 col-sm-6 col-sm-offset-3 text-center'>
+                        <p>
+                            To request more information, please fill out the <a href='contact.php'>Contact</a> form with the current URL.
+                        </p>
+                    </div>
+                </div>
+
+                <?php
+            }
+        } else {
+            ?>
+
+            <div class='row'>
+            <div class='col-xs-3'></div>
+            <div class='col-xs-6 text-center'>
+                <p style="font-size: 140%;">
+                    <b>Welcome to the Results Page.</b><br/>
+                    This page requires a URL variable to show results.<br/><hr/>
+                    Please consider going to the <a href="request.php" class="alert-link">Request Page</a> to complete<br/>
+                    the form for requesting new analyses.
+                </p>
+            </div>
+            </div>
+
+            <?php
         }
-        echo "</table>";
-    } else {
-        echo "no data available";
-    }
+        ?>
 
-     echo "<h1>TCP Results</h1>";
-
-     $sql = "SELECT * FROM TCPResults";
-     $result = $conn->query($sql);
-
-     if ($result->num_rows > 0)
-     {
-         // output data of each row
-         for($i = 0; $i < 10; $i++)
-         echo "<table border=1><tr><td>ConnectionLoc</td><td>TestNumber</td><td>WindowSize</td><td>Port</td><td>UpSpeed</td><td>UpStdDev</td><td>UpMedian</td><td>UpPeriod</td><td>UpPct</td><td>DownSpeed</td><td>DownStdDev</td><td>DownMedian</td><td>DownPeriod</td><td>DownPct</td><td>ErrorType</td></tr>";
-         while($row = $result->fetch_assoc())
-         {
-             echo "<tr><td>".$row["ConnectionLoc"]."</td><td>".$row["TestNumber"]."</td><td>".$row["WindowSize"]."</td><td>".$row["Port"]."</td><td>".$row["UpSpeed"]."</td><td>".$row["UpStdDev"]."</td><td>".$row["UpMedian"]."</td><td>".$row["UpPeriod"]."</td><td>".$row["UpPct"]."</td><td>".$row["DownSpeed"]."</td><td>".$row["DownStdDev"]."</td><td>".$row["DownMedian"]."</td><td>".$row["DownPeriod"]."</td><td>".$row["DownPct"]."</td><td>".$row["ErrorType"]."</td></tr>";
-         }
-         echo "</table>";
-     }
-     else
-     {
-         echo "No data for this test";
-     }
-
-     echo "<h1>UDP Results</h1>";
-
-     $sql = "SELECT * FROM UDPResults";
-     $result = $conn->query($sql);
-
-     if ($result->num_rows > 0)
-     {
-         // output data of each row
-         echo "<table border=1><tr><td>ConnectionLoc</td><td>TestNumber</td><td>Port</td><td>DatagramSize</td><td>Jitter</td><td>Loss</td><td>Time</td><td>ErrorType</td></tr>";
-         while($row = $result->fetch_assoc())
-         {
-             echo "<tr><td>".$row["ConnectionLoc"]."</td><td>".$row["TestNumber"]."</td><td>".$row["Port"]."</td><td>".$row["DatagramSize"]."</td><td>".$row["Jitter"]."</td><td>".$row["Loss"]."</td><td>".$row["Time"]."</td><td>".$row["ErrorType"]."</td></tr>";
-         }
-         echo "</table>";
-     }
-     else
-     {
-         echo "No data for this test";
-     }
-
-
-
-    $conn->close();
-
-
-
-    ?>
-
-
-
-
-</body>
+        <hr/>
+        <footer>
+            <div class="container">
+                <p class="muted credit">Website designed and built by Peter Walker, Timothy Dyck, and Nicholas Moradi.</p>
+                <p class="muted credit">Senior Capstone project of <a href="https://csumb.edu/">California State University of Monterey Bay</a>, 2015.</p>
+            </div>
+        </footer>
+    </body>
 </html>

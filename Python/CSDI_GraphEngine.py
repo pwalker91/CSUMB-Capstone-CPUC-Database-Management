@@ -19,7 +19,8 @@ import hashlib
 import traceback
 from CSDI_MySQL import CSDI_MySQL as DB
 from CSDI_matplotlib import barGraph
-from sensitiveInfo import PASSWORD
+from sensitiveInfo import (PASSWORD, EMAIL_USER, EMAIL_PASS)
+from EmailClient import EmailClient
 #END IMPORTS
 
 
@@ -49,12 +50,16 @@ for PAGE in PAGE_RESULTS:
     #Making it easier to get the PageRequest row's ID
     requestPageID = PAGE[page_headers.index("Id")]
 
+    #We want to skip any rows where an error was encountered
+    if PAGE[page_headers.index("ErrorEncountered")]:
+        continue
+
     #Lots of stuff enclosed in a TRY, so that we can update the 'PageRequest'
     # table on an error
     try:
         #We start by loading the JSON from the results of the query to 'PageRequest'
         TestJSON = json.loads( PAGE[page_headers.index("AnalysisOpts")].decode() )
-        print(TestJSON, end="\n\n")
+        #print(TestJSON, end="\n\n")
 
         #Getting all of the files that match the given criteria
         EXECUTED, results_Files = DataDB.select('FileInfo', "*", **TestJSON['file_criteria'])
@@ -142,6 +147,24 @@ for PAGE in PAGE_RESULTS:
         PageDB._CSDI_MySQL__executeQuery(UPDATE, UPDATE_DAT)
 
         #Send email to PAGE[page_headers.index("ContactEmail")]
+        NAME = PAGE[page_headers.index("ContactName")]
+        if not NAME:
+            NAME = "CSDI User"
+        EMAIL = PAGE[page_headers.index("ContactEmail")]
+
+        ec = EmailClient(name='CSDI Server Bot', username=EMAIL_USER, password=EMAIL_PASS)
+        ec.addRecipient( (NAME, EMAIL) )
+        ec.SUBJECT = "CSDI Analysis Ready"
+        ec.MESSAGE = ("Hello {},\n\n".format(NAME) +
+                      "Your analysis request has been processed, " +
+                      "and the results can be found at this link:\n\n" +
+                      "http://54.200.224.217/csdi/results.php?h={}\n\n".format(pageHash) +
+                      "If you have any questions regarding the analysis process, or the website" +
+                      " itself, please do not hesitate to contact us.\n\n\n" +
+                      "Sincerely,\n\n" +
+                      "The CSDI Team"
+                      )
+        ec.send()
 
         newpageCount += 1
     #END TRY
