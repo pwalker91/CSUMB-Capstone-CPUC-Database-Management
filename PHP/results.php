@@ -35,13 +35,19 @@
 
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
-                    <!-- Brand and toggle get grouped for better mobile display -->
                     <div class="navbar-header">
+                        <button type="button"
+                                class="navbar-toggle collapsed"
+                                data-toggle="collapse" data-target="#navbar"
+                                aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
                         <a class="navbar-brand" href="#">CSDI</a>
                     </div>
-
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div id="navbar" class="navbar-collapse collapse">
                         <ul class="nav navbar-nav">
                             <li><a href="home.php">Home</a></li>
                             <li><a href="request.php">Request</a></li>
@@ -67,9 +73,10 @@
                             <button type="submit" class="btn btn-default">Submit</button>
                         </form>
                         -->
-                    </div>
+                    </div> <!-- /.nav-collapse -->
                 </div> <!-- END CONTAINER -->
             </nav>
+
         </div>
 
 
@@ -166,8 +173,8 @@
         <hr/>
         <footer>
             <div class="container">
-                <p class="muted credit">Website designed and built by Peter Walker, Timothy Dyck, and Nicholas Moradi.</p>
-                <p class="muted credit">Senior Capstone project of <a href="https://csumb.edu/">California State University of Monterey Bay</a>, 2015.</p>
+                <p class="text-muted credit">Website designed and built by Peter Walker, Timothy Dyck, and Nicholas Moradi.</p>
+                <p class="text-muted credit">Senior Capstone project of <a href="https://csumb.edu/">California State University of Monterey Bay</a>, 2015.</p>
             </div>
         </footer>
     </body>

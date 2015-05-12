@@ -1,0 +1,20 @@
+#!/bin/bash
+
+#=====================================================
+# +----------------- min (0 - 59)
+# |  +-------------- hour (0 - 23)
+# |  |  +----------- day of month (1 - 31)
+# |  |  |  +-------- month (1 - 12)
+# |  |  |  |  +----- day of week (0 - 6) (Sunday=0)
+# |  |  |  |  |      ( *  means all values in field)
+# |  |  |  |  |
+# -  -  -  -  - COMMAND_TO_BE_EXECUTED
+#=====================================================
+
+#Setting the default paths and shell that cron will use.
+#By default, these paths are not set, and the default shell is /bin/sh
+PATH=/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin:/opt/aws/bin
+SHELL=/bin/bash
+
+
+0,15,30,45 * * * 1-5 python3 /home/ubuntu/csdi_scripts/CSDI_GraphEngine.py /home/ubuntu/csdi_www/images/graphs
